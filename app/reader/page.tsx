@@ -6,6 +6,7 @@ import { trustedArticles } from '../data/mockArticles';
 import { Suspense, useEffect, useState } from 'react';
 import { Article } from '../types/article';
 import { getRelativeTime, formatDate } from '../lib/utils';
+import { markAsRead } from '../lib/readState';
 
 function ReaderContent() {
   const searchParams = useSearchParams();
@@ -21,6 +22,10 @@ function ReaderContent() {
       if (mockArticle) {
         setArticle(mockArticle);
         setLoading(false);
+        // Mark as read immediately when article is loaded
+        if (articleId) {
+          markAsRead(articleId);
+        }
         return;
       }
 
@@ -45,6 +50,8 @@ function ReaderContent() {
               publishedAt: foundItem.publishedAt,
               sourceDomain: foundItem.sourceDomain,
             });
+            // Mark as read immediately when article is loaded
+            markAsRead(foundItem.id);
           }
         }
       } catch (error) {

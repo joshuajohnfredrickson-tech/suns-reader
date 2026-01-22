@@ -8,6 +8,7 @@ import { EmptyState } from './components/EmptyState';
 import { Article, ArticleSummary } from './types/article';
 import { getRelativeTime, formatDate } from './lib/utils';
 import { getTrustedDomains, addTrustedDomain } from './lib/trustedDomains';
+import { purgeExpiredReadState, getReadStateForArticles } from './lib/readState';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'trusted' | 'discovery'>('trusted');
@@ -30,6 +31,10 @@ export default function Home() {
       const data = await response.json();
       const items: ArticleSummary[] = data.items || [];
 
+      // Get read state for all articles
+      const articleIds = items.map(item => item.id);
+      const readStateMap = getReadStateForArticles(articleIds);
+
       // Convert ArticleSummary to Article format
       const articles: Article[] = items.map((item) => ({
         id: item.id,
@@ -37,7 +42,7 @@ export default function Home() {
         source: item.sourceName,
         timeAgo: getRelativeTime(item.publishedAt),
         date: formatDate(item.publishedAt),
-        isRead: false,
+        isRead: readStateMap[item.id] || false,
         url: item.url,
         publishedAt: item.publishedAt,
         sourceDomain: item.sourceDomain,
@@ -62,6 +67,9 @@ export default function Home() {
 
     // Load trusted domains
     setTrustedDomains(getTrustedDomains());
+
+    // Purge expired read state (older than 24 hours)
+    purgeExpiredReadState();
 
     // Register service worker
     if ('serviceWorker' in navigator) {

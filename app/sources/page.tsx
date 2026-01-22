@@ -3,15 +3,18 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getTrustedDomains, removeTrustedDomain, resetToDefaults } from '../lib/trustedDomains';
+import { clearAllReadState, getReadCount } from '../lib/readState';
 
 export default function SourcesPage() {
   const router = useRouter();
   const [trustedDomains, setTrustedDomains] = useState<string[]>([]);
+  const [readCount, setReadCount] = useState(0);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
     setTrustedDomains(getTrustedDomains());
+    setReadCount(getReadCount());
   }, []);
 
   const handleRemove = (domain: string) => {
@@ -22,6 +25,13 @@ export default function SourcesPage() {
   const handleResetToDefaults = () => {
     resetToDefaults();
     setTrustedDomains(getTrustedDomains());
+  };
+
+  const handleClearReadHistory = () => {
+    if (confirm('Clear all read history? This cannot be undone.')) {
+      clearAllReadState();
+      setReadCount(0);
+    }
   };
 
   const handleBack = () => {
@@ -109,6 +119,25 @@ export default function SourcesPage() {
             ))}
           </div>
         )}
+
+        {/* Read History Section */}
+        <div className="mt-8 pt-6 border-t border-border">
+          <h2 className="text-xl font-bold text-foreground mb-2">Read History</h2>
+          <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-4">
+            {readCount > 0
+              ? `You have ${readCount} read ${readCount === 1 ? 'article' : 'articles'}. Read history automatically expires after 24 hours.`
+              : 'No read articles yet.'}
+          </p>
+          {readCount > 0 && (
+            <button
+              onClick={handleClearReadHistory}
+              className="px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+              style={{ touchAction: 'manipulation' }}
+            >
+              Clear Read History
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
