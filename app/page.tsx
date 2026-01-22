@@ -2,11 +2,53 @@
 
 import { useState, useEffect } from 'react';
 import { ArticleList } from './components/ArticleList';
-import { trustedArticles, discoveryArticles } from './data/mockArticles';
+import { LoadingState } from './components/LoadingState';
+import { ErrorState } from './components/ErrorState';
+import { trustedArticles } from './data/mockArticles';
+import { Article, ArticleSummary } from './types/article';
+import { getRelativeTime, formatDate } from './lib/utils';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'trusted' | 'discovery'>('trusted');
   const [mounted, setMounted] = useState(false);
+  const [discoveryArticles, setDiscoveryArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchDiscoveryArticles = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch('/api/search?q=Phoenix+Suns');
+      if (!response.ok) {
+        throw new Error('Failed to fetch articles');
+      }
+
+      const data = await response.json();
+      const items: ArticleSummary[] = data.items || [];
+
+      // Convert ArticleSummary to Article format
+      const articles: Article[] = items.map((item) => ({
+        id: item.id,
+        title: item.title,
+        source: item.sourceName,
+        timeAgo: getRelativeTime(item.publishedAt),
+        date: formatDate(item.publishedAt),
+        isRead: false,
+        url: item.url,
+        publishedAt: item.publishedAt,
+        sourceDomain: item.sourceDomain,
+      }));
+
+      setDiscoveryArticles(articles);
+    } catch (err) {
+      console.error('Failed to fetch discovery articles:', err);
+      setError(err instanceof Error ? err.message : 'Unknown error');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -17,6 +59,9 @@ export default function Home() {
         console.error('Service Worker registration failed:', error);
       });
     }
+
+    // Fetch discovery articles on mount
+    fetchDiscoveryArticles();
   }, []);
 
   if (!mounted) {
@@ -24,8 +69,9 @@ export default function Home() {
   }
 
   const handleRefresh = () => {
-    // No-op for now
-    console.log('Refresh clicked');
+    if (activeTab === 'discovery') {
+      fetchDiscoveryArticles();
+    }
   };
 
   return (
@@ -82,9 +128,15 @@ export default function Home() {
       </nav>
 
       {/* Article List */}
-      <ArticleList
-        articles={activeTab === 'trusted' ? trustedArticles : discoveryArticles}
-      />
+      {activeTab === 'trusted' ? (
+        <ArticleList articles={trustedArticles} />
+      ) : loading ? (
+        <LoadingState />
+      ) : error ? (
+        <ErrorState message={error} onRetry={fetchDiscoveryArticles} />
+      ) : (
+        <ArticleList articles={discoveryArticles} />
+      )}
     </div>
   );
 }

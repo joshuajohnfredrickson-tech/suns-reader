@@ -2,21 +2,75 @@
 
 import { useSearchParams, useRouter } from 'next/navigation';
 import { ReaderView } from '../components/ReaderView';
-import { trustedArticles, discoveryArticles } from '../data/mockArticles';
-import { Suspense } from 'react';
+import { trustedArticles } from '../data/mockArticles';
+import { Suspense, useEffect, useState } from 'react';
+import { Article } from '../types/article';
+import { getRelativeTime, formatDate } from '../lib/utils';
 
 function ReaderContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const articleId = searchParams.get('id');
+  const [article, setArticle] = useState<Article | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Find article in both lists
-  const allArticles = [...trustedArticles, ...discoveryArticles];
-  const article = allArticles.find(a => a.id === articleId);
+  useEffect(() => {
+    const loadArticle = async () => {
+      // First, try to find in mock trusted articles
+      const mockArticle = trustedArticles.find(a => a.id === articleId);
+      if (mockArticle) {
+        setArticle(mockArticle);
+        setLoading(false);
+        return;
+      }
+
+      // If not found in mock, try to fetch from discovery articles
+      try {
+        const response = await fetch('/api/search?q=Phoenix+Suns');
+        if (response.ok) {
+          const data = await response.json();
+          const items = data.items || [];
+
+          // Find the article in the fetched items
+          const foundItem = items.find((item: any) => item.id === articleId);
+          if (foundItem) {
+            setArticle({
+              id: foundItem.id,
+              title: foundItem.title,
+              source: foundItem.sourceName,
+              timeAgo: getRelativeTime(foundItem.publishedAt),
+              date: formatDate(foundItem.publishedAt),
+              isRead: false,
+              url: foundItem.url,
+              publishedAt: foundItem.publishedAt,
+              sourceDomain: foundItem.sourceDomain,
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Failed to load article:', error);
+      }
+
+      setLoading(false);
+    };
+
+    loadArticle();
+  }, [articleId]);
 
   const handleBack = () => {
     router.back();
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-background text-foreground">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-accent mb-4"></div>
+          <p className="text-zinc-600 dark:text-zinc-400">Loading article...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!article) {
     return (
@@ -26,6 +80,7 @@ function ReaderContent() {
           <button
             onClick={handleBack}
             className="text-accent hover:underline"
+            style={{ touchAction: 'manipulation' }}
           >
             Go back
           </button>
