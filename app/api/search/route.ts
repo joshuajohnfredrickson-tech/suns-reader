@@ -8,6 +8,7 @@ interface RSSItem {
   pubDate?: string;
   guid?: string;
   source?: string;
+  sourceUrl?: string;
 }
 
 /**
@@ -29,7 +30,11 @@ function parseRSS(xmlText: string): RSSItem[] {
       const link = itemXml.match(/<link>([\s\S]*?)<\/link>/i)?.[1]?.trim();
       const pubDate = itemXml.match(/<pubDate>([\s\S]*?)<\/pubDate>/i)?.[1]?.trim();
       const guid = itemXml.match(/<guid[^>]*>([\s\S]*?)<\/guid>/i)?.[1]?.trim();
-      const source = itemXml.match(/<source[^>]*>([\s\S]*?)<\/source>/i)?.[1]?.trim();
+
+      // Extract source element and its url attribute
+      const sourceMatch = itemXml.match(/<source[^>]*url="([^"]*)"[^>]*>([\s\S]*?)<\/source>/i);
+      const sourceUrl = sourceMatch?.[1]?.trim();
+      const source = sourceMatch?.[2]?.trim();
 
       if (title && link) {
         items.push({
@@ -38,6 +43,7 @@ function parseRSS(xmlText: string): RSSItem[] {
           pubDate,
           guid,
           source: source ? decodeHTML(source) : undefined,
+          sourceUrl,
         });
       }
     }
@@ -62,6 +68,14 @@ function decodeHTML(html: string): string {
 }
 
 /**
+ * Extract publisher from title pattern "Title - Publisher"
+ */
+function extractPublisherFromTitle(title: string): string | undefined {
+  const match = title.match(/\s-\s([^-]+)$/);
+  return match?.[1]?.trim();
+}
+
+/**
  * Normalize RSS items to ArticleSummary format
  */
 function normalizeRSSItems(items: RSSItem[]): ArticleSummary[] {
@@ -71,8 +85,13 @@ function normalizeRSSItems(items: RSSItem[]): ArticleSummary[] {
 
       const url = item.link;
       const id = simpleHash(item.guid || url);
-      const sourceDomain = getDomain(url);
-      const sourceName = item.source || sourceDomain;
+
+      // Use source URL to derive domain if available, otherwise fall back to link
+      const publisherUrl = item.sourceUrl || url;
+      const sourceDomain = getDomain(publisherUrl);
+
+      // Use source name, or extract from title, or fall back to domain
+      const sourceName = item.source || extractPublisherFromTitle(item.title) || sourceDomain;
 
       // Parse pubDate to ISO string
       let publishedAt = new Date().toISOString(); // Default to now
