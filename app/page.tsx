@@ -2,13 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { ArticleList } from './components/ArticleList';
-import { ReaderView } from './components/ReaderView';
 import { trustedArticles, discoveryArticles } from './data/mockArticles';
-import { Article } from './types/article';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'trusted' | 'discovery'>('trusted');
-  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -31,20 +28,6 @@ export default function Home() {
     console.log('Refresh clicked');
   };
 
-  const handleArticleClick = (article: Article) => {
-    setSelectedArticle(article);
-  };
-
-  const handleBackToList = () => {
-    setSelectedArticle(null);
-  };
-
-  // Show reader view if an article is selected
-  if (selectedArticle) {
-    return <ReaderView article={selectedArticle} onBack={handleBackToList} />;
-  }
-
-  // Show article list
   return (
     <div className="flex flex-col h-screen bg-background text-foreground">
       {/* Top Bar */}
@@ -54,6 +37,7 @@ export default function Home() {
           onClick={handleRefresh}
           className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
           aria-label="Refresh"
+          style={{ touchAction: 'manipulation' }}
         >
           <svg
             className="w-5 h-5"
@@ -80,6 +64,7 @@ export default function Home() {
               ? 'text-accent border-b-2 border-accent'
               : 'text-zinc-600 dark:text-zinc-400 hover:text-foreground'
           }`}
+          style={{ touchAction: 'manipulation' }}
         >
           Trusted
         </button>
@@ -90,6 +75,7 @@ export default function Home() {
               ? 'text-accent border-b-2 border-accent'
               : 'text-zinc-600 dark:text-zinc-400 hover:text-foreground'
           }`}
+          style={{ touchAction: 'manipulation' }}
         >
           Discovery
         </button>
@@ -98,7 +84,6 @@ export default function Home() {
       {/* Article List */}
       <ArticleList
         articles={activeTab === 'trusted' ? trustedArticles : discoveryArticles}
-        onArticleClick={handleArticleClick}
       />
     </div>
   );
