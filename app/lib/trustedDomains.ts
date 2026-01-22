@@ -5,14 +5,26 @@
 const STORAGE_KEY = 'suns-reader-trusted-domains';
 
 // Default starter list of trusted domains
-const DEFAULT_TRUSTED_DOMAINS = [
-  'espn.com',
+export const DEFAULT_TRUSTED_DOMAINS = [
+  'arizonasports.com',
+  'brightsideofthesun.com',
+  'valleyofthesuns.com',
   'nba.com',
-  'theathletic.com',
-  'azcentral.com',
-  'arizona.com',
+  'espn.com',
+  'yahoo.com',
+  'hoopsrumors.com',
+  'sportingnews.com',
   'si.com',
+  'abc15.com',
+  'azcentral.com',
 ];
+
+/**
+ * Normalize domain: lowercase and strip www.
+ */
+function normalizeDomain(domain: string): string {
+  return domain.toLowerCase().trim().replace(/^www\./, '');
+}
 
 /**
  * Get all trusted domains from localStorage
@@ -23,7 +35,12 @@ export function getTrustedDomains(): string[] {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
-      return JSON.parse(stored);
+      const domains = JSON.parse(stored);
+      // If empty array, don't leave user stuck - return defaults
+      if (Array.isArray(domains) && domains.length === 0) {
+        return DEFAULT_TRUSTED_DOMAINS;
+      }
+      return domains;
     }
 
     // First run - seed with defaults
@@ -43,7 +60,7 @@ export function addTrustedDomain(domain: string): void {
 
   try {
     const domains = getTrustedDomains();
-    const cleanDomain = domain.toLowerCase().trim();
+    const cleanDomain = normalizeDomain(domain);
 
     if (!domains.includes(cleanDomain)) {
       domains.push(cleanDomain);
@@ -62,7 +79,7 @@ export function removeTrustedDomain(domain: string): void {
 
   try {
     const domains = getTrustedDomains();
-    const cleanDomain = domain.toLowerCase().trim();
+    const cleanDomain = normalizeDomain(domain);
     const filtered = domains.filter(d => d !== cleanDomain);
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
@@ -78,6 +95,19 @@ export function isTrusted(domain: string): boolean {
   if (typeof window === 'undefined') return false;
 
   const domains = getTrustedDomains();
-  const cleanDomain = domain.toLowerCase().trim();
+  const cleanDomain = normalizeDomain(domain);
   return domains.includes(cleanDomain);
+}
+
+/**
+ * Reset to default trusted domains
+ */
+export function resetToDefaults(): void {
+  if (typeof window === 'undefined') return;
+
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_TRUSTED_DOMAINS));
+  } catch (error) {
+    console.error('Failed to reset to defaults:', error);
+  }
 }

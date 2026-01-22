@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getTrustedDomains, removeTrustedDomain } from '../lib/trustedDomains';
+import { getTrustedDomains, removeTrustedDomain, resetToDefaults } from '../lib/trustedDomains';
 
 export default function SourcesPage() {
   const router = useRouter();
@@ -16,6 +16,11 @@ export default function SourcesPage() {
 
   const handleRemove = (domain: string) => {
     removeTrustedDomain(domain);
+    setTrustedDomains(getTrustedDomains());
+  };
+
+  const handleResetToDefaults = () => {
+    resetToDefaults();
     setTrustedDomains(getTrustedDomains());
   };
 
@@ -55,7 +60,16 @@ export default function SourcesPage() {
 
       {/* Content */}
       <div className="flex-1 overflow-y-auto px-4 py-6">
-        <h1 className="text-2xl font-bold mb-2 text-foreground">Trusted Sources</h1>
+        <div className="flex items-center justify-between mb-2">
+          <h1 className="text-2xl font-bold text-foreground">Trusted Sources</h1>
+          <button
+            onClick={handleResetToDefaults}
+            className="px-4 py-2 text-sm text-accent hover:bg-accent/10 rounded-lg transition-colors"
+            style={{ touchAction: 'manipulation' }}
+          >
+            Reset to Defaults
+          </button>
+        </div>
         <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-6">
           Manage which news sources appear in your Trusted tab.
         </p>
@@ -63,9 +77,16 @@ export default function SourcesPage() {
         {trustedDomains.length === 0 ? (
           <div className="text-center py-12">
             <div className="text-4xl mb-4">📰</div>
-            <p className="text-zinc-600 dark:text-zinc-400">
-              No trusted sources yet. Add sources from the Discovery tab.
+            <p className="text-zinc-600 dark:text-zinc-400 mb-4">
+              No trusted sources yet.
             </p>
+            <button
+              onClick={handleResetToDefaults}
+              className="px-6 py-3 bg-accent text-white rounded-lg hover:opacity-90 active:opacity-80 transition-opacity"
+              style={{ touchAction: 'manipulation' }}
+            >
+              Load Default Sources
+            </button>
           </div>
         ) : (
           <div className="space-y-2">

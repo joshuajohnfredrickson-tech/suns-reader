@@ -12,12 +12,12 @@ export function simpleHash(str: string): string {
 }
 
 /**
- * Extract domain from URL
+ * Extract domain from URL and normalize (lowercase, strip www.)
  */
 export function getDomain(url: string): string {
   try {
     const urlObj = new URL(url);
-    return urlObj.hostname.replace('www.', '');
+    return urlObj.hostname.toLowerCase().replace(/^www\./, '');
   } catch {
     return 'unknown';
   }
