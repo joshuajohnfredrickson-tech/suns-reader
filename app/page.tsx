@@ -2,27 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { ArticleList } from './components/ArticleList';
-
-const trustedArticles = [
-  { id: '1', title: 'Breaking: Major Climate Agreement Reached at Summit', source: 'Reuters', timeAgo: '2h ago', isRead: false },
-  { id: '2', title: 'Tech Giants Announce New AI Safety Initiative', source: 'The Verge', timeAgo: '3h ago', isRead: false },
-  { id: '3', title: 'Global Markets Rally on Economic Growth Data', source: 'Financial Times', timeAgo: '4h ago', isRead: true },
-  { id: '4', title: 'Scientists Discover New Treatment for Rare Disease', source: 'Nature', timeAgo: '5h ago', isRead: true },
-  { id: '5', title: 'International Space Station Mission Extended', source: 'NASA', timeAgo: '6h ago', isRead: false },
-  { id: '6', title: 'Renewable Energy Surpasses Coal in Power Generation', source: 'Bloomberg', timeAgo: '7h ago', isRead: true },
-];
-
-const discoveryArticles = [
-  { id: '7', title: 'How Modern Architecture Is Reshaping Cities', source: 'Architectural Digest', timeAgo: '1h ago', isRead: false },
-  { id: '8', title: 'The Rise of Plant-Based Cuisine Around the World', source: 'Food & Wine', timeAgo: '2h ago', isRead: false },
-  { id: '9', title: 'Exploring Ancient Ruins: New Archaeological Findings', source: 'National Geographic', timeAgo: '3h ago', isRead: false },
-  { id: '10', title: 'The Future of Electric Vehicles in Urban Planning', source: 'Wired', timeAgo: '4h ago', isRead: true },
-  { id: '11', title: 'Mental Health Awareness: A Growing Priority', source: 'Psychology Today', timeAgo: '5h ago', isRead: false },
-  { id: '12', title: 'Art and Technology: The Digital Renaissance', source: 'The Atlantic', timeAgo: '6h ago', isRead: true },
-];
+import { ReaderView } from './components/ReaderView';
+import { trustedArticles, discoveryArticles } from './data/mockArticles';
+import { Article } from './types/article';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'trusted' | 'discovery'>('trusted');
+  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -45,6 +31,20 @@ export default function Home() {
     console.log('Refresh clicked');
   };
 
+  const handleArticleClick = (article: Article) => {
+    setSelectedArticle(article);
+  };
+
+  const handleBackToList = () => {
+    setSelectedArticle(null);
+  };
+
+  // Show reader view if an article is selected
+  if (selectedArticle) {
+    return <ReaderView article={selectedArticle} onBack={handleBackToList} />;
+  }
+
+  // Show article list
   return (
     <div className="flex flex-col h-screen bg-background text-foreground">
       {/* Top Bar */}
@@ -98,6 +98,7 @@ export default function Home() {
       {/* Article List */}
       <ArticleList
         articles={activeTab === 'trusted' ? trustedArticles : discoveryArticles}
+        onArticleClick={handleArticleClick}
       />
     </div>
   );
