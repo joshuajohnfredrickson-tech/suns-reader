@@ -10,14 +10,14 @@ export function ReaderView({ article, onBack }: ReaderViewProps) {
   return (
     <div className="flex flex-col h-screen bg-background text-foreground">
       {/* Header */}
-      <header className="flex items-center gap-3 px-4 py-3 border-b border-border bg-background sticky top-0 z-10">
+      <header className="flex items-center gap-2 px-4 py-3 border-b border-border bg-background z-10">
         <button
           onClick={onBack}
-          className="p-2 -ml-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
-          aria-label="Back"
+          className="flex items-center gap-2 -ml-2 px-2 py-2 min-h-[44px] rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
+          style={{ touchAction: 'manipulation' }}
         >
           <svg
-            className="w-5 h-5"
+            className="w-6 h-6"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -29,8 +29,8 @@ export function ReaderView({ article, onBack }: ReaderViewProps) {
               d="M15 19l-7-7 7-7"
             />
           </svg>
+          <span className="text-base font-medium">Back</span>
         </button>
-        <h1 className="text-xl font-semibold truncate">Reader</h1>
       </header>
 
       {/* Article Content */}

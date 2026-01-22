@@ -77,16 +77,21 @@ export default function Home() {
   return (
     <div className="flex flex-col h-screen bg-background text-foreground">
       {/* Top Bar */}
-      <header className="flex items-center justify-between px-4 py-3 border-b border-border bg-background sticky top-0 z-10">
+      <header className="flex items-center justify-between px-4 py-3 border-b border-border bg-background z-10">
         <h1 className="text-xl font-semibold">Suns Reader</h1>
         <button
           onClick={handleRefresh}
-          className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
+          disabled={loading}
+          className={`p-2 rounded-lg transition-colors ${
+            loading
+              ? 'opacity-50 cursor-not-allowed'
+              : 'hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700'
+          }`}
           aria-label="Refresh"
           style={{ touchAction: 'manipulation' }}
         >
           <svg
-            className="w-5 h-5"
+            className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -102,7 +107,7 @@ export default function Home() {
       </header>
 
       {/* Tabs */}
-      <nav className="flex border-b border-border bg-background sticky top-[57px] z-10">
+      <nav className="flex border-b border-border bg-background z-10">
         <button
           onClick={() => setActiveTab('trusted')}
           className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${
