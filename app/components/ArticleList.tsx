@@ -10,10 +10,10 @@ export function ArticleList({ articles, onArticleClick }: ArticleListProps) {
   return (
     <div className="flex-1 overflow-y-auto">
       {articles.map((article) => (
-        <div
+        <button
           key={article.id}
           onClick={() => onArticleClick(article)}
-          className="border-b border-border px-4 py-4 hover:bg-zinc-50 dark:hover:bg-zinc-900 active:bg-zinc-100 dark:active:bg-zinc-800 transition-colors cursor-pointer"
+          className="w-full border-b border-border px-4 py-4 hover:bg-zinc-50 dark:hover:bg-zinc-900 active:bg-zinc-100 dark:active:bg-zinc-800 transition-colors cursor-pointer text-left"
         >
           <div className="flex items-start gap-3">
             <div
@@ -34,7 +34,7 @@ export function ArticleList({ articles, onArticleClick }: ArticleListProps) {
               </div>
             </div>
           </div>
-        </div>
+        </button>
       ))}
     </div>
   );
