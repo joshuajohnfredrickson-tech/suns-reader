@@ -28,6 +28,8 @@ export default function SourcesPage() {
   const handleClearReadHistory = () => {
     if (confirm('Reset all articles to unread? This cannot be undone.')) {
       clearAllReadState();
+      // Navigate to home page to trigger UI update
+      router.push('/');
     }
   };
 

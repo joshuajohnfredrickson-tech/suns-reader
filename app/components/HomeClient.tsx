@@ -129,6 +129,31 @@ export default function HomeClient() {
         <h1 className="text-xl font-semibold">Suns Reader</h1>
         <div className="flex items-center gap-2">
           <button
+            onClick={handleRefresh}
+            disabled={loading}
+            className={`p-2 rounded-lg transition-colors ${
+              loading
+                ? 'opacity-50 cursor-not-allowed'
+                : 'hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700'
+            }`}
+            aria-label="Refresh"
+            style={{ touchAction: 'manipulation' }}
+          >
+            <svg
+              className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              />
+            </svg>
+          </button>
+          <button
             onClick={() => window.location.href = '/sources'}
             className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
             aria-label="Manage Sources"
@@ -151,31 +176,6 @@ export default function HomeClient() {
                 strokeLinejoin="round"
                 strokeWidth={2}
                 d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-              />
-            </svg>
-          </button>
-          <button
-            onClick={handleRefresh}
-            disabled={loading}
-            className={`p-2 rounded-lg transition-colors ${
-              loading
-                ? 'opacity-50 cursor-not-allowed'
-                : 'hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700'
-            }`}
-            aria-label="Refresh"
-            style={{ touchAction: 'manipulation' }}
-          >
-            <svg
-              className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
               />
             </svg>
           </button>
