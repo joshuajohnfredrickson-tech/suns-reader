@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ArticleList } from './ArticleList';
 import { LoadingState } from './LoadingState';
@@ -16,11 +16,12 @@ export default function HomeClient() {
   const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState<'trusted' | 'discovery'>('trusted');
   const [mounted, setMounted] = useState(false);
-  const [allArticles, setAllArticles] = useState<Article[]>([]);
+  const [articleSummaries, setArticleSummaries] = useState<ArticleSummary[]>([]);
   const [trustedDomains, setTrustedDomains] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastRefreshed, setLastRefreshed] = useState<Date | null>(null);
+  const [readVersion, setReadVersion] = useState(0);
 
   const fetchArticles = async () => {
     setLoading(true);
@@ -35,33 +36,7 @@ export default function HomeClient() {
       const data = await response.json();
       const items: ArticleSummary[] = data.items || [];
 
-      // Get read state for all articles
-      const articleIds = items.map(item => item.id);
-      const readStateMap = getReadStateForArticles(articleIds);
-
-      // Convert ArticleSummary to Article format
-      const articles: Article[] = items.map((item) => {
-        // Remove " - Source" suffix from title if it matches the sourceName
-        let cleanTitle = item.title;
-        const sourceSuffix = ` - ${item.sourceName}`;
-        if (cleanTitle.endsWith(sourceSuffix)) {
-          cleanTitle = cleanTitle.slice(0, -sourceSuffix.length);
-        }
-
-        return {
-          id: item.id,
-          title: cleanTitle,
-          source: item.sourceName,
-          timeAgo: getRelativeTime(item.publishedAt),
-          date: formatDate(item.publishedAt),
-          isRead: readStateMap[item.id] || false,
-          url: item.url,
-          publishedAt: item.publishedAt,
-          sourceDomain: item.sourceDomain,
-        };
-      });
-
-      setAllArticles(articles);
+      setArticleSummaries(items);
       setLastRefreshed(new Date());
     } catch (err) {
       console.error('Failed to fetch articles:', err);
@@ -98,9 +73,65 @@ export default function HomeClient() {
       });
     }
 
+    // Listen for storage events (read state changes)
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'suns-reader-read-state') {
+        setReadVersion(v => v + 1);
+      }
+    };
+
+    // Listen for custom read state change event
+    const handleReadStateChange = () => {
+      setReadVersion(v => v + 1);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('readStateChanged', handleReadStateChange);
+
     // Fetch articles on mount
     fetchArticles();
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('readStateChanged', handleReadStateChange);
+    };
   }, [searchParams]);
+
+  // Derive articles with read state - recomputes when readVersion changes
+  const allArticles = useMemo(() => {
+    const articleIds = articleSummaries.map(item => item.id);
+    const readStateMap = getReadStateForArticles(articleIds);
+
+    return articleSummaries.map((item) => {
+      // Remove " - Source" suffix from title if it matches the sourceName
+      let cleanTitle = item.title;
+      const sourceSuffix = ` - ${item.sourceName}`;
+      if (cleanTitle.endsWith(sourceSuffix)) {
+        cleanTitle = cleanTitle.slice(0, -sourceSuffix.length);
+      }
+
+      return {
+        id: item.id,
+        title: cleanTitle,
+        source: item.sourceName,
+        timeAgo: getRelativeTime(item.publishedAt),
+        date: formatDate(item.publishedAt),
+        isRead: readStateMap[item.id] || false,
+        url: item.url,
+        publishedAt: item.publishedAt,
+        sourceDomain: item.sourceDomain,
+      };
+    });
+  }, [articleSummaries, readVersion]);
+
+  // Derive trusted articles - recomputes when articles or trustedDomains change
+  const trustedArticles = useMemo(() => {
+    return allArticles.filter(article =>
+      article.sourceDomain && trustedDomains.includes(article.sourceDomain.toLowerCase())
+    );
+  }, [allArticles, trustedDomains]);
+
+  const discoveryArticles = allArticles;
 
   if (!mounted) {
     return null;
@@ -114,13 +145,6 @@ export default function HomeClient() {
     setActiveTab(tab);
     router.push(`/?tab=${tab}`, { scroll: false });
   };
-
-  // Filter articles by trusted domains
-  const trustedArticles = allArticles.filter(article =>
-    article.sourceDomain && trustedDomains.includes(article.sourceDomain.toLowerCase())
-  );
-
-  const discoveryArticles = allArticles;
 
   return (
     <div className="flex flex-col h-screen bg-background text-foreground">
@@ -216,10 +240,17 @@ export default function HomeClient() {
       ) : activeTab === 'trusted' ? (
         trustedArticles.length > 0 ? (
           <ArticleList articles={trustedArticles} showAddToTrusted={false} onAddToTrusted={handleAddToTrusted} trustedDomains={trustedDomains} lastRefreshed={lastRefreshed} />
-        ) : (
+        ) : trustedDomains.length === 0 ? (
           <EmptyState
             title="No Trusted Sources Yet"
             message="Add sources from the Discovery tab to see articles from trusted sites here."
+            actionLabel="Go to Discovery"
+            onAction={() => handleTabChange('discovery')}
+          />
+        ) : (
+          <EmptyState
+            title="No Articles Found"
+            message="No articles from trusted sources in the last 24 hours."
             actionLabel="Go to Discovery"
             onAction={() => handleTabChange('discovery')}
           />

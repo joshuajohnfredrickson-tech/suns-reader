@@ -131,6 +131,9 @@ export function clearAllReadState(): void {
   try {
     localStorage.removeItem(STORAGE_KEY);
     console.log('[ReadState] Cleared all read history');
+
+    // Emit custom event to notify components of read state change
+    window.dispatchEvent(new Event('readStateChanged'));
   } catch (error) {
     console.error('Failed to clear read state:', error);
   }
