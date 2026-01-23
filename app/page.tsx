@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ArticleList } from './components/ArticleList';
 import { LoadingState } from './components/LoadingState';
 import { ErrorState } from './components/ErrorState';
@@ -11,12 +12,15 @@ import { getTrustedDomains, addTrustedDomain } from './lib/trustedDomains';
 import { purgeExpiredReadState, getReadStateForArticles } from './lib/readState';
 
 export default function Home() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState<'trusted' | 'discovery'>('trusted');
   const [mounted, setMounted] = useState(false);
   const [allArticles, setAllArticles] = useState<Article[]>([]);
   const [trustedDomains, setTrustedDomains] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [lastRefreshed, setLastRefreshed] = useState<Date | null>(null);
 
   const fetchArticles = async () => {
     setLoading(true);
@@ -36,19 +40,29 @@ export default function Home() {
       const readStateMap = getReadStateForArticles(articleIds);
 
       // Convert ArticleSummary to Article format
-      const articles: Article[] = items.map((item) => ({
-        id: item.id,
-        title: item.title,
-        source: item.sourceName,
-        timeAgo: getRelativeTime(item.publishedAt),
-        date: formatDate(item.publishedAt),
-        isRead: readStateMap[item.id] || false,
-        url: item.url,
-        publishedAt: item.publishedAt,
-        sourceDomain: item.sourceDomain,
-      }));
+      const articles: Article[] = items.map((item) => {
+        // Remove " - Source" suffix from title if it matches the sourceName
+        let cleanTitle = item.title;
+        const sourceSuffix = ` - ${item.sourceName}`;
+        if (cleanTitle.endsWith(sourceSuffix)) {
+          cleanTitle = cleanTitle.slice(0, -sourceSuffix.length);
+        }
+
+        return {
+          id: item.id,
+          title: cleanTitle,
+          source: item.sourceName,
+          timeAgo: getRelativeTime(item.publishedAt),
+          date: formatDate(item.publishedAt),
+          isRead: readStateMap[item.id] || false,
+          url: item.url,
+          publishedAt: item.publishedAt,
+          sourceDomain: item.sourceDomain,
+        };
+      });
 
       setAllArticles(articles);
+      setLastRefreshed(new Date());
     } catch (err) {
       console.error('Failed to fetch articles:', err);
       setError(err instanceof Error ? err.message : 'Unknown error');
@@ -65,6 +79,12 @@ export default function Home() {
   useEffect(() => {
     setMounted(true);
 
+    // Load active tab from URL query param
+    const tabParam = searchParams.get('tab');
+    if (tabParam === 'discovery' || tabParam === 'trusted') {
+      setActiveTab(tabParam);
+    }
+
     // Load trusted domains
     setTrustedDomains(getTrustedDomains());
 
@@ -80,7 +100,7 @@ export default function Home() {
 
     // Fetch articles on mount
     fetchArticles();
-  }, []);
+  }, [searchParams]);
 
   if (!mounted) {
     return null;
@@ -88,6 +108,11 @@ export default function Home() {
 
   const handleRefresh = () => {
     fetchArticles();
+  };
+
+  const handleTabChange = (tab: 'trusted' | 'discovery') => {
+    setActiveTab(tab);
+    router.push(`/?tab=${tab}`, { scroll: false });
   };
 
   // Filter articles by trusted domains
@@ -160,7 +185,7 @@ export default function Home() {
       {/* Tabs */}
       <nav className="flex border-b border-border bg-background z-10">
         <button
-          onClick={() => setActiveTab('trusted')}
+          onClick={() => handleTabChange('trusted')}
           className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${
             activeTab === 'trusted'
               ? 'text-accent border-b-2 border-accent'
@@ -171,7 +196,7 @@ export default function Home() {
           Trusted
         </button>
         <button
-          onClick={() => setActiveTab('discovery')}
+          onClick={() => handleTabChange('discovery')}
           className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${
             activeTab === 'discovery'
               ? 'text-accent border-b-2 border-accent'
@@ -190,7 +215,7 @@ export default function Home() {
         <ErrorState message={error} onRetry={fetchArticles} />
       ) : activeTab === 'trusted' ? (
         trustedArticles.length > 0 ? (
-          <ArticleList articles={trustedArticles} showAddToTrusted={false} onAddToTrusted={handleAddToTrusted} trustedDomains={trustedDomains} />
+          <ArticleList articles={trustedArticles} showAddToTrusted={false} onAddToTrusted={handleAddToTrusted} trustedDomains={trustedDomains} lastRefreshed={lastRefreshed} />
         ) : (
           <EmptyState
             title="No Trusted Sources Yet"
@@ -200,7 +225,7 @@ export default function Home() {
           />
         )
       ) : (
-        <ArticleList articles={discoveryArticles} showAddToTrusted={true} onAddToTrusted={handleAddToTrusted} trustedDomains={trustedDomains} />
+        <ArticleList articles={discoveryArticles} showAddToTrusted={true} onAddToTrusted={handleAddToTrusted} trustedDomains={trustedDomains} lastRefreshed={lastRefreshed} />
       )}
     </div>
   );

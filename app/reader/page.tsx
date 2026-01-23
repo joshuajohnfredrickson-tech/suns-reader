@@ -12,6 +12,7 @@ function ReaderContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const articleId = searchParams.get('id');
+  const tab = searchParams.get('tab') || 'trusted';
   const [article, setArticle] = useState<Article | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -65,7 +66,7 @@ function ReaderContent() {
   }, [articleId]);
 
   const handleBack = () => {
-    router.back();
+    router.push(`/?tab=${tab}`);
   };
 
   if (loading) {
