@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getTrustedDomains, removeTrustedDomain, resetToDefaults } from '../lib/trustedDomains';
-import { clearAllReadState } from '../lib/readState';
 
 export default function SourcesPage() {
   const router = useRouter();
@@ -25,13 +24,6 @@ export default function SourcesPage() {
     setTrustedDomains(getTrustedDomains());
   };
 
-  const handleClearReadHistory = () => {
-    if (confirm('Reset all articles to unread? This cannot be undone.')) {
-      clearAllReadState();
-      // Navigate to home page to trigger UI update
-      router.push('/');
-    }
-  };
 
   const handleBack = () => {
     router.back();
@@ -118,17 +110,6 @@ export default function SourcesPage() {
             ))}
           </div>
         )}
-
-        {/* Read History Section */}
-        <div className="mt-8 pt-6 border-t border-border">
-          <button
-            onClick={handleClearReadHistory}
-            className="px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
-            style={{ touchAction: 'manipulation' }}
-          >
-            Reset read/unread
-          </button>
-        </div>
       </div>
     </div>
   );
