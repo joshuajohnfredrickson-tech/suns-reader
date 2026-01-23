@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import { Article } from '../types/article';
 
 interface ReaderViewProps {
@@ -6,7 +8,49 @@ interface ReaderViewProps {
   onBack: () => void;
 }
 
+interface ExtractedContent {
+  success: boolean;
+  url: string;
+  title?: string;
+  byline?: string;
+  siteName?: string;
+  contentHtml?: string;
+  textContent?: string;
+  excerpt?: string;
+  length?: number;
+  error?: string;
+}
+
 export function ReaderView({ article, onBack }: ReaderViewProps) {
+  const [extracted, setExtracted] = useState<ExtractedContent | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchExtractedContent = async () => {
+      if (!article.url) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/extract?url=${encodeURIComponent(article.url)}`);
+        const data = await response.json();
+        setExtracted(data);
+      } catch (error) {
+        console.error('Failed to extract article:', error);
+        setExtracted({
+          success: false,
+          url: article.url,
+          error: 'Failed to load article content',
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchExtractedContent();
+  }, [article.url]);
+
   return (
     <div className="flex flex-col h-screen bg-background text-foreground">
       {/* Header */}
@@ -35,19 +79,21 @@ export function ReaderView({ article, onBack }: ReaderViewProps) {
 
       {/* Article Content */}
       <article className="flex-1 overflow-y-auto px-4 py-6">
-        {/* Article Meta */}
+        {/* Article Meta - Show immediately */}
         <div className="mb-6">
           <h1 className="text-2xl font-bold leading-tight mb-3 text-foreground">
-            {article.title}
+            {extracted?.title || article.title}
           </h1>
 
           <div className="flex flex-col gap-1 text-sm text-zinc-600 dark:text-zinc-400">
             <div className="flex items-center gap-2">
-              <span className="font-medium text-foreground">{article.source}</span>
-              {article.author && (
+              <span className="font-medium text-foreground">
+                {extracted?.siteName || article.source}
+              </span>
+              {(extracted?.byline || article.author) && (
                 <>
                   <span>•</span>
-                  <span>{article.author}</span>
+                  <span>{extracted?.byline || article.author}</span>
                 </>
               )}
             </div>
@@ -62,7 +108,7 @@ export function ReaderView({ article, onBack }: ReaderViewProps) {
         {/* Divider */}
         <div className="border-t border-border mb-6" />
 
-        {/* Open Original Button (for real articles) */}
+        {/* Open Original Button - Always visible */}
         {article.url && (
           <div className="mb-6">
             <a
@@ -90,23 +136,50 @@ export function ReaderView({ article, onBack }: ReaderViewProps) {
           </div>
         )}
 
-        {/* Article Body */}
-        {article.body && (
+        {/* Content Area */}
+        {loading ? (
+          // Loading state
+          <div className="flex items-center justify-center py-12">
+            <div className="text-center">
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-accent mb-4"></div>
+              <p className="text-zinc-600 dark:text-zinc-400">Loading article...</p>
+            </div>
+          </div>
+        ) : extracted?.success && extracted.contentHtml ? (
+          // Success - render extracted content
+          <div
+            className="prose prose-zinc dark:prose-invert max-w-none prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground prose-strong:text-foreground prose-a:text-accent prose-img:rounded-lg"
+            dangerouslySetInnerHTML={{ __html: extracted.contentHtml }}
+          />
+        ) : extracted?.error ? (
+          // Failed extraction
+          <div className="text-center py-12">
+            <div className="text-4xl mb-4">📄</div>
+            <h3 className="text-lg font-medium mb-2 text-foreground">
+              Couldn't extract this article
+            </h3>
+            <p className="text-zinc-600 dark:text-zinc-400 mb-4">
+              {extracted.error}
+            </p>
+            <p className="text-sm text-zinc-500 dark:text-zinc-500">
+              Click "Open Original" above to read the full article.
+            </p>
+          </div>
+        ) : article.body ? (
+          // Fallback to mock article body if available
           <div className="prose prose-zinc dark:prose-invert max-w-none">
             <div className="text-base leading-relaxed whitespace-pre-line text-foreground">
               {article.body}
             </div>
           </div>
-        )}
-
-        {/* Placeholder for real articles without body */}
-        {!article.body && article.url && (
+        ) : (
+          // No content available
           <div className="text-center py-12">
             <p className="text-zinc-600 dark:text-zinc-400 mb-4">
-              Article content extraction coming soon.
+              No content available.
             </p>
             <p className="text-sm text-zinc-500 dark:text-zinc-500">
-              For now, click "Open Original" to read the full article.
+              Click "Open Original" above to read the article.
             </p>
           </div>
         )}
