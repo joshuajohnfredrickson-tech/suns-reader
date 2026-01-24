@@ -23,7 +23,11 @@
       "Bash(__NEW_LINE_edd14d52e6ad81bc__ echo \"\")",
       "Bash(perl -i -pe:*)",
       "Bash(/usr/local/bin/node --version)",
-      "Bash(/opt/homebrew/bin/node:*)"
+      "Bash(/opt/homebrew/bin/node:*)",
+      "Bash(npx --version)",
+      "Bash(source ~/.zshrc)",
+      "Bash(source ~/.bashrc)",
+      "Bash(export PATH=\"$HOME/.nvm/versions/node/v20.18.1/bin:$HOME/.nvm/versions/node/v22.13.0/bin:$HOME/.nvm/versions/node/v18.20.4/bin:/opt/homebrew/bin:/usr/local/bin:$PATH\")"
     ]
   }
 }

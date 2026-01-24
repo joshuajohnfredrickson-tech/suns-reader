@@ -75,3 +75,24 @@ export function isWithin24Hours(isoDate: string): boolean {
     return false;
   }
 }
+
+/**
+ * Normalize title by removing trailing site name suffix (display-only).
+ * Removes patterns like " - SiteName", " – SiteName", " | SiteName", " : SiteName"
+ * Case-insensitive, whitespace-tolerant. Does NOT modify hyphens inside headline.
+ */
+export function normalizeTitle(title: string, siteName?: string): string {
+  if (!siteName || !title) return title;
+
+  // Escape special regex characters in siteName
+  const escapedSiteName = siteName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  // Match trailing suffix: separator + optional whitespace + siteName (case-insensitive)
+  // Separators: hyphen (-), en-dash (–), em-dash (—), pipe (|), colon (:)
+  const suffixPattern = new RegExp(
+    `\\s*[-–—|:]\\s*${escapedSiteName}\\s*$`,
+    'i'
+  );
+
+  return title.replace(suffixPattern, '').trim();
+}

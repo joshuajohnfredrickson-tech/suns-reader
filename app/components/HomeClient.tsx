@@ -7,7 +7,7 @@ import { LoadingState } from './LoadingState';
 import { ErrorState } from './ErrorState';
 import { EmptyState } from './EmptyState';
 import { Article, ArticleSummary } from '../types/article';
-import { getRelativeTime, formatDate } from '../lib/utils';
+import { getRelativeTime, formatDate, normalizeTitle } from '../lib/utils';
 import { getTrustedDomains, addTrustedDomain } from '../lib/trustedDomains';
 import { purgeExpiredReadState, getReadStateForArticles } from '../lib/readState';
 
@@ -107,12 +107,8 @@ export default function HomeClient() {
     const readStateMap = getReadStateForArticles(articleIds);
 
     return articleSummaries.map((item) => {
-      // Remove " - Source" suffix from title if it matches the sourceName
-      let cleanTitle = item.title;
-      const sourceSuffix = ` - ${item.sourceName}`;
-      if (cleanTitle.endsWith(sourceSuffix)) {
-        cleanTitle = cleanTitle.slice(0, -sourceSuffix.length);
-      }
+      // Normalize title by removing trailing site name suffix (display-only)
+      const cleanTitle = normalizeTitle(item.title, item.sourceName);
 
       return {
         id: item.id,

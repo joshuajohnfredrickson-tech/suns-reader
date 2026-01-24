@@ -676,8 +676,8 @@ export async function POST(request: Request) {
     const debug = body?.debug;
 
     if (!url || typeof url !== "string") {
-      return new Response(JSON.stringify({ success: false, error: "Missing url" }), {
-        status: "no_reader",
+      return new Response(JSON.stringify({ success: false, error: "Missing url", status: "no_reader" }), {
+        status: 400,
         headers: { "content-type": "application/json" },
       });
     }
@@ -691,8 +691,8 @@ export async function POST(request: Request) {
     // Reuse the existing GET logic by calling it with a Request that has the URL param
     return GET(new Request(u.toString(), { method: "GET" }));
   } catch (e: any) {
-    return new Response(JSON.stringify({ success: false, error: e?.message || "POST failed" }), {
-      status: "no_reader",
+    return new Response(JSON.stringify({ success: false, error: e?.message || "POST failed", status: "no_reader" }), {
+      status: 500,
       headers: { "content-type": "application/json" },
     });
   }

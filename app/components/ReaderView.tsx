@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Article } from '../types/article';
 import { resolvePublisherUrl } from '../lib/resolvePublisherUrl';
+import { normalizeTitle } from '../lib/utils';
 
 interface ReaderViewProps {
   article: Article;
@@ -152,7 +153,7 @@ export function ReaderView({ article, onBack }: ReaderViewProps) {
 
     if (extracted?.error) {
       const blockingInfo = isKnownBlockedDomain(
-        extracted?.url || publisherUrl || article.url,
+        extracted?.url || publisherUrl || article.url || '',
         extracted.error
       );
 
@@ -236,7 +237,7 @@ export function ReaderView({ article, onBack }: ReaderViewProps) {
         {/* Article Meta - Show immediately */}
         <div className="mb-6">
           <h1 className="text-2xl font-bold leading-tight mb-3 text-foreground">
-            {extracted?.title || article.title}
+            {normalizeTitle(extracted?.title || article.title, extracted?.siteName || article.source)}
           </h1>
 
           <div className="flex flex-col gap-1 text-sm text-zinc-600 dark:text-zinc-400">
