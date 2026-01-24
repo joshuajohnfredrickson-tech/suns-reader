@@ -28,7 +28,11 @@ export default function HomeClient() {
     setError(null);
 
     try {
-      const response = await fetch('/api/search?q=Phoenix+Suns');
+      // Add cache-buster to force fresh fetch on every refresh
+      const cacheBust = Date.now();
+      const response = await fetch(`/api/search?q=Phoenix+Suns&cb=${cacheBust}`, {
+        cache: 'no-store',
+      });
       if (!response.ok) {
         throw new Error('Failed to fetch articles');
       }

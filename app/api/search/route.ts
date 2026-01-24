@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import { simpleHash, getDomain, isWithin24Hours } from '@/app/lib/utils';
 import { ArticleSummary } from '@/app/types/article';
+import { randomUUID } from 'crypto';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 interface RSSItem {
   title?: string;
@@ -77,18 +81,21 @@ function extractPublisherFromTitle(title: string): string | undefined {
 
 /**
  * Normalize RSS items to ArticleSummary format
+ * Returns Google News wrapper URLs for extraction to resolve
  */
 function normalizeRSSItems(items: RSSItem[]): ArticleSummary[] {
   return items
     .map((item) => {
       if (!item.link || !item.title) return null;
 
+      // Use Google News wrapper URL - /api/extract will resolve to publisher URL
       const url = item.link;
       const id = simpleHash(item.guid || url);
 
-      // Use source URL to derive domain if available, otherwise fall back to link
-      const publisherUrl = item.sourceUrl || url;
-      const sourceDomain = getDomain(publisherUrl);
+      // Derive publisher domain from sourceUrl for display/filtering
+      // Fall back to extracting from title or using google.com
+      const publisherDomain = item.sourceUrl ? getDomain(item.sourceUrl) : 'news.google.com';
+      const sourceDomain = publisherDomain;
 
       // Use source name, or extract from title, or fall back to domain
       const sourceName = item.source || extractPublisherFromTitle(item.title) || sourceDomain;
@@ -106,7 +113,7 @@ function normalizeRSSItems(items: RSSItem[]): ArticleSummary[] {
       return {
         id,
         title: item.title,
-        url,
+        url, // Google News wrapper URL
         publishedAt,
         sourceName,
         sourceDomain,
@@ -115,13 +122,63 @@ function normalizeRSSItems(items: RSSItem[]): ArticleSummary[] {
     .filter((item): item is ArticleSummary => item !== null);
 }
 
+/**
+ * Finalize the request: log metrics and return response
+ */
+function finalize(
+  requestId: string,
+  startedAt: number,
+  query: string,
+  rssUrl: string,
+  rssFetchStatus: number | null,
+  itemsReturned: number,
+  cacheBustUsed: boolean,
+  error: string | null,
+  payload: { items: ArticleSummary[] } | { error: string; items: [] }
+): NextResponse {
+  const durationMs = Date.now() - startedAt;
+
+  // Extract host from RSS URL
+  const rssUrlHost = (() => {
+    try {
+      return new URL(rssUrl).hostname;
+    } catch {
+      return 'unknown';
+    }
+  })();
+
+  // Log single JSON line
+  console.log(JSON.stringify({
+    type: 'search',
+    requestId,
+    ts: new Date().toISOString(),
+    durationMs,
+    query,
+    rssUrlHost,
+    rssFetchStatus,
+    itemsReturned,
+    cacheBustUsed,
+    error,
+  }));
+
+  return NextResponse.json(payload);
+}
+
 export async function GET(request: Request) {
+  const requestId = randomUUID();
+  const startedAt = Date.now();
+
+  let query = 'Phoenix Suns';
+  let rssUrl = '';
+
   try {
     const { searchParams } = new URL(request.url);
-    const query = searchParams.get('q') || 'Phoenix Suns';
+    query = searchParams.get('q') || 'Phoenix Suns';
 
-    // Google News RSS feed URL
-    const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en-US&gl=US&ceid=US:en`;
+    // Add cache-buster to prevent stale responses
+    const cacheBust = Date.now();
+    const baseRssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en-US&gl=US&ceid=US:en`;
+    rssUrl = `${baseRssUrl}&cb=${cacheBust}`;
 
     console.log('[API] Fetching RSS feed:', rssUrl);
 
@@ -129,6 +186,7 @@ export async function GET(request: Request) {
       headers: {
         'User-Agent': 'Mozilla/5.0 (compatible; SunsReader/1.0)',
       },
+      cache: 'no-store',
     });
 
     if (!response.ok) {
@@ -158,12 +216,32 @@ export async function GET(request: Request) {
       return dateB - dateA;
     });
 
-    return NextResponse.json({ items: normalized });
+    return finalize(
+      requestId,
+      startedAt,
+      query,
+      rssUrl,
+      response.status,
+      normalized.length,
+      true,
+      null,
+      { items: normalized }
+    );
   } catch (error) {
     console.error('[API] Search error:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch articles', items: [] },
-      { status: 500 }
+
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch articles';
+
+    return finalize(
+      requestId,
+      startedAt,
+      query,
+      rssUrl || '',
+      null,
+      0,
+      true,
+      errorMessage,
+      { error: errorMessage, items: [] }
     );
   }
 }

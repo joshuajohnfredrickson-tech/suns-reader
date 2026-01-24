@@ -3,7 +3,27 @@
     "allow": [
       "Bash(npm install:*)",
       "Bash(curl:*)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "Bash(lsof:*)",
+      "Bash(npx playwright install chromium)",
+      "Bash(node -e:*)",
+      "Bash(npm run build:*)",
+      "Bash(node --version)",
+      "Bash(xargs kill -9)",
+      "Bash(export PATH=\"/usr/local/bin:$PATH\")",
+      "Bash(export PATH=\"$HOME/.nvm/versions/node/v24.13.0/bin:$PATH\")",
+      "Bash(npm --version:*)",
+      "Bash(python3:*)",
+      "Bash(node /tmp/test-extract.js:*)",
+      "Bash(killall:*)",
+      "Bash(chmod:*)",
+      "Bash(bash:*)",
+      "Bash(__NEW_LINE_39e7b49330183dc3__ echo \"\")",
+      "Bash(__NEW_LINE_3034dd9c7d9e32be__ echo \"\")",
+      "Bash(__NEW_LINE_edd14d52e6ad81bc__ echo \"\")",
+      "Bash(perl -i -pe:*)",
+      "Bash(/usr/local/bin/node --version)",
+      "Bash(/opt/homebrew/bin/node:*)"
     ]
   }
 }

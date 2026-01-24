@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Article } from '../types/article';
+import { resolvePublisherUrl } from '../lib/resolvePublisherUrl';
 
 interface ReaderViewProps {
   article: Article;
@@ -21,9 +22,53 @@ interface ExtractedContent {
   error?: string;
 }
 
+// Known domains that block reader mode
+const KNOWN_BLOCKED_DOMAINS = ['espn.com', 'espn.go.com'];
+
+/**
+ * Check if URL is a Google News wrapper URL
+ */
+function isGoogleNewsUrl(url: string): boolean {
+  if (!url) return false;
+  try {
+    const urlObj = new URL(url);
+    return urlObj.hostname.includes('news.google.com');
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Check if the error indicates a known domain blocking
+ */
+function isKnownBlockedDomain(url: string, error?: string): { isBlocked: boolean; domain: string | null } {
+  if (!url) return { isBlocked: false, domain: null };
+
+  try {
+    const hostname = new URL(url).hostname.toLowerCase();
+    const blockedDomain = KNOWN_BLOCKED_DOMAINS.find(domain => hostname.includes(domain));
+
+    if (blockedDomain) {
+      // Check if error message confirms blocking
+      const errorLower = (error || '').toLowerCase();
+      const hasBlockingKeywords = errorLower.includes('blocking') ||
+                                   errorLower.includes('blocked') ||
+                                   errorLower.includes('may be blocking');
+
+      return { isBlocked: hasBlockingKeywords, domain: blockedDomain };
+    }
+
+    return { isBlocked: false, domain: null };
+  } catch {
+    return { isBlocked: false, domain: null };
+  }
+}
+
 export function ReaderView({ article, onBack }: ReaderViewProps) {
   const [extracted, setExtracted] = useState<ExtractedContent | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loadingMessage, setLoadingMessage] = useState('Loading article...');
+  const [publisherUrl, setPublisherUrl] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchExtractedContent = async () => {
@@ -33,9 +78,40 @@ export function ReaderView({ article, onBack }: ReaderViewProps) {
       }
 
       try {
-        const response = await fetch(`/api/extract?url=${encodeURIComponent(article.url)}`);
-        const data = await response.json();
-        setExtracted(data);
+        const isGoogleNews = isGoogleNewsUrl(article.url);
+
+        // Step 1: If Google News URL, MUST resolve first
+        if (isGoogleNews) {
+          setLoadingMessage('Resolving article URL...');
+          const resolved = await resolvePublisherUrl(article.url);
+
+          if (resolved) {
+            setPublisherUrl(resolved);
+            console.log('[ReaderView] Resolved publisher URL:', resolved);
+
+            // Step 2: Extract article content using the resolved URL
+            setLoadingMessage('Loading article...');
+            const response = await fetch(`/api/extract?url=${encodeURIComponent(resolved)}`);
+            const data = await response.json();
+            setExtracted(data);
+          } else {
+            // Resolution failed - DO NOT call /api/extract with wrapper URL
+            console.error('[ReaderView] Failed to resolve Google News URL');
+            setPublisherUrl(article.url);
+            setExtracted({
+              success: false,
+              url: article.url,
+              error: 'Could not resolve publisher URL',
+            });
+          }
+        } else {
+          // Not a Google News URL - extract directly
+          setPublisherUrl(article.url);
+          setLoadingMessage('Loading article...');
+          const response = await fetch(`/api/extract?url=${encodeURIComponent(article.url)}`);
+          const data = await response.json();
+          setExtracted(data);
+        }
       } catch (error) {
         console.error('Failed to extract article:', error);
         setExtracted({
@@ -43,6 +119,7 @@ export function ReaderView({ article, onBack }: ReaderViewProps) {
           url: article.url,
           error: 'Failed to load article content',
         });
+        setPublisherUrl(article.url);
       } finally {
         setLoading(false);
       }
@@ -50,6 +127,83 @@ export function ReaderView({ article, onBack }: ReaderViewProps) {
 
     fetchExtractedContent();
   }, [article.url]);
+
+  // Compute content node to avoid complex nested ternaries
+  const renderContent = () => {
+    if (loading) {
+      return (
+        <div className="flex items-center justify-center py-12">
+          <div className="text-center">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-accent mb-4"></div>
+            <p className="text-zinc-600 dark:text-zinc-400">{loadingMessage}</p>
+          </div>
+        </div>
+      );
+    }
+
+    if (extracted?.success && extracted.contentHtml) {
+      return (
+        <div
+          className="prose prose-zinc dark:prose-invert max-w-none prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground prose-strong:text-foreground prose-a:text-accent prose-img:rounded-lg"
+          dangerouslySetInnerHTML={{ __html: extracted.contentHtml }}
+        />
+      );
+    }
+
+    if (extracted?.error) {
+      const blockingInfo = isKnownBlockedDomain(
+        extracted?.url || publisherUrl || article.url,
+        extracted.error
+      );
+
+      return (
+        <div className="text-center py-12">
+          <div className="text-4xl mb-4">📄</div>
+          <h3 className="text-lg font-medium mb-2 text-foreground">
+            {blockingInfo.isBlocked
+              ? `${blockingInfo.domain === 'espn.com' ? 'ESPN' : blockingInfo.domain} blocks reader mode`
+              : "Reader view isn't available for this link"}
+          </h3>
+          <p className="text-zinc-600 dark:text-zinc-400 mb-4">
+            {blockingInfo.isBlocked
+              ? 'This site prevents automated article extraction.'
+              : "This article couldn't be formatted for reading."}
+          </p>
+          {process.env.NODE_ENV === 'development' && !blockingInfo.isBlocked && (
+            <p className="text-xs text-zinc-500 dark:text-zinc-500 mb-4">
+              Error: {extracted.error}
+            </p>
+          )}
+          <p className="text-sm font-medium text-foreground">
+            {blockingInfo.isBlocked
+              ? 'Tap "Open Original" above to read the full article.'
+              : 'Click "Open Original" above to read the full article.'}
+          </p>
+        </div>
+      );
+    }
+
+    if (article.body) {
+      return (
+        <div className="prose prose-zinc dark:prose-invert max-w-none">
+          <div className="text-base leading-relaxed whitespace-pre-line text-foreground">
+            {article.body}
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="text-center py-12">
+        <p className="text-zinc-600 dark:text-zinc-400 mb-4">
+          No content available.
+        </p>
+        <p className="text-sm text-zinc-500 dark:text-zinc-500">
+          Click "Open Original" above to read the article.
+        </p>
+      </div>
+    );
+  };
 
   return (
     <div className="flex flex-col h-screen bg-background text-foreground">
@@ -108,11 +262,18 @@ export function ReaderView({ article, onBack }: ReaderViewProps) {
         {/* Divider */}
         <div className="border-t border-border mb-6" />
 
+        {/* Debug: Show extraction URL (dev only) */}
+        {process.env.NODE_ENV === 'development' && article.url && (
+          <div className="mb-4 p-2 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded text-xs">
+            <strong>Debug - Extracting from:</strong> {article.url}
+          </div>
+        )}
+
         {/* Open Original Button - Always visible */}
-        {article.url && (
+        {(extracted?.url || publisherUrl || article.url) && (
           <div className="mb-6">
             <a
-              href={article.url}
+              href={extracted?.url || publisherUrl || article.url}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2 bg-accent text-white rounded-lg hover:opacity-90 active:opacity-80 transition-opacity no-underline"
@@ -137,52 +298,7 @@ export function ReaderView({ article, onBack }: ReaderViewProps) {
         )}
 
         {/* Content Area */}
-        {loading ? (
-          // Loading state
-          <div className="flex items-center justify-center py-12">
-            <div className="text-center">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-accent mb-4"></div>
-              <p className="text-zinc-600 dark:text-zinc-400">Loading article...</p>
-            </div>
-          </div>
-        ) : extracted?.success && extracted.contentHtml ? (
-          // Success - render extracted content
-          <div
-            className="prose prose-zinc dark:prose-invert max-w-none prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground prose-strong:text-foreground prose-a:text-accent prose-img:rounded-lg"
-            dangerouslySetInnerHTML={{ __html: extracted.contentHtml }}
-          />
-        ) : extracted?.error ? (
-          // Failed extraction
-          <div className="text-center py-12">
-            <div className="text-4xl mb-4">📄</div>
-            <h3 className="text-lg font-medium mb-2 text-foreground">
-              Couldn't extract this article
-            </h3>
-            <p className="text-zinc-600 dark:text-zinc-400 mb-4">
-              {extracted.error}
-            </p>
-            <p className="text-sm text-zinc-500 dark:text-zinc-500">
-              Click "Open Original" above to read the full article.
-            </p>
-          </div>
-        ) : article.body ? (
-          // Fallback to mock article body if available
-          <div className="prose prose-zinc dark:prose-invert max-w-none">
-            <div className="text-base leading-relaxed whitespace-pre-line text-foreground">
-              {article.body}
-            </div>
-          </div>
-        ) : (
-          // No content available
-          <div className="text-center py-12">
-            <p className="text-zinc-600 dark:text-zinc-400 mb-4">
-              No content available.
-            </p>
-            <p className="text-sm text-zinc-500 dark:text-zinc-500">
-              Click "Open Original" above to read the article.
-            </p>
-          </div>
-        )}
+        {renderContent()}
       </article>
     </div>
   );
