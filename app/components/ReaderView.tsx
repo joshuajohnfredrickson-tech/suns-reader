@@ -146,7 +146,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
     if (extracted?.success && extracted.contentHtml) {
       return (
         <div
-          className="prose prose-zinc dark:prose-invert max-w-none prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground prose-strong:text-foreground prose-a:text-accent prose-img:rounded-lg"
+          className="reader-content text-base sm:text-lg leading-8 text-foreground"
           dangerouslySetInnerHTML={{ __html: extracted.contentHtml }}
         />
       );
@@ -197,9 +197,9 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
           .filter((p: string) => p.length > 0);
 
         return (
-          <div className="prose prose-zinc dark:prose-invert max-w-none">
+          <div className="text-base sm:text-lg leading-8 text-foreground">
             {paragraphs.map((paragraph: string, index: number) => (
-              <p key={index} className="text-base sm:text-lg leading-8 mb-5 text-foreground">
+              <p key={index} className="mb-6">
                 {paragraph}
               </p>
             ))}
@@ -215,9 +215,9 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
           .filter((line: string) => line.length > 0);
 
         return (
-          <div className="prose prose-zinc dark:prose-invert max-w-none">
+          <div className="text-base sm:text-lg leading-8 text-foreground">
             {lines.map((line: string, index: number) => (
-              <p key={index} className="text-base sm:text-lg leading-8 mb-5 text-foreground">
+              <p key={index} className="mb-6">
                 {line}
               </p>
             ))}
@@ -240,9 +240,9 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
         }
 
         return (
-          <div className="prose prose-zinc dark:prose-invert max-w-none">
+          <div className="text-base sm:text-lg leading-8 text-foreground">
             {paragraphs.map((paragraph: string, index: number) => (
-              <p key={index} className="text-base sm:text-lg leading-8 mb-5 text-foreground">
+              <p key={index} className="mb-6">
                 {paragraph}
               </p>
             ))}
@@ -252,10 +252,8 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
 
       // Very short text or couldn't split - render as single block with improved line-height
       return (
-        <div className="prose prose-zinc dark:prose-invert max-w-none">
-          <div className="text-base sm:text-lg leading-8 text-foreground">
-            {normalizedBody}
-          </div>
+        <div className="text-base sm:text-lg leading-8 text-foreground">
+          {normalizedBody}
         </div>
       );
     }
@@ -272,10 +270,12 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
     );
   };
 
+  const originalUrl = extracted?.url || publisherUrl || article.url;
+
   return (
     <div className="flex flex-col h-screen bg-background text-foreground">
       {/* Header */}
-      <header className="flex items-center gap-2 px-4 py-4 sm:py-5 border-b border-border bg-background z-10">
+      <header className="flex items-center justify-between px-4 py-4 sm:py-5 border-b border-border bg-background z-10">
         <button
           onClick={onBack}
           className="flex items-center gap-2 -ml-2 px-3 py-3 min-h-[48px] rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
@@ -296,79 +296,79 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
           </svg>
           <span className="text-base font-medium">Back</span>
         </button>
+
+        {/* Open Original - text link style */}
+        {originalUrl && (
+          <a
+            href={originalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-3 py-3 min-h-[48px] min-w-[48px] text-accent hover:underline transition-colors no-underline"
+            style={{ touchAction: 'manipulation' }}
+          >
+            <span className="text-base font-medium">Open Original</span>
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+              />
+            </svg>
+          </a>
+        )}
       </header>
 
       {/* Article Content */}
-      <article className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Article Meta - Show immediately */}
-        <div className="mb-6">
-          {/* Title */}
-          <h1 className="text-2xl sm:text-3xl font-bold leading-tight mb-6 text-foreground">
-            {normalizeTitle(extracted?.title || article.title, extracted?.siteName || article.source)}
-          </h1>
+      <article className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+        <div className="max-w-2xl mx-auto">
+          {/* Article Meta - Show immediately */}
+          <div className="mb-10">
+            {/* Title */}
+            <h1 className="text-2xl sm:text-3xl font-bold leading-tight mb-8 text-foreground">
+              {normalizeTitle(extracted?.title || article.title, extracted?.siteName || article.source)}
+            </h1>
 
-          {/* Source line */}
-          <div className="flex items-center gap-2 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 mb-3">
-            <span className="font-medium text-foreground">
-              {extracted?.siteName || article.source}
-            </span>
-            {(extracted?.byline || article.author) && (
-              <>
-                <span>•</span>
-                <span>{extracted?.byline || article.author}</span>
-              </>
-            )}
+            {/* Source line */}
+            <div className="flex items-center gap-2 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 mb-4">
+              <span className="font-medium text-foreground">
+                {extracted?.siteName || article.source}
+              </span>
+              {(extracted?.byline || article.author) && (
+                <>
+                  <span>•</span>
+                  <span>{extracted?.byline || article.author}</span>
+                </>
+              )}
+            </div>
+
+            {/* Date/time stamp */}
+            <div className="flex items-center gap-2 text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
+              <span>{article.date}</span>
+              <span>•</span>
+              <span>{article.timeAgo}</span>
+            </div>
           </div>
 
-          {/* Date/time stamp */}
-          <div className="flex items-center gap-2 text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-            <span>{article.date}</span>
-            <span>•</span>
-            <span>{article.timeAgo}</span>
-          </div>
+          {/* Divider */}
+          <div className="border-t border-border mb-10" />
+
+          {/* Debug: Show extraction URL (only with ?debug=1) */}
+          {debug && article.url && (
+            <div className="mb-10 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded text-xs break-words overflow-wrap-anywhere max-w-full">
+              <strong>Debug - Extracting from:</strong>{" "}
+              <span className="break-all">{article.url}</span>
+            </div>
+          )}
+
+          {/* Content Area */}
+          {renderContent()}
         </div>
-
-        {/* Divider */}
-        <div className="border-t border-border mb-6" />
-
-        {/* Debug: Show extraction URL (only with ?debug=1) */}
-        {debug && article.url && (
-          <div className="mb-6 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded text-xs break-words overflow-wrap-anywhere max-w-full">
-            <strong>Debug - Extracting from:</strong>{" "}
-            <span className="break-all">{article.url}</span>
-          </div>
-        )}
-
-        {/* Open Original Button - Always visible */}
-        {(extracted?.url || publisherUrl || article.url) && (
-          <div className="mb-8">
-            <a
-              href={extracted?.url || publisherUrl || article.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-3.5 min-h-[48px] bg-accent text-white rounded-lg hover:opacity-90 active:opacity-80 transition-opacity no-underline"
-              style={{ touchAction: 'manipulation' }}
-            >
-              <span>Open Original</span>
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                />
-              </svg>
-            </a>
-          </div>
-        )}
-
-        {/* Content Area */}
-        {renderContent()}
       </article>
     </div>
   );
