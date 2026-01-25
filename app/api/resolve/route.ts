@@ -405,24 +405,28 @@ async function resolveUrl(inputUrl: string, debug: boolean = false): Promise<Res
 
   // Helper to log and return
   const logAndReturn = (
-    ok: boolean,
+    success: boolean,
     strategy: string | null,
     publisherUrl: string | null,
     error: string | null,
-    methodsTried: string[]
+    methodsTried: string[],
+    cached: boolean = false
   ): ResolveResult => {
     console.log(JSON.stringify({
       type: "resolve",
+      ts: new Date().toISOString(),
       requestId,
-      ok,
+      success,
+      cached,
       strategy,
+      methodsTried,
       durationMs: Date.now() - startedAt,
       inputHost: safeHostname(inputUrl),
       publisherHost: safeHostname(publisherUrl),
-      error: error || undefined,
+      error: success ? null : (error || "Could not resolve publisher URL"),
     }));
 
-    if (ok && publisherUrl) {
+    if (success && publisherUrl) {
       return debug
         ? { success: true, publisherUrl, debug: { inputUrl, normalizedUrl: normalizeGoogleNewsUrl(inputUrl), strategy, methodsTried } }
         : { success: true, publisherUrl };
@@ -433,9 +437,9 @@ async function resolveUrl(inputUrl: string, debug: boolean = false): Promise<Res
   };
 
   // Check cache first
-  const cached = getCached(inputUrl);
-  if (cached) {
-    return logAndReturn(true, "cache", cached, null, ["cache"]);
+  const cachedUrl = getCached(inputUrl);
+  if (cachedUrl) {
+    return logAndReturn(true, "cache", cachedUrl, null, ["cache"], true);
   }
 
   // Normalize RSS wrapper URLs
