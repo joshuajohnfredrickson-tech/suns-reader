@@ -36,10 +36,10 @@ export default function SourcesPage() {
   return (
     <div className="flex flex-col h-screen bg-background text-foreground">
       {/* Header */}
-      <header className="flex items-center gap-2 px-4 py-3 border-b border-border bg-background z-10">
+      <header className="flex items-center gap-2 px-4 py-4 sm:py-5 border-b border-border bg-background z-10">
         <button
           onClick={handleBack}
-          className="flex items-center gap-2 -ml-2 px-2 py-2 min-h-[44px] rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
+          className="flex items-center gap-2 -ml-2 px-3 py-3 min-h-[48px] rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
           style={{ touchAction: 'manipulation' }}
         >
           <svg
@@ -60,48 +60,48 @@ export default function SourcesPage() {
       </header>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto px-4 py-6">
-        <div className="flex items-center justify-between mb-3">
+      <div className="flex-1 overflow-y-auto px-5 sm:px-6 py-6 sm:py-8">
+        <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-bold text-foreground">Trusted Sources</h1>
           <button
             onClick={handleResetToDefaults}
-            className="px-4 py-2 text-sm text-accent hover:bg-accent/10 rounded-lg transition-colors"
+            className="px-4 py-3 min-h-[48px] text-sm text-accent hover:bg-accent/10 rounded-lg transition-colors"
             style={{ touchAction: 'manipulation' }}
           >
             Reset to Defaults
           </button>
         </div>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-6">
+        <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-8">
           Manage which news sources appear in your Trusted tab.
         </p>
 
         {trustedDomains.length === 0 ? (
-          <div className="text-center py-12">
-            <div className="text-4xl mb-4">📰</div>
-            <p className="text-zinc-600 dark:text-zinc-400 mb-4">
+          <div className="text-center py-16">
+            <div className="text-5xl mb-6">📰</div>
+            <p className="text-zinc-600 dark:text-zinc-400 mb-6">
               No trusted sources yet.
             </p>
             <button
               onClick={handleResetToDefaults}
-              className="px-6 py-3 bg-accent text-white rounded-lg hover:opacity-90 active:opacity-80 transition-opacity"
+              className="px-6 py-4 min-h-[48px] bg-accent text-white rounded-lg hover:opacity-90 active:opacity-80 transition-opacity"
               style={{ touchAction: 'manipulation' }}
             >
               Load Default Sources
             </button>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-5">
             {trustedDomains.map((domain) => (
               <div
                 key={domain}
-                className="flex items-center justify-between px-4 py-3.5 border border-border rounded-lg bg-background hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                className="flex items-center justify-between px-5 sm:px-6 py-5 sm:py-6 border border-border rounded-lg bg-background hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
               >
                 <div className="flex-1">
-                  <h3 className="font-medium text-foreground">{domain}</h3>
+                  <h3 className="font-medium text-base text-foreground">{domain}</h3>
                 </div>
                 <button
                   onClick={() => handleRemove(domain)}
-                  className="px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                  className="px-4 py-3 min-h-[48px] text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
                   style={{ touchAction: 'manipulation' }}
                 >
                   Remove

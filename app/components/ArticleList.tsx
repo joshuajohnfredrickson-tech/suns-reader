@@ -30,7 +30,7 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
   return (
     <div className="flex-1 overflow-y-auto">
       {lastRefreshed && (
-        <div className="px-4 py-2.5 text-xs text-zinc-500 dark:text-zinc-400 border-b border-border">
+        <div className="px-4 py-4 sm:py-5 text-xs text-zinc-500 dark:text-zinc-400 border-b border-zinc-200/60 dark:border-zinc-800/60">
           Last refreshed: {formatRefreshTime(lastRefreshed)}
         </div>
       )}
@@ -38,22 +38,22 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
         const isTrusted = article.sourceDomain ? trustedDomains.includes(article.sourceDomain.toLowerCase()) : false;
 
         return (
-          <div key={article.id} className="border-b border-border">
+          <div key={article.id} className="border-b border-zinc-200/60 dark:border-zinc-800/60">
             <Link
               href={`/reader?id=${article.id}&tab=${currentTab}`}
-              className="block w-full px-4 py-5 hover:bg-zinc-50 dark:hover:bg-zinc-900 active:bg-zinc-100 dark:active:bg-zinc-800 transition-colors no-underline"
+              className="block w-full px-4 py-6 sm:py-7 hover:bg-zinc-50 dark:hover:bg-zinc-900 active:bg-zinc-100 dark:active:bg-zinc-800 transition-colors no-underline"
               style={{ touchAction: 'manipulation' }}
             >
-              <div className="flex items-start gap-3 pointer-events-none">
+              <div className="flex items-center gap-4 pointer-events-none">
                 <div
-                  className={`mt-1.5 h-2.5 w-2.5 rounded-full flex-shrink-0 ${
+                  className={`h-3 w-3 rounded-full flex-shrink-0 ${
                     article.isRead
-                      ? 'bg-transparent border border-zinc-300 dark:border-zinc-600'
+                      ? 'bg-transparent border-2 border-zinc-300 dark:border-zinc-600'
                       : 'bg-accent'
                   }`}
                 />
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-base font-medium leading-snug mb-1 text-foreground">
+                  <h3 className="text-base font-medium leading-snug mb-2 text-foreground">
                     {article.title}
                   </h3>
                   <div className="flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400">
@@ -67,10 +67,10 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
 
             {/* Add to Trusted button (Discovery tab only) */}
             {showAddToTrusted && !isTrusted && article.sourceDomain && (
-              <div className="px-4 pb-3 pointer-events-auto">
+              <div className="px-4 pb-4 pointer-events-auto">
                 <button
                   onClick={(e) => handleAddToTrusted(e, article.sourceDomain!)}
-                  className="text-xs text-accent hover:underline font-medium"
+                  className="text-sm text-accent hover:underline font-medium"
                   style={{ touchAction: 'manipulation' }}
                 >
                   + Add {article.sourceDomain} to Trusted
