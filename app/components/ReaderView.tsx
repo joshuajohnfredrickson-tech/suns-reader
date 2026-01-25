@@ -186,9 +186,31 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
     }
 
     if (article.body) {
+      // Check if body has paragraph breaks (double newlines)
+      const hasParagraphBreaks = article.body.includes('\n\n');
+
+      if (hasParagraphBreaks) {
+        // Split into paragraphs, trim whitespace, filter empty
+        const paragraphs = article.body
+          .split('\n\n')
+          .map((p: string) => p.trim())
+          .filter((p: string) => p.length > 0);
+
+        return (
+          <div className="prose prose-zinc dark:prose-invert max-w-none">
+            {paragraphs.map((paragraph: string, index: number) => (
+              <p key={index} className="text-base leading-relaxed mb-4 text-foreground">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        );
+      }
+
+      // No paragraph breaks - render as single block with improved line-height
       return (
         <div className="prose prose-zinc dark:prose-invert max-w-none">
-          <div className="text-base leading-relaxed whitespace-pre-line text-foreground">
+          <div className="text-base leading-7 whitespace-pre-line text-foreground">
             {article.body}
           </div>
         </div>
@@ -236,37 +258,39 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
       {/* Article Content */}
       <article className="flex-1 overflow-y-auto px-4 py-6">
         {/* Article Meta - Show immediately */}
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold leading-tight mb-3 text-foreground">
+        <div className="mb-5">
+          {/* Title */}
+          <h1 className="text-2xl font-bold leading-tight mb-4 text-foreground">
             {normalizeTitle(extracted?.title || article.title, extracted?.siteName || article.source)}
           </h1>
 
-          <div className="flex flex-col gap-1 text-sm text-zinc-600 dark:text-zinc-400">
-            <div className="flex items-center gap-2">
-              <span className="font-medium text-foreground">
-                {extracted?.siteName || article.source}
-              </span>
-              {(extracted?.byline || article.author) && (
-                <>
-                  <span>•</span>
-                  <span>{extracted?.byline || article.author}</span>
-                </>
-              )}
-            </div>
-            <div className="flex items-center gap-2">
-              <span>{article.date}</span>
-              <span>•</span>
-              <span>{article.timeAgo}</span>
-            </div>
+          {/* Source line */}
+          <div className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400 mb-2">
+            <span className="font-medium text-foreground">
+              {extracted?.siteName || article.source}
+            </span>
+            {(extracted?.byline || article.author) && (
+              <>
+                <span>•</span>
+                <span>{extracted?.byline || article.author}</span>
+              </>
+            )}
+          </div>
+
+          {/* Date/time stamp */}
+          <div className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
+            <span>{article.date}</span>
+            <span>•</span>
+            <span>{article.timeAgo}</span>
           </div>
         </div>
 
         {/* Divider */}
-        <div className="border-t border-border mb-6" />
+        <div className="border-t border-border mb-5" />
 
         {/* Debug: Show extraction URL (only with ?debug=1) */}
         {debug && article.url && (
-          <div className="mb-4 p-2 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded text-xs break-words overflow-wrap-anywhere max-w-full">
+          <div className="mb-5 p-2 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded text-xs break-words overflow-wrap-anywhere max-w-full">
             <strong>Debug - Extracting from:</strong>{" "}
             <span className="break-all">{article.url}</span>
           </div>
@@ -279,7 +303,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
               href={extracted?.url || publisherUrl || article.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-accent text-white rounded-lg hover:opacity-90 active:opacity-80 transition-opacity no-underline"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-accent text-white rounded-lg hover:opacity-90 active:opacity-80 transition-opacity no-underline"
               style={{ touchAction: 'manipulation' }}
             >
               <span>Open Original</span>
