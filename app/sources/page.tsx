@@ -61,7 +61,7 @@ export default function SourcesPage() {
 
       {/* Content */}
       <div className="flex-1 overflow-y-auto px-4 py-6">
-        <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center justify-between mb-3">
           <h1 className="text-2xl font-bold text-foreground">Trusted Sources</h1>
           <button
             onClick={handleResetToDefaults}
@@ -90,11 +90,11 @@ export default function SourcesPage() {
             </button>
           </div>
         ) : (
-          <div className="space-y-2">
+          <div className="space-y-3">
             {trustedDomains.map((domain) => (
               <div
                 key={domain}
-                className="flex items-center justify-between p-4 border border-border rounded-lg bg-background hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                className="flex items-center justify-between px-4 py-3.5 border border-border rounded-lg bg-background hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
               >
                 <div className="flex-1">
                   <h3 className="font-medium text-foreground">{domain}</h3>

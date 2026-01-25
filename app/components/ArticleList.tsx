@@ -30,7 +30,7 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
   return (
     <div className="flex-1 overflow-y-auto">
       {lastRefreshed && (
-        <div className="px-4 py-2 text-xs text-zinc-500 dark:text-zinc-400 border-b border-border">
+        <div className="px-4 py-2.5 text-xs text-zinc-500 dark:text-zinc-400 border-b border-border">
           Last refreshed: {formatRefreshTime(lastRefreshed)}
         </div>
       )}
@@ -41,12 +41,12 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
           <div key={article.id} className="border-b border-border">
             <Link
               href={`/reader?id=${article.id}&tab=${currentTab}`}
-              className="block w-full px-4 py-4 hover:bg-zinc-50 dark:hover:bg-zinc-900 active:bg-zinc-100 dark:active:bg-zinc-800 transition-colors no-underline"
+              className="block w-full px-4 py-4.5 hover:bg-zinc-50 dark:hover:bg-zinc-900 active:bg-zinc-100 dark:active:bg-zinc-800 transition-colors no-underline"
               style={{ touchAction: 'manipulation' }}
             >
               <div className="flex items-start gap-3 pointer-events-none">
                 <div
-                  className={`mt-2 h-2 w-2 rounded-full flex-shrink-0 ${
+                  className={`mt-1.5 h-2.5 w-2.5 rounded-full flex-shrink-0 ${
                     article.isRead
                       ? 'bg-transparent border border-zinc-300 dark:border-zinc-600'
                       : 'bg-accent'

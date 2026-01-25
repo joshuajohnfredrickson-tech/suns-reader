@@ -149,13 +149,17 @@ export default function HomeClient() {
   return (
     <div className="flex flex-col h-screen bg-background text-foreground">
       {/* Top Bar */}
-      <header className="flex items-center justify-between px-4 py-3 border-b border-border bg-background z-10">
-        <h1 className="text-xl font-semibold">Suns Reader</h1>
-        <div className="flex items-center gap-2">
+      <header className="relative flex items-center justify-between px-4 py-3 border-b border-border bg-background z-10">
+        {/* Empty spacer for centering */}
+        <div className="w-24" />
+        {/* Centered title */}
+        <h1 className="absolute left-1/2 -translate-x-1/2 text-xl font-semibold">Suns Reader</h1>
+        {/* Right-aligned buttons */}
+        <div className="flex items-center gap-3">
           <button
             onClick={handleRefresh}
             disabled={loading}
-            className={`p-2 rounded-lg transition-colors ${
+            className={`p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg transition-colors ${
               loading
                 ? 'opacity-50 cursor-not-allowed'
                 : 'hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700'
@@ -179,7 +183,7 @@ export default function HomeClient() {
           </button>
           <button
             onClick={() => window.location.href = '/sources'}
-            className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
+            className="p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
             aria-label="Manage Sources"
             style={{ touchAction: 'manipulation' }}
           >
@@ -210,7 +214,7 @@ export default function HomeClient() {
       <nav className="flex border-b border-border bg-background z-10">
         <button
           onClick={() => handleTabChange('trusted')}
-          className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${
+          className={`flex-1 px-4 py-3.5 text-sm font-medium transition-colors ${
             activeTab === 'trusted'
               ? 'text-accent border-b-2 border-accent'
               : 'text-zinc-600 dark:text-zinc-400 hover:text-foreground'
@@ -221,7 +225,7 @@ export default function HomeClient() {
         </button>
         <button
           onClick={() => handleTabChange('discovery')}
-          className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${
+          className={`flex-1 px-4 py-3.5 text-sm font-medium transition-colors ${
             activeTab === 'discovery'
               ? 'text-accent border-b-2 border-accent'
               : 'text-zinc-600 dark:text-zinc-400 hover:text-foreground'
