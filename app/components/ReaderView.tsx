@@ -8,6 +8,7 @@ import { normalizeTitle } from '../lib/utils';
 interface ReaderViewProps {
   article: Article;
   onBack: () => void;
+  debug?: boolean;
 }
 
 interface ExtractedContent {
@@ -65,7 +66,7 @@ function isKnownBlockedDomain(url: string, error?: string): { isBlocked: boolean
   }
 }
 
-export function ReaderView({ article, onBack }: ReaderViewProps) {
+export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) {
   const [extracted, setExtracted] = useState<ExtractedContent | null>(null);
   const [loading, setLoading] = useState(true);
   const [loadingMessage, setLoadingMessage] = useState('Loading article...');
@@ -263,10 +264,11 @@ export function ReaderView({ article, onBack }: ReaderViewProps) {
         {/* Divider */}
         <div className="border-t border-border mb-6" />
 
-        {/* Debug: Show extraction URL (dev only) */}
-        {process.env.NODE_ENV === 'development' && article.url && (
-          <div className="mb-4 p-2 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded text-xs">
-            <strong>Debug - Extracting from:</strong> {article.url}
+        {/* Debug: Show extraction URL (only with ?debug=1) */}
+        {debug && article.url && (
+          <div className="mb-4 p-2 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded text-xs break-words overflow-wrap-anywhere max-w-full">
+            <strong>Debug - Extracting from:</strong>{" "}
+            <span className="break-all">{article.url}</span>
           </div>
         )}
 

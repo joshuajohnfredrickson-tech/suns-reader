@@ -13,6 +13,7 @@ function ReaderContent() {
   const router = useRouter();
   const articleId = searchParams.get('id');
   const tab = searchParams.get('tab') || 'trusted';
+  const debug = searchParams.get('debug') === '1';
   const [article, setArticle] = useState<Article | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -97,7 +98,7 @@ function ReaderContent() {
     );
   }
 
-  return <ReaderView article={article} onBack={handleBack} />;
+  return <ReaderView article={article} onBack={handleBack} debug={debug} />;
 }
 
 export default function ReaderPage() {
