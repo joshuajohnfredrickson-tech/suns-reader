@@ -186,12 +186,12 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
     }
 
     if (article.body) {
-      // Check if body has paragraph breaks (double newlines)
-      const hasParagraphBreaks = article.body.includes('\n\n');
+      // Normalize newlines (Windows -> Unix)
+      const normalizedBody = article.body.replace(/\r\n/g, '\n');
 
-      if (hasParagraphBreaks) {
-        // Split into paragraphs, trim whitespace, filter empty
-        const paragraphs = article.body
+      // Check for paragraph breaks (double newlines)
+      if (normalizedBody.includes('\n\n')) {
+        const paragraphs = normalizedBody
           .split('\n\n')
           .map((p: string) => p.trim())
           .filter((p: string) => p.length > 0);
@@ -207,11 +207,29 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
         );
       }
 
-      // No paragraph breaks - render as single block with improved line-height
+      // Check for single newlines (treat each line as a paragraph for breathing room)
+      if (normalizedBody.includes('\n')) {
+        const lines = normalizedBody
+          .split('\n')
+          .map((line: string) => line.trim())
+          .filter((line: string) => line.length > 0);
+
+        return (
+          <div className="prose prose-zinc dark:prose-invert max-w-none">
+            {lines.map((line: string, index: number) => (
+              <p key={index} className="text-base leading-relaxed mb-4 text-foreground">
+                {line}
+              </p>
+            ))}
+          </div>
+        );
+      }
+
+      // No newlines at all - render as single block with improved line-height
       return (
         <div className="prose prose-zinc dark:prose-invert max-w-none">
-          <div className="text-base leading-7 whitespace-pre-line text-foreground">
-            {article.body}
+          <div className="text-base leading-7 text-foreground">
+            {normalizedBody}
           </div>
         </div>
       );
