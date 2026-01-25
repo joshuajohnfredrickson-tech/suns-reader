@@ -27,7 +27,13 @@
       "Bash(npx --version)",
       "Bash(source ~/.zshrc)",
       "Bash(source ~/.bashrc)",
-      "Bash(export PATH=\"$HOME/.nvm/versions/node/v20.18.1/bin:$HOME/.nvm/versions/node/v22.13.0/bin:$HOME/.nvm/versions/node/v18.20.4/bin:/opt/homebrew/bin:/usr/local/bin:$PATH\")"
+      "Bash(export PATH=\"$HOME/.nvm/versions/node/v20.18.1/bin:$HOME/.nvm/versions/node/v22.13.0/bin:$HOME/.nvm/versions/node/v18.20.4/bin:/opt/homebrew/bin:/usr/local/bin:$PATH\")",
+      "Bash(export PATH=\"$HOME/.nvm/versions/node/v24.13.0/bin:/usr/bin:$PATH\")",
+      "Bash(/opt/homebrew/bin/npm run build)",
+      "Bash(ls:*)",
+      "Bash(export PATH=\"/Users/joshfredrickson/.nvm/versions/node/v24.13.0/bin:$PATH\")",
+      "Bash(export PATH=\"/Users/joshfredrickson/.nvm/versions/node/v24.13.0/bin:$PATH:/usr/bin\")",
+      "Bash(pkill:*)"
     ]
   }
 }
