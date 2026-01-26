@@ -23,10 +23,7 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
   };
 
   return (
-    <div className="flex-1 overflow-y-auto debug-marker">
-      {/* TEMP DEBUG LABEL */}
-      <div className="debug-label" style={{ margin: '8px 16px' }}>DEBUG: ArticleList.tsx ACTIVE</div>
-
+    <div className="flex-1 overflow-y-auto">
       <div className="py-4">
         {articles.map((article, index) => {
           const isTrusted = article.sourceDomain ? trustedDomains.includes(article.sourceDomain.toLowerCase()) : false;

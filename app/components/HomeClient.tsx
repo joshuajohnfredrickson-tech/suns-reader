@@ -147,10 +147,7 @@ export default function HomeClient() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-background text-foreground debug-marker">
-      {/* TEMP DEBUG LABEL */}
-      <div className="debug-label" style={{ margin: '8px 16px' }}>DEBUG: HomeClient.tsx ACTIVE</div>
-
+    <div className="flex flex-col h-screen bg-background text-foreground">
       {/* Top Bar */}
       <header className="relative flex items-center justify-between px-4 py-4 sm:py-5 border-b border-border bg-background z-10">
         {/* Empty spacer for centering */}
