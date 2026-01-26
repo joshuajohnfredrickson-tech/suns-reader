@@ -223,7 +223,7 @@ export default function HomeClient() {
       <nav className="flex border-b border-border bg-background z-10">
         <button
           onClick={() => handleTabChange('trusted')}
-          className={`flex-1 px-4 py-3 min-h-[44px] text-sm font-medium transition-colors ${
+          className={`flex-1 px-4 py-3.5 min-h-[44px] text-base font-medium transition-colors ${
             activeTab === 'trusted'
               ? 'text-accent border-b-2 border-accent'
               : 'text-zinc-600 dark:text-zinc-400 hover:text-foreground'
@@ -234,7 +234,7 @@ export default function HomeClient() {
         </button>
         <button
           onClick={() => handleTabChange('discovery')}
-          className={`flex-1 px-4 py-3 min-h-[44px] text-sm font-medium transition-colors ${
+          className={`flex-1 px-4 py-3.5 min-h-[44px] text-base font-medium transition-colors ${
             activeTab === 'discovery'
               ? 'text-accent border-b-2 border-accent'
               : 'text-zinc-600 dark:text-zinc-400 hover:text-foreground'

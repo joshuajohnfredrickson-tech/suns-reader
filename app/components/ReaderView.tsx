@@ -330,12 +330,12 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
           {/* Article Meta - Show immediately */}
           <div className="mb-6">
             {/* Title */}
-            <h1 className="text-xl sm:text-2xl font-semibold leading-snug mb-3 text-foreground">
+            <h1 className="text-xl sm:text-2xl font-semibold leading-snug mb-4 text-foreground">
               {normalizeTitle(extracted?.title || article.title, extracted?.siteName || article.source)}
             </h1>
 
             {/* Source + author line */}
-            <div className="flex items-center gap-1.5 text-sm text-zinc-500 dark:text-zinc-400 mb-1">
+            <div className="flex items-center gap-1.5 text-sm text-zinc-500 dark:text-zinc-400 mb-2">
               <span className="font-medium text-zinc-700 dark:text-zinc-300">
                 {extracted?.siteName || article.source}
               </span>
@@ -348,7 +348,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
             </div>
 
             {/* Date/time stamp */}
-            <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400">
+            <div className="flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400">
               <span>{article.date}</span>
               <span>·</span>
               <span>{article.timeAgo}</span>
@@ -356,7 +356,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
           </div>
 
           {/* Divider */}
-          <div className="border-t border-zinc-200/60 dark:border-zinc-800/60 mb-6" />
+          <div className="border-t border-zinc-200/60 dark:border-zinc-800/60 mb-8" />
 
           {/* Debug: Show extraction URL (only with ?debug=1) */}
           {debug && article.url && (
