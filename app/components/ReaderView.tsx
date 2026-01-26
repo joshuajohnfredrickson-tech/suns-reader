@@ -145,10 +145,14 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
 
     if (extracted?.success && extracted.contentHtml) {
       return (
-        <div
-          className="reader-content text-base sm:text-lg leading-8 text-foreground"
-          dangerouslySetInnerHTML={{ __html: extracted.contentHtml }}
-        />
+        <>
+          {/* TEMP DEBUG LABEL */}
+          <div className="debug-label">DEBUG: ReaderView.tsx ACTIVE (HTML)</div>
+          <div
+            className="reader-content text-base sm:text-lg leading-8 text-foreground"
+            dangerouslySetInnerHTML={{ __html: extracted.contentHtml }}
+          />
+        </>
       );
     }
 
@@ -197,13 +201,17 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
           .filter((p: string) => p.length > 0);
 
         return (
-          <div className="text-base sm:text-lg leading-8 text-foreground">
-            {paragraphs.map((paragraph: string, index: number) => (
-              <p key={index} className="mb-6">
-                {paragraph}
-              </p>
-            ))}
-          </div>
+          <>
+            {/* TEMP DEBUG LABEL */}
+            <div className="debug-label">DEBUG: ReaderView.tsx ACTIVE (TEXT)</div>
+            <div className="text-base sm:text-lg leading-8 text-foreground">
+              {paragraphs.map((paragraph: string, index: number) => (
+                <p key={index} className="mb-6">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </>
         );
       }
 
@@ -215,13 +223,17 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
           .filter((line: string) => line.length > 0);
 
         return (
-          <div className="text-base sm:text-lg leading-8 text-foreground">
-            {lines.map((line: string, index: number) => (
-              <p key={index} className="mb-6">
-                {line}
-              </p>
-            ))}
-          </div>
+          <>
+            {/* TEMP DEBUG LABEL */}
+            <div className="debug-label">DEBUG: ReaderView.tsx ACTIVE (TEXT)</div>
+            <div className="text-base sm:text-lg leading-8 text-foreground">
+              {lines.map((line: string, index: number) => (
+                <p key={index} className="mb-6">
+                  {line}
+                </p>
+              ))}
+            </div>
+          </>
         );
       }
 
@@ -240,21 +252,29 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
         }
 
         return (
-          <div className="text-base sm:text-lg leading-8 text-foreground">
-            {paragraphs.map((paragraph: string, index: number) => (
-              <p key={index} className="mb-6">
-                {paragraph}
-              </p>
-            ))}
-          </div>
+          <>
+            {/* TEMP DEBUG LABEL */}
+            <div className="debug-label">DEBUG: ReaderView.tsx ACTIVE (TEXT)</div>
+            <div className="text-base sm:text-lg leading-8 text-foreground">
+              {paragraphs.map((paragraph: string, index: number) => (
+                <p key={index} className="mb-6">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </>
         );
       }
 
       // Very short text or couldn't split - render as single block with improved line-height
       return (
-        <div className="text-base sm:text-lg leading-8 text-foreground">
-          {normalizedBody}
-        </div>
+        <>
+          {/* TEMP DEBUG LABEL */}
+          <div className="debug-label">DEBUG: ReaderView.tsx ACTIVE (TEXT)</div>
+          <div className="text-base sm:text-lg leading-8 text-foreground">
+            {normalizedBody}
+          </div>
+        </>
       );
     }
 
@@ -273,7 +293,10 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
   const originalUrl = extracted?.url || publisherUrl || article.url;
 
   return (
-    <div className="flex flex-col h-screen bg-background text-foreground">
+    <div className="flex flex-col h-screen bg-background text-foreground debug-marker">
+      {/* TEMP DEBUG: Fixed badge for prod/PWA verification */}
+      <div className="debug-badge">DEBUG BUILD: ReaderView marker v1</div>
+
       {/* Header */}
       <header className="flex items-center justify-between px-4 py-4 sm:py-5 border-b border-border bg-background z-10">
         <button

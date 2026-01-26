@@ -147,7 +147,10 @@ export default function HomeClient() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-background text-foreground">
+    <div className="flex flex-col h-screen bg-background text-foreground debug-marker">
+      {/* TEMP DEBUG LABEL */}
+      <div className="debug-label" style={{ margin: '8px 16px' }}>DEBUG: HomeClient.tsx ACTIVE</div>
+
       {/* Top Bar */}
       <header className="relative flex items-center justify-between px-4 py-4 sm:py-5 border-b border-border bg-background z-10">
         {/* Empty spacer for centering */}
@@ -210,6 +213,15 @@ export default function HomeClient() {
         </div>
       </header>
 
+      {/* Status Bar */}
+      {lastRefreshed && (
+        <div className="px-4 py-3 sm:py-4 text-center border-b border-border bg-background">
+          <span className="text-xs text-zinc-500 dark:text-zinc-400">
+            Last refreshed: {lastRefreshed.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+          </span>
+        </div>
+      )}
+
       {/* Tabs */}
       <nav className="flex border-b border-border bg-background z-10">
         <button
@@ -243,7 +255,7 @@ export default function HomeClient() {
         <ErrorState message={error} onRetry={fetchArticles} />
       ) : activeTab === 'trusted' ? (
         trustedArticles.length > 0 ? (
-          <ArticleList articles={trustedArticles} showAddToTrusted={false} onAddToTrusted={handleAddToTrusted} trustedDomains={trustedDomains} lastRefreshed={lastRefreshed} />
+          <ArticleList articles={trustedArticles} showAddToTrusted={false} onAddToTrusted={handleAddToTrusted} trustedDomains={trustedDomains} />
         ) : trustedDomains.length === 0 ? (
           <EmptyState
             title="No Trusted Sources Yet"
@@ -260,7 +272,7 @@ export default function HomeClient() {
           />
         )
       ) : (
-        <ArticleList articles={discoveryArticles} showAddToTrusted={true} onAddToTrusted={handleAddToTrusted} trustedDomains={trustedDomains} lastRefreshed={lastRefreshed} />
+        <ArticleList articles={discoveryArticles} showAddToTrusted={true} onAddToTrusted={handleAddToTrusted} trustedDomains={trustedDomains} />
       )}
     </div>
   );
