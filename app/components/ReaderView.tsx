@@ -328,7 +328,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
       <article className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div className="max-w-2xl mx-auto">
           {/* Article Meta Header Block */}
-          <div className="pt-2 pb-6 mb-8 border-b border-zinc-200/60 dark:border-zinc-800/60">
+          <div className="pt-4 pb-6 mb-8">
             {/* Title */}
             <h1 className="text-xl sm:text-2xl font-semibold leading-snug mb-5 text-foreground">
               {normalizeTitle(extracted?.title || article.title, extracted?.siteName || article.source)}
