@@ -149,7 +149,7 @@ export default function HomeClient() {
   return (
     <div className="flex flex-col h-screen bg-background text-foreground">
       {/* Top Bar */}
-      <header className="relative flex items-center justify-between px-4 py-4 sm:py-5 border-b border-border bg-background z-10">
+      <header className="relative flex items-center justify-between px-4 py-4 sm:py-5 bg-background z-10">
         {/* Empty spacer for centering */}
         <div className="w-28" />
         {/* Centered title */}
