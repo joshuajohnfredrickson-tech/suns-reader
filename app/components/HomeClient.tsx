@@ -210,10 +210,10 @@ export default function HomeClient() {
         </div>
       </header>
 
-      {/* Status Bar */}
+      {/* Status Bar - visually tucks under header */}
       {lastRefreshed && (
-        <div className="px-4 py-3 sm:py-4 text-center border-b border-border bg-background">
-          <span className="text-xs text-zinc-500 dark:text-zinc-400">
+        <div className="px-4 py-1.5 text-center bg-background">
+          <span className="text-[11px] text-zinc-400 dark:text-zinc-500">
             Last refreshed: {lastRefreshed.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
           </span>
         </div>

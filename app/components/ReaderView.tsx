@@ -327,10 +327,10 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
       {/* Article Content */}
       <article className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div className="max-w-2xl mx-auto">
-          {/* Article Meta - Show immediately */}
-          <div className="mb-6">
+          {/* Article Meta Header Block */}
+          <div className="pb-6 mb-8 border-b border-zinc-200/60 dark:border-zinc-800/60">
             {/* Title */}
-            <h1 className="text-xl sm:text-2xl font-semibold leading-snug mb-4 text-foreground">
+            <h1 className="text-xl sm:text-2xl font-semibold leading-snug mb-5 text-foreground">
               {normalizeTitle(extracted?.title || article.title, extracted?.siteName || article.source)}
             </h1>
 
@@ -348,19 +348,16 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
             </div>
 
             {/* Date/time stamp */}
-            <div className="flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400">
+            <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400">
               <span>{article.date}</span>
               <span>·</span>
               <span>{article.timeAgo}</span>
             </div>
           </div>
 
-          {/* Divider */}
-          <div className="border-t border-zinc-200/60 dark:border-zinc-800/60 mb-8" />
-
           {/* Debug: Show extraction URL (only with ?debug=1) */}
           {debug && article.url && (
-            <div className="mb-6 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded text-xs break-words overflow-wrap-anywhere max-w-full">
+            <div className="mb-8 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded text-xs break-words overflow-wrap-anywhere max-w-full">
               <strong>Debug - Extracting from:</strong>{" "}
               <span className="break-all">{article.url}</span>
             </div>

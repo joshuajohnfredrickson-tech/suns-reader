@@ -32,18 +32,20 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
           <div key={article.id}>
             <Link
               href={`/reader?id=${article.id}&tab=${currentTab}`}
-              className={`block w-full px-4 py-4 hover:bg-zinc-50 dark:hover:bg-zinc-900 active:bg-zinc-100 dark:active:bg-zinc-800 transition-colors no-underline ${!isLast ? 'border-b border-zinc-200/50 dark:border-zinc-800/50' : ''}`}
+              className={`block w-full px-4 py-5 hover:bg-zinc-50 dark:hover:bg-zinc-900 active:bg-zinc-100 dark:active:bg-zinc-800 transition-colors no-underline ${!isLast ? 'border-b border-zinc-200/50 dark:border-zinc-800/50' : ''}`}
               style={{ touchAction: 'manipulation' }}
             >
-              <div className="flex items-start gap-3 pointer-events-none">
+              <div className="relative pl-6 pointer-events-none">
+                {/* Unread dot - vertically centered to content block */}
                 <div
-                  className={`h-2.5 w-2.5 rounded-full flex-shrink-0 mt-1.5 ${
+                  className={`absolute left-0 top-1/2 -translate-y-1/2 h-2.5 w-2.5 rounded-full ${
                     article.isRead
                       ? 'bg-transparent border border-zinc-300 dark:border-zinc-600'
                       : 'bg-accent'
                   }`}
                 />
-                <div className="flex-1 min-w-0">
+                {/* Title + metadata block */}
+                <div className="min-w-0">
                   <h3 className="text-base font-medium leading-snug text-foreground">
                     {article.title}
                   </h3>
@@ -58,11 +60,10 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
 
             {/* Add to Trusted button (Discovery tab only) - aligned with title column */}
             {showAddToTrusted && !isTrusted && article.sourceDomain && (
-              <div className="flex items-start gap-3 px-4 pb-3 pointer-events-auto border-b border-zinc-200/50 dark:border-zinc-800/50">
-                <div className="w-2.5 flex-shrink-0" />
+              <div className="pl-10 pr-4 pb-4 pointer-events-auto border-b border-zinc-200/50 dark:border-zinc-800/50">
                 <button
                   onClick={(e) => handleAddToTrusted(e, article.sourceDomain!)}
-                  className="text-xs text-accent hover:underline font-medium py-1"
+                  className="text-xs text-accent hover:underline font-medium"
                   style={{ touchAction: 'manipulation' }}
                 >
                   + Add {article.sourceDomain} to Trusted
