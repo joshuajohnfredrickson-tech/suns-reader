@@ -3,6 +3,10 @@ export const dynamic = "force-dynamic";
 
 import { NextRequest, NextResponse } from "next/server";
 import { randomUUID } from "crypto";
+import {
+  createTelemetryContext,
+  TelemetryReason,
+} from "../../lib/telemetry";
 
 // =============================================================================
 // Cache Configuration
@@ -392,11 +396,28 @@ interface ResolveResult {
 }
 
 /**
+ * Map error string to telemetry reason bucket
+ */
+function errorToTelemetryReason(error: string | null): TelemetryReason {
+  if (!error) return "unknown";
+  if (error.includes("timeout")) return "timeout";
+  if (error.includes("401")) return "http_401";
+  if (error.includes("403")) return "http_403";
+  if (error.includes("404")) return "http_404";
+  if (error.includes("429")) return "http_429";
+  if (error.includes("5") && /50[0-9]|5[1-9][0-9]/.test(error)) return "http_5xx";
+  return "unknown";
+}
+
+/**
  * Main resolver function - shared by GET and POST
  */
 async function resolveUrl(inputUrl: string, debug: boolean = false): Promise<ResolveResult> {
   const requestId = randomUUID();
   const startedAt = Date.now();
+
+  // Create telemetry context for this request
+  const tel = createTelemetryContext("resolve", inputUrl);
 
   // Clean cache periodically (1 in 100 requests)
   if (Math.random() < 0.01) {
@@ -425,6 +446,17 @@ async function resolveUrl(inputUrl: string, debug: boolean = false): Promise<Res
       publisherHost: safeHostname(publisherUrl),
       error: success ? null : (error || "Could not resolve publisher URL"),
     }));
+
+    // Record telemetry (skip cache hits to avoid noise)
+    if (!cached) {
+      tel.record({
+        ok: success,
+        reason: success ? undefined : errorToTelemetryReason(error),
+        // Resolve failures are generally not playwright candidates
+        // (the URL resolution step doesn't involve JS rendering)
+        playwright_candidate: false,
+      });
+    }
 
     if (success && publisherUrl) {
       return debug

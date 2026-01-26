@@ -34,3 +34,46 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Telemetry
+
+The resolve/extract pipeline includes lightweight structured telemetry for reliability analysis.
+
+### Configuration
+
+| Env Var | Default | Description |
+|---------|---------|-------------|
+| `TELEMETRY_ENABLED` | `true` | Set to `"false"` to disable telemetry |
+| `TELEMETRY_SAMPLE_RATE` | `0.15` | Sample rate for successful requests (0.0-1.0). Failures are always logged. |
+
+### Log Format
+
+Telemetry events are logged as single-line JSON with `"tag":"telemetry"`:
+
+```json
+{"tag":"telemetry","ts":"2025-01-25T12:00:00.000Z","req_id":"abc12345","stage":"extract","domain":"example.com","ok":false,"reason":"blocked","duration_ms":1234,"playwright_candidate":true}
+```
+
+### Filtering Logs
+
+**Vercel Dashboard:**
+1. Go to your project's Logs tab
+2. Filter by: `"tag":"telemetry"`
+
+**Vercel CLI:**
+```bash
+# Recent telemetry logs
+vercel logs --filter='"tag":"telemetry"' | head -100
+
+# Export for analysis
+vercel logs --filter='"tag":"telemetry"' --since=7d > telemetry.jsonl
+```
+
+**Local analysis:**
+```bash
+# Count failures by reason
+cat telemetry.jsonl | jq -r 'select(.ok == false) | .reason' | sort | uniq -c | sort -rn
+
+# List domains that are playwright candidates
+cat telemetry.jsonl | jq -r 'select(.playwright_candidate == true) | .domain' | sort | uniq -c | sort -rn
+```

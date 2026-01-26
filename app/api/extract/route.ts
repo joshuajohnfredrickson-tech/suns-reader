@@ -2,6 +2,13 @@ import { NextResponse } from 'next/server';
 import { JSDOM } from 'jsdom';
 import { Readability } from '@mozilla/readability';
 import { randomUUID } from 'crypto';
+import {
+  recordTelemetry,
+  extractDomain,
+  generateReqId,
+  TelemetryReason,
+  isPlaywrightCandidate,
+} from '../../lib/telemetry';
 
 // Local only; disabled on Vercel. Set ENABLE_PLAYWRIGHT=1 to enable Playwright fallback.
 const ENABLE_PLAYWRIGHT = process.env.ENABLE_PLAYWRIGHT === '1';
@@ -77,13 +84,47 @@ function buildExtractResponse(overrides: Partial<ExtractResult>): ExtractResult 
 }
 
 /**
- * Finalize the request: log metrics and return response
+ * Map extract status/error to telemetry reason bucket
+ */
+function extractStatusToTelemetryReason(
+  status: string | number | undefined,
+  error: string | null | undefined
+): TelemetryReason {
+  const errorStr = (error || '').toLowerCase();
+  const statusStr = String(status || '').toLowerCase();
+
+  // Check for timeout
+  if (errorStr.includes('timeout') || errorStr.includes('aborted')) return 'timeout';
+
+  // Check for HTTP status codes in error message
+  if (errorStr.includes('401') || statusStr === '401') return 'http_401';
+  if (errorStr.includes('403') || statusStr === '403') return 'http_403';
+  if (errorStr.includes('404') || statusStr === '404') return 'http_404';
+  if (errorStr.includes('429') || statusStr === '429') return 'http_429';
+  if (/50[0-9]|5[1-9][0-9]/.test(errorStr) || /^5\d{2}$/.test(statusStr)) return 'http_5xx';
+
+  // Check for semantic status strings
+  if (statusStr === 'blocked' || errorStr.includes('block')) return 'blocked';
+  if (statusStr === 'paywall' || errorStr.includes('paywall') || errorStr.includes('subscribe')) return 'paywall';
+  if (statusStr === 'empty' || errorStr.includes('empty')) return 'empty';
+  if (errorStr.includes('parse') || errorStr.includes('readability')) return 'parse_error';
+
+  // Check for empty content indicators
+  if (errorStr.includes('reader view') || errorStr.includes('no_reader')) return 'empty';
+
+  return 'unknown';
+}
+
+/**
+ * Finalize the request: log metrics, record telemetry, and return response
  */
 function finalize(
   requestId: string,
   startedAt: number,
   inputUrl: string,
-  payload: ExtractResult
+  payload: ExtractResult,
+  telemetryReqId?: string,
+  httpStatus?: number
 ): NextResponse<ExtractResult> {
   // Compute metrics from payload
   const host = (() => {
@@ -115,6 +156,26 @@ function finalize(
     fetchedUrl: payload.fetchedUrl || null,
     error: payload.error || null,
   }));
+
+  // Record telemetry
+  const reason = payload.success ? undefined : extractStatusToTelemetryReason(payload.status, payload.error);
+  const contentEmpty = textLength === 0 || textLength < 100;
+
+  recordTelemetry({
+    req_id: telemetryReqId || generateReqId(),
+    stage: 'extract',
+    domain: extractDomain(payload.url || payload.fetchedUrl || inputUrl),
+    ok: payload.success,
+    reason,
+    duration_ms: durationMs,
+    playwright_candidate: payload.success
+      ? undefined
+      : isPlaywrightCandidate({
+          httpStatus,
+          reason,
+          contentEmpty,
+        }),
+  });
 
   return NextResponse.json(payload);
 }
@@ -700,6 +761,7 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   const requestId = randomUUID();
+  const telReqId = generateReqId(); // Short ID for telemetry correlation
   const startedAt = Date.now();
 
   cleanCache(); // Clean expired cache entries
