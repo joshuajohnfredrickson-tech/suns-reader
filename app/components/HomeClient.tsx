@@ -20,7 +20,6 @@ export default function HomeClient() {
   const [trustedDomains, setTrustedDomains] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [lastRefreshed, setLastRefreshed] = useState<Date | null>(null);
   const [readVersion, setReadVersion] = useState(0);
 
   const fetchArticles = async () => {
@@ -41,7 +40,6 @@ export default function HomeClient() {
       const items: ArticleSummary[] = data.items || [];
 
       setArticleSummaries(items);
-      setLastRefreshed(new Date());
     } catch (err) {
       console.error('Failed to fetch articles:', err);
       setError(err instanceof Error ? err.message : 'Unknown error');
@@ -209,15 +207,6 @@ export default function HomeClient() {
           </button>
         </div>
       </header>
-
-      {/* Status Bar - visually tucks under header */}
-      {lastRefreshed && (
-        <div className="px-4 py-1.5 text-center bg-background">
-          <span className="text-[11px] text-zinc-400 dark:text-zinc-500">
-            Last refreshed: {lastRefreshed.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
-          </span>
-        </div>
-      )}
 
       {/* Tabs */}
       <nav className="flex border-b border-border bg-background z-10">
