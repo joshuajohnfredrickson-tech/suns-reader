@@ -129,7 +129,14 @@ export default function HomeClient() {
     );
   }, [allArticles, trustedDomains]);
 
-  const discoveryArticles = allArticles;
+  // Derive discovery articles - exclude trusted sources for disjoint tabs
+  const discoveryArticles = useMemo(() => {
+    return allArticles.filter(article =>
+      // Keep articles with no domain (don't accidentally drop them)
+      // OR articles whose domain is NOT in the trusted list
+      !article.sourceDomain || !trustedDomains.includes(article.sourceDomain.toLowerCase())
+    );
+  }, [allArticles, trustedDomains]);
 
   if (!mounted) {
     return null;
