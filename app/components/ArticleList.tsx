@@ -32,7 +32,7 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
         return (
           <div
             key={article.id}
-            className={`relative ${!isLast ? 'border-b border-zinc-200/50 dark:border-zinc-800/50' : ''}`}
+            className={!isLast ? 'border-b border-zinc-200/50 dark:border-zinc-800/50' : ''}
           >
             <Link
               href={`/reader?id=${article.id}&tab=${currentTab}`}
@@ -56,25 +56,25 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
                   <h3 className="text-base font-medium leading-snug text-foreground">
                     {article.title}
                   </h3>
-                  <div className={`flex items-center gap-1.5 mt-1.5 text-xs text-zinc-500 dark:text-zinc-400 ${showPill ? 'pr-20' : ''}`}>
-                    <span>{article.source}</span>
-                    <span>·</span>
-                    <span>{article.timeAgo}</span>
+                  <div className="flex items-center justify-between gap-2 mt-1.5 text-xs text-zinc-500 dark:text-zinc-400">
+                    <div className="flex items-center gap-1.5">
+                      <span>{article.source}</span>
+                      <span>·</span>
+                      <span>{article.timeAgo}</span>
+                    </div>
+                    {showPill && (
+                      <button
+                        onClick={(e) => handleAddToTrusted(e, article.sourceDomain!)}
+                        className="pointer-events-auto px-2 py-1 -mr-2 text-xs font-medium text-accent hover:underline transition-colors"
+                        style={{ touchAction: 'manipulation' }}
+                      >
+                        Add to Trusted
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
             </Link>
-
-            {/* Compact "+ Trusted" pill button - positioned at bottom-right of row */}
-            {showPill && (
-              <button
-                onClick={(e) => handleAddToTrusted(e, article.sourceDomain!)}
-                className="absolute right-4 bottom-5 inline-flex items-center justify-center h-7 px-2.5 text-xs font-medium leading-none rounded-full border border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-400 bg-transparent hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
-                style={{ touchAction: 'manipulation' }}
-              >
-                + Trusted
-              </button>
-            )}
           </div>
         );
       })}
