@@ -15,15 +15,15 @@ import { purgeExpiredReadState, getReadStateForArticles } from '../lib/readState
 function Toast({ message, visible }: { message: string; visible: boolean }) {
   return (
     <div
-      className={`fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 px-6 py-3 bg-zinc-900 dark:bg-zinc-800 text-white text-base font-medium rounded-lg shadow-lg transition-all duration-200 ${
+      className={`fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 px-8 py-5 bg-zinc-900 dark:bg-zinc-800 text-white text-lg font-medium rounded-2xl shadow-2xl transition-all duration-200 ${
         visible
           ? 'opacity-100 scale-100'
           : 'opacity-0 scale-95 pointer-events-none'
       }`}
     >
-      <div className="flex items-center gap-2.5">
+      <div className="flex items-center gap-3">
         <svg
-          className="w-5 h-5 text-green-400 shrink-0"
+          className="w-6 h-6 text-green-400 shrink-0"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
