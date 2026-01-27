@@ -15,16 +15,15 @@ import { purgeExpiredReadState, getReadStateForArticles } from '../lib/readState
 function Toast({ message, visible }: { message: string; visible: boolean }) {
   return (
     <div
-      className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 bg-zinc-900 dark:bg-zinc-800 text-white text-sm font-medium rounded-lg shadow-lg transition-all duration-200 ${
+      className={`fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 px-6 py-3 bg-zinc-900 dark:bg-zinc-800 text-white text-base font-medium rounded-lg shadow-lg transition-all duration-200 ${
         visible
-          ? 'opacity-100 translate-y-0'
-          : 'opacity-0 translate-y-2 pointer-events-none'
+          ? 'opacity-100 scale-100'
+          : 'opacity-0 scale-95 pointer-events-none'
       }`}
-      style={{ paddingBottom: 'max(0.625rem, env(safe-area-inset-bottom))' }}
     >
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2.5">
         <svg
-          className="w-4 h-4 text-green-400 shrink-0"
+          className="w-5 h-5 text-green-400 shrink-0"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
