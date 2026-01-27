@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ArticleList } from './ArticleList';
 import { LoadingState } from './LoadingState';
@@ -10,6 +10,37 @@ import { Article, ArticleSummary } from '../types/article';
 import { getRelativeTime, formatDate, normalizeTitle } from '../lib/utils';
 import { getTrustedDomains, addTrustedDomain } from '../lib/trustedDomains';
 import { purgeExpiredReadState, getReadStateForArticles } from '../lib/readState';
+
+// Toast component
+function Toast({ message, visible }: { message: string; visible: boolean }) {
+  return (
+    <div
+      className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 bg-zinc-900 dark:bg-zinc-800 text-white text-sm font-medium rounded-lg shadow-lg transition-all duration-200 ${
+        visible
+          ? 'opacity-100 translate-y-0'
+          : 'opacity-0 translate-y-2 pointer-events-none'
+      }`}
+      style={{ paddingBottom: 'max(0.625rem, env(safe-area-inset-bottom))' }}
+    >
+      <div className="flex items-center gap-2">
+        <svg
+          className="w-4 h-4 text-green-400 shrink-0"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M5 13l4 4L19 7"
+          />
+        </svg>
+        <span>{message}</span>
+      </div>
+    </div>
+  );
+}
 
 export default function HomeClient() {
   const router = useRouter();
@@ -21,6 +52,29 @@ export default function HomeClient() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [readVersion, setReadVersion] = useState(0);
+  const [toast, setToast] = useState<{ message: string; visible: boolean }>({
+    message: '',
+    visible: false,
+  });
+  const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const showToast = useCallback((message: string) => {
+    if (toastTimeoutRef.current) {
+      clearTimeout(toastTimeoutRef.current);
+    }
+    setToast({ message, visible: true });
+    toastTimeoutRef.current = setTimeout(() => {
+      setToast(prev => ({ ...prev, visible: false }));
+    }, 2000);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (toastTimeoutRef.current) {
+        clearTimeout(toastTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const fetchArticles = async () => {
     setLoading(true);
@@ -48,10 +102,11 @@ export default function HomeClient() {
     }
   };
 
-  const handleAddToTrusted = (domain: string) => {
+  const handleAddToTrusted = useCallback((domain: string) => {
     addTrustedDomain(domain);
     setTrustedDomains(getTrustedDomains());
-  };
+    showToast('Added to Trusted');
+  }, [showToast]);
 
   useEffect(() => {
     setMounted(true);
@@ -267,6 +322,9 @@ export default function HomeClient() {
       ) : (
         <ArticleList articles={discoveryArticles} showAddToTrusted={true} onAddToTrusted={handleAddToTrusted} trustedDomains={trustedDomains} />
       )}
+
+      {/* Toast */}
+      <Toast message={toast.message} visible={toast.visible} />
     </div>
   );
 }
