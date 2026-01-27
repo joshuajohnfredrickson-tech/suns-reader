@@ -91,26 +91,24 @@ export default function SourcesPage() {
               </button>
             </div>
           ) : (
-            <div className="px-4">
-              <div className="border border-border rounded-lg bg-background overflow-hidden">
-                {trustedDomains.map((domain, index) => (
-                  <div
-                    key={domain}
-                    className={`flex items-center justify-between h-[48px] px-[18px] hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors${index < trustedDomains.length - 1 ? ' border-b border-border' : ''}`}
-                  >
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-medium text-base text-foreground leading-tight truncate">{domain}</h3>
-                    </div>
-                    <button
-                      onClick={() => handleRemove(domain)}
-                      className="flex items-center justify-center h-[44px] px-3 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors shrink-0"
-                      style={{ touchAction: 'manipulation' }}
-                    >
-                      Remove
-                    </button>
+            <div className="mx-4 border border-border rounded-lg bg-background overflow-hidden">
+              {trustedDomains.map((domain, index) => (
+                <div
+                  key={domain}
+                  className={`flex items-center justify-between h-[48px] px-[18px] hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors${index < trustedDomains.length - 1 ? ' border-b border-border' : ''}`}
+                >
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-medium text-base text-foreground leading-tight truncate">{domain}</h3>
                   </div>
-                ))}
-              </div>
+                  <button
+                    onClick={() => handleRemove(domain)}
+                    className="flex items-center justify-center h-[44px] px-3 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors shrink-0"
+                    style={{ touchAction: 'manipulation' }}
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
             </div>
           )}
         </div>
