@@ -62,17 +62,17 @@ export default function SourcesPage() {
       {/* Content */}
       <div className="flex-1 overflow-y-auto px-4 py-6">
         <div className="max-w-xl mx-auto">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-3" style={{ padding: '0 18px' }}>
           <h1 className="text-2xl font-bold text-foreground">Trusted Sources</h1>
           <button
             onClick={handleResetToDefaults}
-            className="px-4 py-3 min-h-[48px] text-sm text-accent hover:bg-accent/10 rounded-lg transition-colors"
+            className="px-3 py-2 min-h-[44px] text-sm text-accent hover:bg-accent/10 rounded-lg transition-colors"
             style={{ touchAction: 'manipulation' }}
           >
             Reset to Defaults
           </button>
         </div>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-8">
+        <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-6" style={{ padding: '0 18px' }}>
           Manage which news sources appear in your Trusted tab.
         </p>
 
@@ -96,12 +96,12 @@ export default function SourcesPage() {
               <div
                 key={domain}
                 className="flex items-center justify-between border border-border rounded-xl bg-background hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
-                style={{ padding: '14px 18px' }}
+                style={{ padding: '12px 18px' }}
               >
                 <h3 className="font-medium text-base text-foreground">{domain}</h3>
                 <button
                   onClick={() => handleRemove(domain)}
-                  className="px-3 py-1.5 min-h-[44px] text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                  className="flex items-center px-3 min-h-[44px] text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
                   style={{ touchAction: 'manipulation' }}
                 >
                   Remove
