@@ -27,7 +27,7 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
       {articles.map((article, index) => {
         const isTrusted = article.sourceDomain ? trustedDomains.includes(article.sourceDomain.toLowerCase()) : false;
         const isLast = index === articles.length - 1;
-        const showPill = showAddToTrusted && !isTrusted && article.sourceDomain;
+        const showAction = showAddToTrusted && !isTrusted && article.sourceDomain;
 
         return (
           <div
@@ -56,16 +56,16 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
                   <h3 className="text-base font-medium leading-snug text-foreground">
                     {article.title}
                   </h3>
-                  <div className="flex items-center justify-between gap-2 mt-1.5 pr-4 text-xs text-zinc-500 dark:text-zinc-400">
+                  <div className={`relative mt-1.5 text-xs text-zinc-500 dark:text-zinc-400 ${showAction ? 'pr-24' : ''}`}>
                     <div className="flex items-center gap-1.5">
                       <span>{article.source}</span>
                       <span>·</span>
                       <span>{article.timeAgo}</span>
                     </div>
-                    {showPill && (
+                    {showAction && (
                       <button
                         onClick={(e) => handleAddToTrusted(e, article.sourceDomain!)}
-                        className="pointer-events-auto px-2 py-1 text-xs font-medium text-accent hover:underline transition-colors"
+                        className="absolute right-5 top-0 pointer-events-auto px-2 py-1 -my-1 text-xs font-medium text-accent hover:underline transition-colors"
                         style={{ touchAction: 'manipulation' }}
                       >
                         Add to Trusted

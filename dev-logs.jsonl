@@ -1,0 +1,1141 @@
+
+> suns-reader@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.4 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.196:3000
+
+✓ Starting...
+✓ Ready in 427ms
+ GET / 200 in 454ms (compile: 402ms, render: 52ms)
+ GET / 200 in 65ms (compile: 5ms, render: 60ms)
+ GET /manifest.webmanifest 200 in 36ms (compile: 30ms, render: 6ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317920505
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"47f229a5-2513-4767-a2b5-7a4e59ef1d46","ts":"2026-01-25T05:12:01.102Z","durationMs":597,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769317920443 200 in 661ms (compile: 57ms, render: 603ms)
+ GET /reader?id=1ad0b4&tab=trusted 200 in 39ms (compile: 25ms, render: 15ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317953890
+ GET /manifest.webmanifest 200 in 4ms (compile: 1407µs, render: 3ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"12987382-3a79-4232-a816-c2d487836615","ts":"2026-01-25T05:12:34.441Z","durationMs":551,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 559ms (compile: 2ms, render: 556ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317954455
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"d0bb0915-a4c1-4865-bc88-805e68fbbd64","ts":"2026-01-25T05:12:34.851Z","durationMs":396,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 403ms (compile: 3ms, render: 400ms)
+{"type":"resolve","ts":"2026-01-25T05:12:34.919Z","requestId":"0e637e87-e436-473c-b2cb-a5c9ae655abf","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":396,"inputHost":"news.google.com","publisherHost":"www.brightsideofthesun.com","error":null}
+ POST /api/resolve 200 in 459ms (compile: 59ms, render: 400ms)
+{"type":"resolve","ts":"2026-01-25T05:12:34.934Z","requestId":"b65dfcdc-1132-43fb-9f7b-bec437e6fa12","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":408,"inputHost":"news.google.com","publisherHost":"www.brightsideofthesun.com","error":null}
+ POST /api/resolve 200 in 473ms (compile: 62ms, render: 411ms)
+[Extract] Input URL: https://www.brightsideofthesun.com/suns-injury-report/97349/jalen-green-hamstring-devin-booker-ankle-injury-updates-miami-heat-game-status
+[Extract] Fetching direct (non-Google) URL: https://www.brightsideofthesun.com/suns-injury-report/97349/jalen-green-hamstring-devin-booker-ankle-injury-updates-miami-heat-game-status
+[Extract] Success via Readability: Injury Update: The latest on Devin Booker and Jalen Green (fetch)
+{"type":"extract","requestId":"4a4d3d33-75c7-4ca7-ae01-d3bf0da9b141","ts":"2026-01-25T05:12:35.503Z","durationMs":195,"inputUrl":"https://www.brightsideofthesun.com/suns-injury-report/97349/jalen-green-hamstring-devin-booker-ankle-injury-updates-miami-heat-game-status","host":"www.brightsideofthesun.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":57,"textLength":1514,"fetchedUrl":"https://www.brightsideofthesun.com/suns-injury-report/97349/jalen-green-hamstring-devin-booker-ankle-injury-updates-miami-heat-game-status","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.brightsideofthesun.com%2Fsuns-injury-report%2F97349%2Fjalen-green-hamstring-devin-booker-ankle-injury-updates-miami-heat-game-status 200 in 577ms (compile: 379ms, render: 198ms)
+[Extract] Cache hit for: https://www.brightsideofthesun.com/suns-injury-report/97349/jalen-green-hamstring-devin-booker-ankle-injury-updates-miami-heat-game-status
+{"type":"extract","requestId":"32299174-8429-4d83-9c86-11d9b7fab87b","ts":"2026-01-25T05:12:35.507Z","durationMs":0,"inputUrl":"https://www.brightsideofthesun.com/suns-injury-report/97349/jalen-green-hamstring-devin-booker-ankle-injury-updates-miami-heat-game-status","host":"www.brightsideofthesun.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":57,"textLength":1514,"fetchedUrl":"https://www.brightsideofthesun.com/suns-injury-report/97349/jalen-green-hamstring-devin-booker-ankle-injury-updates-miami-heat-game-status","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.brightsideofthesun.com%2Fsuns-injury-report%2F97349%2Fjalen-green-hamstring-devin-booker-ankle-injury-updates-miami-heat-game-status 200 in 2ms (compile: 772µs, render: 1621µs)
+ GET /?tab=trusted 200 in 26ms (compile: 6ms, render: 20ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317959873
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317959880
+ GET /manifest.webmanifest 200 in 4ms (compile: 1703µs, render: 3ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"372893ef-46bc-47a4-8473-ed7be14582a1","ts":"2026-01-25T05:12:40.372Z","durationMs":499,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769317959861 200 in 505ms (compile: 2ms, render: 503ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"c15effa6-494e-47ee-85e1-0ead71749ac1","ts":"2026-01-25T05:12:40.542Z","durationMs":662,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769317959862 200 in 668ms (compile: 1840µs, render: 666ms)
+ GET /reader?id=2fazj2&tab=trusted 200 in 23ms (compile: 4ms, render: 18ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317961810
+ GET /manifest.webmanifest 200 in 4ms (compile: 1631µs, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"b5bb96d9-2bb0-47f8-9d38-4276e84c30ea","ts":"2026-01-25T05:12:42.351Z","durationMs":541,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 548ms (compile: 2ms, render: 546ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317962364
+{"type":"resolve","ts":"2026-01-25T05:12:42.727Z","requestId":"862266ea-2c51-4660-b68d-a04f7c27c231","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":341,"inputHost":"news.google.com","publisherHost":"www.azcentral.com","error":null}
+ POST /api/resolve 200 in 352ms (compile: 4ms, render: 348ms)
+[Extract] Input URL: https://www.azcentral.com/story/sports/nba/suns/2026/01/24/phoenix-suns-major-injury-update-devin-booker-jalen-green-atlanta-hawks-miami-heat/88342706007/
+[Extract] Fetching direct (non-Google) URL: https://www.azcentral.com/story/sports/nba/suns/2026/01/24/phoenix-suns-major-injury-update-devin-booker-jalen-green-atlanta-hawks-miami-heat/88342706007/
+{"type":"resolve","ts":"2026-01-25T05:12:42.787Z","requestId":"be8dc68d-08c2-4b81-a456-655d31cdc4a5","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":395,"inputHost":"news.google.com","publisherHost":"www.azcentral.com","error":null}
+ POST /api/resolve 200 in 402ms (compile: 2ms, render: 399ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"f69d7dd8-7a2b-4912-8b47-bd996dfd0acb","ts":"2026-01-25T05:12:42.809Z","durationMs":445,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 455ms (compile: 3ms, render: 453ms)
+[Extract] Success via Readability: Phoenix Suns provide major injury updates on Jalen Green, Devin Booker (fetch)
+{"type":"extract","requestId":"3547700b-f80d-4820-bdd7-a750d4ee14de","ts":"2026-01-25T05:12:43.079Z","durationMs":337,"inputUrl":"https://www.azcentral.com/story/sports/nba/suns/2026/01/24/phoenix-suns-major-injury-update-devin-booker-jalen-green-atlanta-hawks-miami-heat/88342706007/","host":"www.azcentral.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":70,"textLength":4065,"fetchedUrl":"https://www.azcentral.com/story/sports/nba/suns/2026/01/24/phoenix-suns-major-injury-update-devin-booker-jalen-green-atlanta-hawks-miami-heat/88342706007/","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.azcentral.com%2Fstory%2Fsports%2Fnba%2Fsuns%2F2026%2F01%2F24%2Fphoenix-suns-major-injury-update-devin-booker-jalen-green-atlanta-hawks-miami-heat%2F88342706007%2F 200 in 345ms (compile: 3ms, render: 342ms)
+[Extract] Cache hit for: https://www.azcentral.com/story/sports/nba/suns/2026/01/24/phoenix-suns-major-injury-update-devin-booker-jalen-green-atlanta-hawks-miami-heat/88342706007/
+{"type":"extract","requestId":"cc2de382-8798-42a7-96d1-6932760c67f6","ts":"2026-01-25T05:12:43.085Z","durationMs":0,"inputUrl":"https://www.azcentral.com/story/sports/nba/suns/2026/01/24/phoenix-suns-major-injury-update-devin-booker-jalen-green-atlanta-hawks-miami-heat/88342706007/","host":"www.azcentral.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":70,"textLength":4065,"fetchedUrl":"https://www.azcentral.com/story/sports/nba/suns/2026/01/24/phoenix-suns-major-injury-update-devin-booker-jalen-green-atlanta-hawks-miami-heat/88342706007/","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.azcentral.com%2Fstory%2Fsports%2Fnba%2Fsuns%2F2026%2F01%2F24%2Fphoenix-suns-major-injury-update-devin-booker-jalen-green-atlanta-hawks-miami-heat%2F88342706007%2F 200 in 4ms (compile: 1575µs, render: 3ms)
+ GET /?tab=trusted 200 in 24ms (compile: 4ms, render: 21ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317966458
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317966463
+ GET /manifest.webmanifest 200 in 3ms (compile: 1153µs, render: 1476µs)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"98161161-2189-4d1e-8d46-e6a539ef0e72","ts":"2026-01-25T05:12:46.866Z","durationMs":403,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769317966446 200 in 408ms (compile: 1779µs, render: 406ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"5fb32c19-80a3-497f-96f3-481ee79f58d1","ts":"2026-01-25T05:12:46.975Z","durationMs":517,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769317966445 200 in 522ms (compile: 1814µs, render: 520ms)
+ GET /reader?id=qn8qdx&tab=trusted 200 in 22ms (compile: 3ms, render: 18ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317968720
+ GET /manifest.webmanifest 200 in 8ms (compile: 5ms, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"3bd70c6c-2a2e-42b5-b612-9e872d3f1bbb","ts":"2026-01-25T05:12:49.169Z","durationMs":449,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 455ms (compile: 1734µs, render: 453ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317969178
+{"type":"resolve","ts":"2026-01-25T05:12:49.518Z","requestId":"3a294b31-110a-4474-a5f2-5ca2b8f2f347","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":334,"inputHost":"news.google.com","publisherHost":"arizonasports.com","error":null}
+ POST /api/resolve 200 in 340ms (compile: 1789µs, render: 339ms)
+[Extract] Input URL: https://arizonasports.com/nba/phoenix-suns/devin-booker-jalen-green-2/3609597/
+[Extract] Fetching direct (non-Google) URL: https://arizonasports.com/nba/phoenix-suns/devin-booker-jalen-green-2/3609597/
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 25 items within 24 hours
+{"type":"search","requestId":"485c53fe-f0fe-482e-ad13-ad1a108e0c01","ts":"2026-01-25T05:12:49.573Z","durationMs":395,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":25,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 403ms (compile: 2ms, render: 400ms)
+{"type":"resolve","ts":"2026-01-25T05:12:49.577Z","requestId":"29c7323d-f64d-4a5c-b911-570beeed9d6f","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":389,"inputHost":"news.google.com","publisherHost":"arizonasports.com","error":null}
+ POST /api/resolve 200 in 398ms (compile: 5ms, render: 393ms)
+[Extract] Success via Readability: Devin Booker out, Jalen Green questionable - Arizona Sports (fetch)
+{"type":"extract","requestId":"b079b6ef-203a-4e23-92a3-44bd12a73d17","ts":"2026-01-25T05:12:49.783Z","durationMs":254,"inputUrl":"https://arizonasports.com/nba/phoenix-suns/devin-booker-jalen-green-2/3609597/","host":"arizonasports.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=UTF-8","titleLength":59,"textLength":1612,"fetchedUrl":"https://arizonasports.com/nba/phoenix-suns/devin-booker-jalen-green-2/3609597/","error":null}
+ GET /api/extract?url=https%3A%2F%2Farizonasports.com%2Fnba%2Fphoenix-suns%2Fdevin-booker-jalen-green-2%2F3609597%2F 200 in 260ms (compile: 3ms, render: 257ms)
+[Extract] Cache hit for: https://arizonasports.com/nba/phoenix-suns/devin-booker-jalen-green-2/3609597/
+{"type":"extract","requestId":"a84966fc-37c7-4c07-a336-b93b8db6d7d2","ts":"2026-01-25T05:12:49.791Z","durationMs":0,"inputUrl":"https://arizonasports.com/nba/phoenix-suns/devin-booker-jalen-green-2/3609597/","host":"arizonasports.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=UTF-8","titleLength":59,"textLength":1612,"fetchedUrl":"https://arizonasports.com/nba/phoenix-suns/devin-booker-jalen-green-2/3609597/","error":null}
+ GET /api/extract?url=https%3A%2F%2Farizonasports.com%2Fnba%2Fphoenix-suns%2Fdevin-booker-jalen-green-2%2F3609597%2F 200 in 3ms (compile: 1041µs, render: 1859µs)
+ GET /?tab=trusted 200 in 22ms (compile: 4ms, render: 18ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317972110
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317972114
+ GET /manifest.webmanifest 200 in 3ms (compile: 1165µs, render: 1655µs)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"6f6d6e5f-c05f-4edf-b6d6-7c401e27a326","ts":"2026-01-25T05:12:52.545Z","durationMs":431,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769317972096 200 in 441ms (compile: 6ms, render: 435ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"76d7eaaf-0d84-41b8-ace2-8dfa191b0b28","ts":"2026-01-25T05:12:52.550Z","durationMs":440,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769317972095 200 in 445ms (compile: 1890µs, render: 444ms)
+ GET /reader?id=m4jfzi&tab=trusted 200 in 22ms (compile: 4ms, render: 18ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317975682
+ GET /manifest.webmanifest 200 in 4ms (compile: 1422µs, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"75fc8788-e865-4bde-b0ca-37f71ea9fb28","ts":"2026-01-25T05:12:56.084Z","durationMs":402,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 409ms (compile: 2ms, render: 406ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317976095
+{"type":"resolve","ts":"2026-01-25T05:12:56.441Z","requestId":"8132ff85-7c4a-42d8-981c-5a79412e01b9","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":339,"inputHost":"news.google.com","publisherHost":"www.si.com","error":null}
+ POST /api/resolve 200 in 345ms (compile: 2ms, render: 343ms)
+[Extract] Input URL: https://www.si.com/nba/suns/onsi/news/phoenix-suns-reveal-injury-statuses-devin-booker-jalen-green-miami-heat
+[Extract] Fetching direct (non-Google) URL: https://www.si.com/nba/suns/onsi/news/phoenix-suns-reveal-injury-statuses-devin-booker-jalen-green-miami-heat
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"6d419f81-2690-47b3-869e-b3f5437199ee","ts":"2026-01-25T05:12:56.464Z","durationMs":369,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 377ms (compile: 2ms, render: 375ms)
+{"type":"resolve","ts":"2026-01-25T05:12:56.470Z","requestId":"e57ee1ef-407c-44e0-9546-fe527b4a2ced","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":362,"inputHost":"news.google.com","publisherHost":"www.si.com","error":null}
+ POST /api/resolve 200 in 374ms (compile: 7ms, render: 367ms)
+Error: Could not parse CSS stylesheet
+    at exports.createStylesheet (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/living/helpers/stylesheets.js:37:21)
+    at HTMLStyleElementImpl._updateAStyleBlock (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/living/nodes/HTMLStyleElement-impl.js:68:5)
+    at HTMLStyleElementImpl._poppedOffStackOfOpenElements (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/living/nodes/HTMLStyleElement-impl.js:42:10)
+    at JSDOMParse5Adapter.onItemPop (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/browser/parser/html.js:175:43)
+    at Parser.onItemPop (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/index.js:176:90)
+    at OpenElementStack.pop (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/open-element-stack.js:83:22)
+    at endTagInText (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/index.js:2353:20)
+    at Parser._endTagOutsideForeignContent (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/index.js:992:17)
+    at Parser.onEndTag (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/index.js:957:18)
+    at Tokenizer.emitCurrentTagToken (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:385:26)
+    at Tokenizer.handleSpecialEndTag (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:1060:22)
+    at Tokenizer._stateRawtextEndTagName (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:1106:18)
+    at Tokenizer._stateRawtextEndTagOpen (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:1095:18)
+    at Tokenizer._callState (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:544:22)
+    at Tokenizer._runParsingLoop (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:216:22)
+    at Tokenizer.write (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:241:14)
+    at Parser.parse (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/index.js:116:26)
+    at Object.parse (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/index.js:43:30)
+    at parseIntoDocument (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/browser/parser/html.js:202:17)
+    at parseIntoDocument (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/browser/parser/index.js:31:10)
+    at new JSDOM (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/api.js:42:5)
+    at GET (/Users/joshfredrickson/Projects/suns-reader/.next/dev/server/chunks/[root-of-the-server]__44dff021._.js:1696:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AppRouteRouteModule.do (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:5:37866)
+    at async AppRouteRouteModule.handle (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:5:45156)
+    at async responseGenerator (/Users/joshfredrickson/Projects/suns-reader/.next/dev/server/chunks/[root-of-the-server]__ddbfb247._.js:16992:38)
+    at async AppRouteRouteModule.handleResponse (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:1:187713)
+    at async handleResponse (/Users/joshfredrickson/Projects/suns-reader/.next/dev/server/chunks/[root-of-the-server]__ddbfb247._.js:17055:32)
+    at async Module.handler (/Users/joshfredrickson/Projects/suns-reader/.next/dev/server/chunks/[root-of-the-server]__ddbfb247._.js:17108:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/base-server.js:1422:9)
+    at async DevServer.renderPageComponent (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/base-server.js:1474:24)
+    at async DevServer.renderToResponseImpl (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/base-server.js:1524:32)
+    at async DevServer.pipeImpl (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/base-server.js:1018:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/base-server.js:909:17)
+    at async /Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/lib/start-server.js:226:13) #body-0 {margin-top: 137px;}
+          
+          
+          
+          }
+Error: Could not parse CSS stylesheet
+    at exports.createStylesheet (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/living/helpers/stylesheets.js:37:21)
+    at HTMLStyleElementImpl._updateAStyleBlock (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/living/nodes/HTMLStyleElement-impl.js:68:5)
+    at HTMLStyleElementImpl._poppedOffStackOfOpenElements (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/living/nodes/HTMLStyleElement-impl.js:42:10)
+    at JSDOMParse5Adapter.onItemPop (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/browser/parser/html.js:175:43)
+    at Parser.onItemPop (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/index.js:176:90)
+    at OpenElementStack.pop (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/open-element-stack.js:83:22)
+    at endTagInText (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/index.js:2353:20)
+    at Parser._endTagOutsideForeignContent (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/index.js:992:17)
+    at Parser.onEndTag (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/index.js:957:18)
+    at Tokenizer.emitCurrentTagToken (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:385:26)
+    at Tokenizer.handleSpecialEndTag (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:1060:22)
+    at Tokenizer._stateRawtextEndTagName (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:1106:18)
+    at Tokenizer._stateRawtextEndTagOpen (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:1095:18)
+    at Tokenizer._callState (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:544:22)
+    at Tokenizer._runParsingLoop (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:216:22)
+    at Tokenizer.write (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:241:14)
+    at Parser.parse (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/index.js:116:26)
+    at Object.parse (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/index.js:43:30)
+    at parseIntoDocument (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/browser/parser/html.js:202:17)
+    at parseIntoDocument (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/browser/parser/index.js:31:10)
+    at new JSDOM (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/api.js:42:5)
+    at GET (/Users/joshfredrickson/Projects/suns-reader/.next/dev/server/chunks/[root-of-the-server]__44dff021._.js:1704:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AppRouteRouteModule.do (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:5:37866)
+    at async AppRouteRouteModule.handle (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:5:45156)
+    at async responseGenerator (/Users/joshfredrickson/Projects/suns-reader/.next/dev/server/chunks/[root-of-the-server]__ddbfb247._.js:16992:38)
+    at async AppRouteRouteModule.handleResponse (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:1:187713)
+    at async handleResponse (/Users/joshfredrickson/Projects/suns-reader/.next/dev/server/chunks/[root-of-the-server]__ddbfb247._.js:17055:32)
+    at async Module.handler (/Users/joshfredrickson/Projects/suns-reader/.next/dev/server/chunks/[root-of-the-server]__ddbfb247._.js:17108:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/base-server.js:1422:9)
+    at async DevServer.renderPageComponent (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/base-server.js:1474:24)
+    at async DevServer.renderToResponseImpl (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/base-server.js:1524:32)
+    at async DevServer.pipeImpl (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/base-server.js:1018:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/base-server.js:909:17)
+    at async /Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/lib/start-server.js:226:13) #body-0 {margin-top: 137px;}
+          
+          
+          
+          }
+[Extract] Success via Readability: Suns Reveal Injury Statuses of Devin Booker, Jalen Green vs Heat (fetch)
+{"type":"extract","requestId":"ce50f1c2-a630-4e92-8465-81f95803ba80","ts":"2026-01-25T05:12:56.756Z","durationMs":302,"inputUrl":"https://www.si.com/nba/suns/onsi/news/phoenix-suns-reveal-injury-statuses-devin-booker-jalen-green-miami-heat","host":"www.si.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html","titleLength":64,"textLength":3114,"fetchedUrl":"https://www.si.com/nba/suns/onsi/news/phoenix-suns-reveal-injury-statuses-devin-booker-jalen-green-miami-heat","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.si.com%2Fnba%2Fsuns%2Fonsi%2Fnews%2Fphoenix-suns-reveal-injury-statuses-devin-booker-jalen-green-miami-heat 200 in 311ms (compile: 4ms, render: 308ms)
+[Extract] Cache hit for: https://www.si.com/nba/suns/onsi/news/phoenix-suns-reveal-injury-statuses-devin-booker-jalen-green-miami-heat
+{"type":"extract","requestId":"a9d74e5d-d4e4-41c8-bab4-4157cd70fe65","ts":"2026-01-25T05:12:56.762Z","durationMs":1,"inputUrl":"https://www.si.com/nba/suns/onsi/news/phoenix-suns-reveal-injury-statuses-devin-booker-jalen-green-miami-heat","host":"www.si.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html","titleLength":64,"textLength":3114,"fetchedUrl":"https://www.si.com/nba/suns/onsi/news/phoenix-suns-reveal-injury-statuses-devin-booker-jalen-green-miami-heat","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.si.com%2Fnba%2Fsuns%2Fonsi%2Fnews%2Fphoenix-suns-reveal-injury-statuses-devin-booker-jalen-green-miami-heat 200 in 4ms (compile: 973µs, render: 3ms)
+ GET /?tab=trusted 200 in 27ms (compile: 5ms, render: 22ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317979085
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317979090
+ GET /manifest.webmanifest 200 in 3ms (compile: 1284µs, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"95deb9f6-225c-48d2-a8cc-9533587389ac","ts":"2026-01-25T05:12:59.487Z","durationMs":397,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769317979070 200 in 408ms (compile: 7ms, render: 401ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 25 items within 24 hours
+{"type":"search","requestId":"45eec602-4851-43e9-80e7-4833adaf39b2","ts":"2026-01-25T05:12:59.494Z","durationMs":409,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":25,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769317979070 200 in 417ms (compile: 3ms, render: 414ms)
+ GET /reader?id=ox8qh0&tab=trusted 200 in 21ms (compile: 3ms, render: 17ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317983321
+ GET /manifest.webmanifest 200 in 4ms (compile: 1701µs, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"6324c529-798c-44d9-924b-a9c384624edc","ts":"2026-01-25T05:13:03.791Z","durationMs":470,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 477ms (compile: 2ms, render: 475ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317983803
+{"type":"resolve","ts":"2026-01-25T05:13:04.210Z","requestId":"b05d8eea-8452-45d4-a00e-b8bc63c7da47","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":397,"inputHost":"news.google.com","publisherHost":"www.azcentral.com","error":null}
+ POST /api/resolve 200 in 405ms (compile: 4ms, render: 402ms)
+[Extract] Input URL: https://www.azcentral.com/story/sports/nba/suns/2026/01/24/phoenix-suns-jusuf-nurkic-pete-maravich-utah-jazz-nba-record/88321190007/
+[Extract] Fetching direct (non-Google) URL: https://www.azcentral.com/story/sports/nba/suns/2026/01/24/phoenix-suns-jusuf-nurkic-pete-maravich-utah-jazz-nba-record/88321190007/
+{"type":"resolve","ts":"2026-01-25T05:13:04.243Z","requestId":"c5e5b7a1-dce2-4440-bbac-0ba881cb58e1","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":425,"inputHost":"news.google.com","publisherHost":"www.azcentral.com","error":null}
+ POST /api/resolve 200 in 437ms (compile: 9ms, render: 429ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"c6415871-2c71-492c-8a1d-39fc01029994","ts":"2026-01-25T05:13:04.398Z","durationMs":595,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 604ms (compile: 3ms, render: 602ms)
+[Extract] Success via Readability: Ex-Suns center Jusuf Nurkic makes history with Utah Jazz (fetch)
+{"type":"extract","requestId":"eacadbf2-084d-49b9-84d3-1373a3c168a0","ts":"2026-01-25T05:13:04.525Z","durationMs":306,"inputUrl":"https://www.azcentral.com/story/sports/nba/suns/2026/01/24/phoenix-suns-jusuf-nurkic-pete-maravich-utah-jazz-nba-record/88321190007/","host":"www.azcentral.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":56,"textLength":2625,"fetchedUrl":"https://www.azcentral.com/story/sports/nba/suns/2026/01/24/phoenix-suns-jusuf-nurkic-pete-maravich-utah-jazz-nba-record/88321190007/","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.azcentral.com%2Fstory%2Fsports%2Fnba%2Fsuns%2F2026%2F01%2F24%2Fphoenix-suns-jusuf-nurkic-pete-maravich-utah-jazz-nba-record%2F88321190007%2F 200 in 312ms (compile: 2ms, render: 310ms)
+[Extract] Cache hit for: https://www.azcentral.com/story/sports/nba/suns/2026/01/24/phoenix-suns-jusuf-nurkic-pete-maravich-utah-jazz-nba-record/88321190007/
+{"type":"extract","requestId":"ee906e18-fdc7-4e09-99ed-67901cac1702","ts":"2026-01-25T05:13:04.534Z","durationMs":0,"inputUrl":"https://www.azcentral.com/story/sports/nba/suns/2026/01/24/phoenix-suns-jusuf-nurkic-pete-maravich-utah-jazz-nba-record/88321190007/","host":"www.azcentral.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":56,"textLength":2625,"fetchedUrl":"https://www.azcentral.com/story/sports/nba/suns/2026/01/24/phoenix-suns-jusuf-nurkic-pete-maravich-utah-jazz-nba-record/88321190007/","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.azcentral.com%2Fstory%2Fsports%2Fnba%2Fsuns%2F2026%2F01%2F24%2Fphoenix-suns-jusuf-nurkic-pete-maravich-utah-jazz-nba-record%2F88321190007%2F 200 in 8ms (compile: 2ms, render: 6ms)
+ GET /?tab=trusted 200 in 23ms (compile: 3ms, render: 21ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317986939
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317986943
+ GET /manifest.webmanifest 200 in 6ms (compile: 4ms, render: 1817µs)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"5d35335c-53dd-4810-80cf-6daad83b980f","ts":"2026-01-25T05:13:07.321Z","durationMs":382,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769317986923 200 in 389ms (compile: 3ms, render: 386ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"7c8c2608-5e2a-4407-8836-0e9d9b363c59","ts":"2026-01-25T05:13:07.342Z","durationMs":398,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769317986924 200 in 408ms (compile: 6ms, render: 402ms)
+ GET /reader?id=xe4b6i&tab=trusted 200 in 25ms (compile: 4ms, render: 21ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317992763
+ GET /manifest.webmanifest 200 in 3ms (compile: 1233µs, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"95b7a8bb-2524-40b0-a9c8-69c1c1f6846f","ts":"2026-01-25T05:13:13.232Z","durationMs":469,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 477ms (compile: 2ms, render: 475ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317993242
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"6060c761-02e1-42aa-9a8b-10468271bbee","ts":"2026-01-25T05:13:13.678Z","durationMs":436,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 443ms (compile: 1997µs, render: 441ms)
+{"type":"resolve","ts":"2026-01-25T05:13:13.684Z","requestId":"a9ab3a24-309a-4e7f-8063-59c08a028bc4","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":435,"inputHost":"news.google.com","publisherHost":"www.brightsideofthesun.com","error":null}
+ POST /api/resolve 200 in 441ms (compile: 2ms, render: 439ms)
+[Extract] Input URL: https://www.brightsideofthesun.com/suns-analysis/97191/east-coast-road-trip-insights-jalen-green-devin-booker-jordan-ott-process-depth
+[Extract] Fetching direct (non-Google) URL: https://www.brightsideofthesun.com/suns-analysis/97191/east-coast-road-trip-insights-jalen-green-devin-booker-jordan-ott-process-depth
+[Extract] Success via Readability: The most interesting things I heard on the Suns’ road trip (fetch)
+{"type":"extract","requestId":"f4bb277f-5fdd-4946-a0ba-0ac6d8369cf8","ts":"2026-01-25T05:13:13.897Z","durationMs":207,"inputUrl":"https://www.brightsideofthesun.com/suns-analysis/97191/east-coast-road-trip-insights-jalen-green-devin-booker-jordan-ott-process-depth","host":"www.brightsideofthesun.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":58,"textLength":3012,"fetchedUrl":"https://www.brightsideofthesun.com/suns-analysis/97191/east-coast-road-trip-insights-jalen-green-devin-booker-jordan-ott-process-depth","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.brightsideofthesun.com%2Fsuns-analysis%2F97191%2Feast-coast-road-trip-insights-jalen-green-devin-booker-jordan-ott-process-depth 200 in 211ms (compile: 1457µs, render: 210ms)
+{"type":"resolve","ts":"2026-01-25T05:13:13.903Z","requestId":"3e625428-88e8-48a0-b487-1b23440cdc59","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":648,"inputHost":"news.google.com","publisherHost":"www.brightsideofthesun.com","error":null}
+ POST /api/resolve 200 in 653ms (compile: 1640µs, render: 651ms)
+[Extract] Cache hit for: https://www.brightsideofthesun.com/suns-analysis/97191/east-coast-road-trip-insights-jalen-green-devin-booker-jordan-ott-process-depth
+{"type":"extract","requestId":"3b332d7e-2503-4057-96af-b454ac547074","ts":"2026-01-25T05:13:13.911Z","durationMs":0,"inputUrl":"https://www.brightsideofthesun.com/suns-analysis/97191/east-coast-road-trip-insights-jalen-green-devin-booker-jordan-ott-process-depth","host":"www.brightsideofthesun.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":58,"textLength":3012,"fetchedUrl":"https://www.brightsideofthesun.com/suns-analysis/97191/east-coast-road-trip-insights-jalen-green-devin-booker-jordan-ott-process-depth","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.brightsideofthesun.com%2Fsuns-analysis%2F97191%2Feast-coast-road-trip-insights-jalen-green-devin-booker-jordan-ott-process-depth 200 in 6ms (compile: 2ms, render: 4ms)
+ GET /?tab=trusted 200 in 25ms (compile: 4ms, render: 21ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317995612
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317995615
+ GET /manifest.webmanifest 200 in 10ms (compile: 7ms, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"b2fd577d-e4e2-4fb8-bc07-4c881d34911d","ts":"2026-01-25T05:13:16.009Z","durationMs":397,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769317995599 200 in 404ms (compile: 2ms, render: 402ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"cb21ddbf-3094-4760-824c-c052277863e0","ts":"2026-01-25T05:13:16.031Z","durationMs":416,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769317995600 200 in 424ms (compile: 5ms, render: 419ms)
+ GET /reader?id=k1ns3e&tab=trusted 200 in 22ms (compile: 3ms, render: 18ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317999008
+ GET /manifest.webmanifest 200 in 4ms (compile: 2ms, render: 1636µs)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 25 items within 24 hours
+{"type":"search","requestId":"35c7b6aa-7397-4726-bd87-067de4052f61","ts":"2026-01-25T05:13:19.521Z","durationMs":513,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":25,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 519ms (compile: 3ms, render: 516ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769317999527
+{"type":"resolve","ts":"2026-01-25T05:13:19.870Z","requestId":"add0b2eb-f193-4f09-b6e3-62acd56026ec","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":337,"inputHost":"news.google.com","publisherHost":"www.brightsideofthesun.com","error":null}
+ POST /api/resolve 200 in 344ms (compile: 1884µs, render: 342ms)
+[Extract] Input URL: https://www.brightsideofthesun.com/suns-analysis/97302/the-increstan-culture-nba-social-media-player-fandom-injuries-durant-accountabilityasingly-vicious-nature-of-stan-culture
+[Extract] Fetching direct (non-Google) URL: https://www.brightsideofthesun.com/suns-analysis/97302/the-increstan-culture-nba-social-media-player-fandom-injuries-durant-accountabilityasingly-vicious-nature-of-stan-culture
+{"type":"resolve","ts":"2026-01-25T05:13:19.900Z","requestId":"45802975-3c50-4e55-94a9-c820b319095a","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":363,"inputHost":"news.google.com","publisherHost":"www.brightsideofthesun.com","error":null}
+ POST /api/resolve 200 in 373ms (compile: 5ms, render: 368ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"bd5ed5e5-b294-4c33-b740-46801e320199","ts":"2026-01-25T05:13:19.929Z","durationMs":402,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 407ms (compile: 1423µs, render: 406ms)
+[Extract] Success via Readability: The increasingly vicious nature of Stan Culture (fetch)
+{"type":"extract","requestId":"941dc7e2-9df9-43a3-949a-b111943bfe00","ts":"2026-01-25T05:13:20.067Z","durationMs":186,"inputUrl":"https://www.brightsideofthesun.com/suns-analysis/97302/the-increstan-culture-nba-social-media-player-fandom-injuries-durant-accountabilityasingly-vicious-nature-of-stan-culture","host":"www.brightsideofthesun.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":47,"textLength":2225,"fetchedUrl":"https://www.brightsideofthesun.com/suns-analysis/97302/the-increstan-culture-nba-social-media-player-fandom-injuries-durant-accountabilityasingly-vicious-nature-of-stan-culture","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.brightsideofthesun.com%2Fsuns-analysis%2F97302%2Fthe-increstan-culture-nba-social-media-player-fandom-injuries-durant-accountabilityasingly-vicious-nature-of-stan-culture 200 in 193ms (compile: 3ms, render: 190ms)
+[Extract] Cache hit for: https://www.brightsideofthesun.com/suns-analysis/97302/the-increstan-culture-nba-social-media-player-fandom-injuries-durant-accountabilityasingly-vicious-nature-of-stan-culture
+{"type":"extract","requestId":"b187f1e1-b80f-40c8-bf60-a739bb6c2194","ts":"2026-01-25T05:13:20.074Z","durationMs":0,"inputUrl":"https://www.brightsideofthesun.com/suns-analysis/97302/the-increstan-culture-nba-social-media-player-fandom-injuries-durant-accountabilityasingly-vicious-nature-of-stan-culture","host":"www.brightsideofthesun.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":47,"textLength":2225,"fetchedUrl":"https://www.brightsideofthesun.com/suns-analysis/97302/the-increstan-culture-nba-social-media-player-fandom-injuries-durant-accountabilityasingly-vicious-nature-of-stan-culture","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.brightsideofthesun.com%2Fsuns-analysis%2F97302%2Fthe-increstan-culture-nba-social-media-player-fandom-injuries-durant-accountabilityasingly-vicious-nature-of-stan-culture 200 in 6ms (compile: 1628µs, render: 4ms)
+ GET /?tab=trusted 200 in 24ms (compile: 4ms, render: 19ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318001124
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318001129
+ GET /manifest.webmanifest 200 in 6ms (compile: 4ms, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"a29f9733-ed69-447a-934e-18faaea434a0","ts":"2026-01-25T05:13:21.526Z","durationMs":397,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318001113 200 in 402ms (compile: 1777µs, render: 400ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"a1948ed8-4933-40b6-a624-266b0151df18","ts":"2026-01-25T05:13:21.579Z","durationMs":455,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318001112 200 in 460ms (compile: 2ms, render: 458ms)
+ GET /reader?id=morna2&tab=trusted 200 in 21ms (compile: 2ms, render: 18ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318003617
+ GET /manifest.webmanifest 200 in 8ms (compile: 6ms, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"c0286ad0-bb94-4ab1-8949-afac2e213ce7","ts":"2026-01-25T05:13:24.064Z","durationMs":447,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 455ms (compile: 3ms, render: 452ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318004075
+{"type":"resolve","ts":"2026-01-25T05:13:24.446Z","requestId":"fdc6fb6b-e5b9-4b15-9bb2-0073bfecbac6","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":363,"inputHost":"news.google.com","publisherHost":"valleyofthesuns.com","error":null}
+ POST /api/resolve 200 in 370ms (compile: 1886µs, render: 368ms)
+[Extract] Input URL: https://valleyofthesuns.com/suns-rumor-failed-attempt-gift-devin-booker-jalen-green
+[Extract] Fetching direct (non-Google) URL: https://valleyofthesuns.com/suns-rumor-failed-attempt-gift-devin-booker-jalen-green
+{"type":"resolve","ts":"2026-01-25T05:13:24.464Z","requestId":"73daaa29-b6d3-4888-8f6f-3b406cc2bcb4","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":377,"inputHost":"news.google.com","publisherHost":"valleyofthesuns.com","error":null}
+ POST /api/resolve 200 in 387ms (compile: 6ms, render: 381ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"b09e699f-d7b9-4349-9fa9-e1de9e1e22cd","ts":"2026-01-25T05:13:24.511Z","durationMs":436,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 445ms (compile: 3ms, render: 442ms)
+Error: Could not parse CSS stylesheet
+    at exports.createStylesheet (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/living/helpers/stylesheets.js:37:21)
+    at HTMLStyleElementImpl._updateAStyleBlock (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/living/nodes/HTMLStyleElement-impl.js:68:5)
+    at HTMLStyleElementImpl._poppedOffStackOfOpenElements (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/living/nodes/HTMLStyleElement-impl.js:42:10)
+    at JSDOMParse5Adapter.onItemPop (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/browser/parser/html.js:175:43)
+    at Parser.onItemPop (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/index.js:176:90)
+    at OpenElementStack.pop (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/open-element-stack.js:83:22)
+    at endTagInText (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/index.js:2353:20)
+    at Parser._endTagOutsideForeignContent (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/index.js:992:17)
+    at Parser.onEndTag (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/index.js:957:18)
+    at Tokenizer.emitCurrentTagToken (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:385:26)
+    at Tokenizer.handleSpecialEndTag (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:1060:22)
+    at Tokenizer._stateRawtextEndTagName (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:1106:18)
+    at Tokenizer._stateRawtextEndTagOpen (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:1095:18)
+    at Tokenizer._callState (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:544:22)
+    at Tokenizer._runParsingLoop (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:216:22)
+    at Tokenizer.write (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:241:14)
+    at Parser.parse (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/index.js:116:26)
+    at Object.parse (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/index.js:43:30)
+    at parseIntoDocument (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/browser/parser/html.js:202:17)
+    at parseIntoDocument (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/browser/parser/index.js:31:10)
+    at new JSDOM (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/api.js:42:5)
+    at GET (/Users/joshfredrickson/Projects/suns-reader/.next/dev/server/chunks/[root-of-the-server]__44dff021._.js:1696:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AppRouteRouteModule.do (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:5:37866)
+    at async AppRouteRouteModule.handle (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:5:45156)
+    at async responseGenerator (/Users/joshfredrickson/Projects/suns-reader/.next/dev/server/chunks/[root-of-the-server]__ddbfb247._.js:16992:38)
+    at async AppRouteRouteModule.handleResponse (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:1:187713)
+    at async handleResponse (/Users/joshfredrickson/Projects/suns-reader/.next/dev/server/chunks/[root-of-the-server]__ddbfb247._.js:17055:32)
+    at async Module.handler (/Users/joshfredrickson/Projects/suns-reader/.next/dev/server/chunks/[root-of-the-server]__ddbfb247._.js:17108:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/base-server.js:1422:9)
+    at async DevServer.renderPageComponent (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/base-server.js:1474:24)
+    at async DevServer.renderToResponseImpl (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/base-server.js:1524:32)
+    at async DevServer.pipeImpl (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/base-server.js:1018:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/base-server.js:909:17)
+    at async /Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/lib/start-server.js:226:13) #body-0 {margin-top: 60px;}
+          
+          
+          
+          }
+Error: Could not parse CSS stylesheet
+    at exports.createStylesheet (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/living/helpers/stylesheets.js:37:21)
+    at HTMLStyleElementImpl._updateAStyleBlock (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/living/nodes/HTMLStyleElement-impl.js:68:5)
+    at HTMLStyleElementImpl._poppedOffStackOfOpenElements (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/living/nodes/HTMLStyleElement-impl.js:42:10)
+    at JSDOMParse5Adapter.onItemPop (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/browser/parser/html.js:175:43)
+    at Parser.onItemPop (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/index.js:176:90)
+    at OpenElementStack.pop (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/open-element-stack.js:83:22)
+    at endTagInText (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/index.js:2353:20)
+    at Parser._endTagOutsideForeignContent (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/index.js:992:17)
+    at Parser.onEndTag (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/index.js:957:18)
+    at Tokenizer.emitCurrentTagToken (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:385:26)
+    at Tokenizer.handleSpecialEndTag (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:1060:22)
+    at Tokenizer._stateRawtextEndTagName (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:1106:18)
+    at Tokenizer._stateRawtextEndTagOpen (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:1095:18)
+    at Tokenizer._callState (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:544:22)
+    at Tokenizer._runParsingLoop (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:216:22)
+    at Tokenizer.write (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/tokenizer/index.js:241:14)
+    at Parser.parse (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/parser/index.js:116:26)
+    at Object.parse (/Users/joshfredrickson/Projects/suns-reader/node_modules/parse5/dist/cjs/index.js:43:30)
+    at parseIntoDocument (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/browser/parser/html.js:202:17)
+    at parseIntoDocument (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/jsdom/browser/parser/index.js:31:10)
+    at new JSDOM (/Users/joshfredrickson/Projects/suns-reader/node_modules/jsdom/lib/api.js:42:5)
+    at GET (/Users/joshfredrickson/Projects/suns-reader/.next/dev/server/chunks/[root-of-the-server]__44dff021._.js:1704:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AppRouteRouteModule.do (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:5:37866)
+    at async AppRouteRouteModule.handle (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:5:45156)
+    at async responseGenerator (/Users/joshfredrickson/Projects/suns-reader/.next/dev/server/chunks/[root-of-the-server]__ddbfb247._.js:16992:38)
+    at async AppRouteRouteModule.handleResponse (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:1:187713)
+    at async handleResponse (/Users/joshfredrickson/Projects/suns-reader/.next/dev/server/chunks/[root-of-the-server]__ddbfb247._.js:17055:32)
+    at async Module.handler (/Users/joshfredrickson/Projects/suns-reader/.next/dev/server/chunks/[root-of-the-server]__ddbfb247._.js:17108:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/base-server.js:1422:9)
+    at async DevServer.renderPageComponent (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/base-server.js:1474:24)
+    at async DevServer.renderToResponseImpl (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/base-server.js:1524:32)
+    at async DevServer.pipeImpl (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/base-server.js:1018:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/base-server.js:909:17)
+    at async /Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/joshfredrickson/Projects/suns-reader/node_modules/next/dist/server/lib/start-server.js:226:13) #body-0 {margin-top: 60px;}
+          
+          
+          
+          }
+[Extract] Success via Readability: Suns rumor a failed attempt to gift Devin Booker what Jalen Green was meant to be (fetch)
+{"type":"extract","requestId":"07496ed6-46c5-4836-afcb-4024e567f21a","ts":"2026-01-25T05:13:24.728Z","durationMs":268,"inputUrl":"https://valleyofthesuns.com/suns-rumor-failed-attempt-gift-devin-booker-jalen-green","host":"valleyofthesuns.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html","titleLength":81,"textLength":2720,"fetchedUrl":"https://valleyofthesuns.com/suns-rumor-failed-attempt-gift-devin-booker-jalen-green","error":null}
+ GET /api/extract?url=https%3A%2F%2Fvalleyofthesuns.com%2Fsuns-rumor-failed-attempt-gift-devin-booker-jalen-green 200 in 274ms (compile: 3ms, render: 271ms)
+[Extract] Cache hit for: https://valleyofthesuns.com/suns-rumor-failed-attempt-gift-devin-booker-jalen-green
+{"type":"extract","requestId":"da941526-a88c-4855-abd6-806ea17fea77","ts":"2026-01-25T05:13:24.732Z","durationMs":0,"inputUrl":"https://valleyofthesuns.com/suns-rumor-failed-attempt-gift-devin-booker-jalen-green","host":"valleyofthesuns.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html","titleLength":81,"textLength":2720,"fetchedUrl":"https://valleyofthesuns.com/suns-rumor-failed-attempt-gift-devin-booker-jalen-green","error":null}
+ GET /api/extract?url=https%3A%2F%2Fvalleyofthesuns.com%2Fsuns-rumor-failed-attempt-gift-devin-booker-jalen-green 200 in 2ms (compile: 1006µs, render: 1315µs)
+ GET /?tab=trusted 200 in 21ms (compile: 4ms, render: 17ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318006249
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318006252
+ GET /manifest.webmanifest 200 in 11ms (compile: 9ms, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"01e58df6-bfaa-4105-b06b-58e753190a85","ts":"2026-01-25T05:13:26.628Z","durationMs":376,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318006237 200 in 385ms (compile: 6ms, render: 379ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"55cbbc47-3183-4069-9525-968c5b9e3e7e","ts":"2026-01-25T05:13:26.697Z","durationMs":448,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318006236 200 in 454ms (compile: 3ms, render: 451ms)
+ GET /reader?id=2ubxx9&tab=trusted 200 in 20ms (compile: 2ms, render: 18ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318008061
+ GET /manifest.webmanifest 200 in 4ms (compile: 1586µs, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"22a43384-c7a4-4e87-aac0-fb1d8cf2ba07","ts":"2026-01-25T05:13:28.482Z","durationMs":421,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 427ms (compile: 2ms, render: 424ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318008489
+{"type":"resolve","ts":"2026-01-25T05:13:28.852Z","requestId":"53e62de0-37af-4dd6-af7a-70c27f653f62","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":356,"inputHost":"news.google.com","publisherHost":"www.azcentral.com","error":null}
+ POST /api/resolve 200 in 363ms (compile: 1833µs, render: 361ms)
+{"type":"resolve","ts":"2026-01-25T05:13:28.856Z","requestId":"b3c56962-080f-4cf4-970e-1b415753b49c","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":356,"inputHost":"news.google.com","publisherHost":"www.azcentral.com","error":null}
+ POST /api/resolve 200 in 367ms (compile: 6ms, render: 361ms)
+[Extract] Input URL: https://www.azcentral.com/story/sports/nba/suns/2026/01/24/jalen-green-injury-adidas-sneaker-search-phoenix-suns/88333089007/
+[Extract] Fetching direct (non-Google) URL: https://www.azcentral.com/story/sports/nba/suns/2026/01/24/jalen-green-injury-adidas-sneaker-search-phoenix-suns/88333089007/
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"78d093ec-4428-4e79-82aa-91ad193e893d","ts":"2026-01-25T05:13:28.888Z","durationMs":399,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 406ms (compile: 2ms, render: 404ms)
+[Extract] Success via Readability: Jalen Green talks sneaker search, Suns season and more in 1-on-1 (fetch)
+{"type":"extract","requestId":"aac04cee-496e-4461-bb72-acb7436b23bc","ts":"2026-01-25T05:13:29.485Z","durationMs":620,"inputUrl":"https://www.azcentral.com/story/sports/nba/suns/2026/01/24/jalen-green-injury-adidas-sneaker-search-phoenix-suns/88333089007/","host":"www.azcentral.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":64,"textLength":3761,"fetchedUrl":"https://www.azcentral.com/story/sports/nba/suns/2026/01/24/jalen-green-injury-adidas-sneaker-search-phoenix-suns/88333089007/","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.azcentral.com%2Fstory%2Fsports%2Fnba%2Fsuns%2F2026%2F01%2F24%2Fjalen-green-injury-adidas-sneaker-search-phoenix-suns%2F88333089007%2F 200 in 625ms (compile: 2ms, render: 623ms)
+[Extract] Cache hit for: https://www.azcentral.com/story/sports/nba/suns/2026/01/24/jalen-green-injury-adidas-sneaker-search-phoenix-suns/88333089007/
+{"type":"extract","requestId":"180bbc08-ad8e-4bf9-bf18-8f35d0c09ad9","ts":"2026-01-25T05:13:29.491Z","durationMs":0,"inputUrl":"https://www.azcentral.com/story/sports/nba/suns/2026/01/24/jalen-green-injury-adidas-sneaker-search-phoenix-suns/88333089007/","host":"www.azcentral.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":64,"textLength":3761,"fetchedUrl":"https://www.azcentral.com/story/sports/nba/suns/2026/01/24/jalen-green-injury-adidas-sneaker-search-phoenix-suns/88333089007/","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.azcentral.com%2Fstory%2Fsports%2Fnba%2Fsuns%2F2026%2F01%2F24%2Fjalen-green-injury-adidas-sneaker-search-phoenix-suns%2F88333089007%2F 200 in 5ms (compile: 1886µs, render: 3ms)
+ GET /?tab=trusted 200 in 21ms (compile: 3ms, render: 18ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318010736
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318010740
+ GET /manifest.webmanifest 200 in 4ms (compile: 1620µs, render: 3ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 25 items within 24 hours
+{"type":"search","requestId":"f3fda1e2-1722-48bd-94c3-7ccc45542986","ts":"2026-01-25T05:13:31.235Z","durationMs":499,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":25,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318010722 200 in 506ms (compile: 3ms, render: 503ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"0083035e-4887-4197-82dc-289141f287b2","ts":"2026-01-25T05:13:31.401Z","durationMs":661,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318010722 200 in 671ms (compile: 6ms, render: 665ms)
+ GET /reader?id=3ttdi3&tab=trusted 200 in 16ms (compile: 1696µs, render: 14ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318013054
+ GET /manifest.webmanifest 200 in 8ms (compile: 6ms, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"137289af-38b8-4cff-9815-dec40bc5a7ff","ts":"2026-01-25T05:13:33.473Z","durationMs":419,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 425ms (compile: 2ms, render: 423ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318013479
+{"type":"resolve","ts":"2026-01-25T05:13:33.826Z","requestId":"3f7d57c7-22dd-4aa8-b5df-8bf7d85b6383","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":339,"inputHost":"news.google.com","publisherHost":"www.brightsideofthesun.com","error":null}
+ POST /api/resolve 200 in 347ms (compile: 2ms, render: 345ms)
+[Extract] Input URL: https://www.brightsideofthesun.com/suns-news/97244/mat-ishbia-concession-prices-value-menu-expansion-tacos-ice-cream-mortgage-matchup-center
+[Extract] Fetching direct (non-Google) URL: https://www.brightsideofthesun.com/suns-news/97244/mat-ishbia-concession-prices-value-menu-expansion-tacos-ice-cream-mortgage-matchup-center
+{"type":"resolve","ts":"2026-01-25T05:13:33.850Z","requestId":"a1742dd6-958d-4c1f-a6d7-c773e393608d","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":358,"inputHost":"news.google.com","publisherHost":"www.brightsideofthesun.com","error":null}
+ POST /api/resolve 200 in 369ms (compile: 7ms, render: 362ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"c410ee1e-4cef-44ce-8f67-8db9eab616d4","ts":"2026-01-25T05:13:33.890Z","durationMs":411,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 417ms (compile: 1561µs, render: 415ms)
+[Extract] Success via Readability: More discounts coming to Mortgage Matchup Center (fetch)
+{"type":"extract","requestId":"e25d746a-3c89-4537-938f-15216f2b882f","ts":"2026-01-25T05:13:34.057Z","durationMs":218,"inputUrl":"https://www.brightsideofthesun.com/suns-news/97244/mat-ishbia-concession-prices-value-menu-expansion-tacos-ice-cream-mortgage-matchup-center","host":"www.brightsideofthesun.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":48,"textLength":991,"fetchedUrl":"https://www.brightsideofthesun.com/suns-news/97244/mat-ishbia-concession-prices-value-menu-expansion-tacos-ice-cream-mortgage-matchup-center","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.brightsideofthesun.com%2Fsuns-news%2F97244%2Fmat-ishbia-concession-prices-value-menu-expansion-tacos-ice-cream-mortgage-matchup-center 200 in 225ms (compile: 2ms, render: 222ms)
+[Extract] Cache hit for: https://www.brightsideofthesun.com/suns-news/97244/mat-ishbia-concession-prices-value-menu-expansion-tacos-ice-cream-mortgage-matchup-center
+{"type":"extract","requestId":"c74a2fa8-b685-48c0-b0fb-3bd27afe8b54","ts":"2026-01-25T05:13:34.067Z","durationMs":0,"inputUrl":"https://www.brightsideofthesun.com/suns-news/97244/mat-ishbia-concession-prices-value-menu-expansion-tacos-ice-cream-mortgage-matchup-center","host":"www.brightsideofthesun.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":48,"textLength":991,"fetchedUrl":"https://www.brightsideofthesun.com/suns-news/97244/mat-ishbia-concession-prices-value-menu-expansion-tacos-ice-cream-mortgage-matchup-center","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.brightsideofthesun.com%2Fsuns-news%2F97244%2Fmat-ishbia-concession-prices-value-menu-expansion-tacos-ice-cream-mortgage-matchup-center 200 in 6ms (compile: 3ms, render: 3ms)
+ GET /?tab=trusted 200 in 20ms (compile: 3ms, render: 17ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318016825
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318016828
+ GET /manifest.webmanifest 200 in 6ms (compile: 4ms, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"e9cb8dcf-9225-49b2-aadd-6e4c283e36af","ts":"2026-01-25T05:13:37.233Z","durationMs":408,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318016807 200 in 417ms (compile: 3ms, render: 413ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 25 items within 24 hours
+{"type":"search","requestId":"211ebe47-6402-48e8-bafa-3a6e1ec68d2d","ts":"2026-01-25T05:13:37.298Z","durationMs":470,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":25,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318016807 200 in 478ms (compile: 6ms, render: 472ms)
+ GET /reader?id=ybrmki&tab=trusted 200 in 21ms (compile: 3ms, render: 18ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318019707
+ GET /manifest.webmanifest 200 in 4ms (compile: 1911µs, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"803686a5-dfb7-48af-b2c8-c95cfd31cda2","ts":"2026-01-25T05:13:40.152Z","durationMs":445,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 452ms (compile: 3ms, render: 450ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318020161
+{"type":"resolve","ts":"2026-01-25T05:13:40.497Z","requestId":"3709e49d-71c6-43bb-a961-e9f82784c6bd","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":324,"inputHost":"news.google.com","publisherHost":"www.azcentral.com","error":null}
+ POST /api/resolve 200 in 335ms (compile: 6ms, render: 329ms)
+[Extract] Input URL: https://www.azcentral.com/story/sports/nba/suns/2026/01/24/whats-next-for-suns-injuries-for-booker-green-in-loss/88335305007/
+[Extract] Fetching direct (non-Google) URL: https://www.azcentral.com/story/sports/nba/suns/2026/01/24/whats-next-for-suns-injuries-for-booker-green-in-loss/88335305007/
+{"type":"resolve","ts":"2026-01-25T05:13:40.512Z","requestId":"a8c5fbb2-9b34-45b2-813d-ceefb19e1d5c","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":343,"inputHost":"news.google.com","publisherHost":"www.azcentral.com","error":null}
+ POST /api/resolve 200 in 351ms (compile: 3ms, render: 348ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"466fe768-a400-4ad3-b9a6-ad6974e6151d","ts":"2026-01-25T05:13:40.600Z","durationMs":439,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 445ms (compile: 2ms, render: 443ms)
+[Extract] Success via Readability: How Suns can win minus Devin Booker and Jalen Green. Takeaways (fetch)
+{"type":"extract","requestId":"75a72363-f5de-4dd5-8853-3f545a5750e5","ts":"2026-01-25T05:13:41.068Z","durationMs":560,"inputUrl":"https://www.azcentral.com/story/sports/nba/suns/2026/01/24/whats-next-for-suns-injuries-for-booker-green-in-loss/88335305007/","host":"www.azcentral.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":62,"textLength":7137,"fetchedUrl":"https://www.azcentral.com/story/sports/nba/suns/2026/01/24/whats-next-for-suns-injuries-for-booker-green-in-loss/88335305007/","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.azcentral.com%2Fstory%2Fsports%2Fnba%2Fsuns%2F2026%2F01%2F24%2Fwhats-next-for-suns-injuries-for-booker-green-in-loss%2F88335305007%2F 200 in 566ms (compile: 2ms, render: 564ms)
+[Extract] Cache hit for: https://www.azcentral.com/story/sports/nba/suns/2026/01/24/whats-next-for-suns-injuries-for-booker-green-in-loss/88335305007/
+{"type":"extract","requestId":"d1be280e-70f2-4407-b28f-a2906cd60e49","ts":"2026-01-25T05:13:41.081Z","durationMs":0,"inputUrl":"https://www.azcentral.com/story/sports/nba/suns/2026/01/24/whats-next-for-suns-injuries-for-booker-green-in-loss/88335305007/","host":"www.azcentral.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":62,"textLength":7137,"fetchedUrl":"https://www.azcentral.com/story/sports/nba/suns/2026/01/24/whats-next-for-suns-injuries-for-booker-green-in-loss/88335305007/","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.azcentral.com%2Fstory%2Fsports%2Fnba%2Fsuns%2F2026%2F01%2F24%2Fwhats-next-for-suns-injuries-for-booker-green-in-loss%2F88335305007%2F 200 in 6ms (compile: 1630µs, render: 4ms)
+ GET /?tab=trusted 200 in 22ms (compile: 3ms, render: 19ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318023005
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318023011
+ GET /manifest.webmanifest 200 in 7ms (compile: 5ms, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"3bff6536-8b37-40cc-95b7-52911ccbcbc5","ts":"2026-01-25T05:13:43.407Z","durationMs":396,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318022991 200 in 402ms (compile: 2ms, render: 400ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"0862cd68-cfaf-4a81-a83e-2665f749c853","ts":"2026-01-25T05:13:43.480Z","durationMs":475,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318022990 200 in 480ms (compile: 1952µs, render: 478ms)
+ GET /reader?id=9y68uz&tab=trusted 200 in 19ms (compile: 2ms, render: 17ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318025489
+ GET /manifest.webmanifest 200 in 7ms (compile: 5ms, render: 1976µs)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"22574909-fe97-4b44-b719-375fb976e832","ts":"2026-01-25T05:13:45.872Z","durationMs":383,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 390ms (compile: 3ms, render: 387ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318025879
+{"type":"resolve","ts":"2026-01-25T05:13:46.212Z","requestId":"8251a93e-27ef-469e-a789-637388fc8079","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":321,"inputHost":"news.google.com","publisherHost":"www.brightsideofthesun.com","error":null}
+ POST /api/resolve 200 in 332ms (compile: 6ms, render: 326ms)
+[Extract] Input URL: https://www.brightsideofthesun.com/phoenx-suns-player-of-the-game/97059/suns-injuries-booker-green-atlanta-road-trip-season-turning-point
+[Extract] Fetching direct (non-Google) URL: https://www.brightsideofthesun.com/phoenx-suns-player-of-the-game/97059/suns-injuries-booker-green-atlanta-road-trip-season-turning-point
+{"type":"resolve","ts":"2026-01-25T05:13:46.234Z","requestId":"8cb8f641-3076-41de-845b-06184e0eae10","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":348,"inputHost":"news.google.com","publisherHost":"www.brightsideofthesun.com","error":null}
+ POST /api/resolve 200 in 354ms (compile: 2ms, render: 352ms)
+[Extract] Success via Readability: From Suns’ resilience to wreckage in one night (fetch)
+{"type":"extract","requestId":"3b4d5cf9-3d8a-4d88-bb41-7804b16679fd","ts":"2026-01-25T05:13:46.401Z","durationMs":177,"inputUrl":"https://www.brightsideofthesun.com/phoenx-suns-player-of-the-game/97059/suns-injuries-booker-green-atlanta-road-trip-season-turning-point","host":"www.brightsideofthesun.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":46,"textLength":2836,"fetchedUrl":"https://www.brightsideofthesun.com/phoenx-suns-player-of-the-game/97059/suns-injuries-booker-green-atlanta-road-trip-season-turning-point","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.brightsideofthesun.com%2Fphoenx-suns-player-of-the-game%2F97059%2Fsuns-injuries-booker-green-atlanta-road-trip-season-turning-point 200 in 183ms (compile: 3ms, render: 181ms)
+[Extract] Cache hit for: https://www.brightsideofthesun.com/phoenx-suns-player-of-the-game/97059/suns-injuries-booker-green-atlanta-road-trip-season-turning-point
+{"type":"extract","requestId":"cfba2958-59f3-4e58-98dd-1e9701792bf0","ts":"2026-01-25T05:13:46.411Z","durationMs":1,"inputUrl":"https://www.brightsideofthesun.com/phoenx-suns-player-of-the-game/97059/suns-injuries-booker-green-atlanta-road-trip-season-turning-point","host":"www.brightsideofthesun.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":46,"textLength":2836,"fetchedUrl":"https://www.brightsideofthesun.com/phoenx-suns-player-of-the-game/97059/suns-injuries-booker-green-atlanta-road-trip-season-turning-point","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.brightsideofthesun.com%2Fphoenx-suns-player-of-the-game%2F97059%2Fsuns-injuries-booker-green-atlanta-road-trip-season-turning-point 200 in 5ms (compile: 3ms, render: 1902µs)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"b17269b0-a3d1-47c9-8186-007198e3bc51","ts":"2026-01-25T05:13:46.427Z","durationMs":548,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 553ms (compile: 1527µs, render: 552ms)
+ GET /?tab=trusted 200 in 22ms (compile: 4ms, render: 18ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318028204
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318028207
+ GET /manifest.webmanifest 200 in 3ms (compile: 1027µs, render: 1780µs)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"847f9bae-955d-4a69-be29-2bd0c8347abe","ts":"2026-01-25T05:13:48.600Z","durationMs":396,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318028189 200 in 404ms (compile: 3ms, render: 401ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"5fc3ec86-9354-4924-8999-3d75f6cfdbce","ts":"2026-01-25T05:13:48.654Z","durationMs":447,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318028190 200 in 456ms (compile: 6ms, render: 450ms)
+ GET /?tab=discovery 200 in 17ms (compile: 3ms, render: 14ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318031806
+ GET /manifest.webmanifest 200 in 4ms (compile: 1162µs, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"08ba5fc4-6783-4fb9-9532-a7d3b3d62857","ts":"2026-01-25T05:13:52.239Z","durationMs":433,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318031799 200 in 439ms (compile: 3ms, render: 436ms)
+ GET /reader?id=f9p9xa&tab=discovery 200 in 23ms (compile: 4ms, render: 19ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318038356
+ GET /manifest.webmanifest 200 in 3ms (compile: 1217µs, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"0e2ce1c5-7949-4a62-8ae7-81e1f5cb78ff","ts":"2026-01-25T05:13:59.052Z","durationMs":696,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 703ms (compile: 1989µs, render: 701ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318039059
+{"type":"resolve","ts":"2026-01-25T05:13:59.453Z","requestId":"905673a9-307e-4c4c-b74c-c4fadf898d6d","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":383,"inputHost":"news.google.com","publisherHost":"athlonsports.com","error":null}
+ POST /api/resolve 200 in 391ms (compile: 3ms, render: 388ms)
+[Extract] Input URL: https://athlonsports.com/nba/phoenix-suns/suns-announce-devin-booker-update-injury-news-heat
+[Extract] Fetching direct (non-Google) URL: https://athlonsports.com/nba/phoenix-suns/suns-announce-devin-booker-update-injury-news-heat
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"45fbc2a8-2ace-4d83-9b39-5859f176a692","ts":"2026-01-25T05:13:59.559Z","durationMs":500,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 506ms (compile: 1856µs, render: 504ms)
+{"type":"resolve","ts":"2026-01-25T05:13:59.579Z","requestId":"ab5bd2b5-130a-4726-a4f8-1f5953e309be","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":503,"inputHost":"news.google.com","publisherHost":"athlonsports.com","error":null}
+ POST /api/resolve 200 in 509ms (compile: 1857µs, render: 507ms)
+[Extract] Success via Readability: Suns Make Devin Booker Announcement After Injury News (fetch)
+{"type":"extract","requestId":"93a73fb0-ffd8-4566-b923-c17e91e3e421","ts":"2026-01-25T05:13:59.946Z","durationMs":480,"inputUrl":"https://athlonsports.com/nba/phoenix-suns/suns-announce-devin-booker-update-injury-news-heat","host":"athlonsports.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":53,"textLength":3177,"fetchedUrl":"https://athlonsports.com/nba/phoenix-suns/suns-announce-devin-booker-update-injury-news-heat","error":null}
+ GET /api/extract?url=https%3A%2F%2Fathlonsports.com%2Fnba%2Fphoenix-suns%2Fsuns-announce-devin-booker-update-injury-news-heat 200 in 487ms (compile: 3ms, render: 484ms)
+[Extract] Cache hit for: https://athlonsports.com/nba/phoenix-suns/suns-announce-devin-booker-update-injury-news-heat
+{"type":"extract","requestId":"800308f1-0fcd-4e6a-a831-4918ae81bfd7","ts":"2026-01-25T05:13:59.954Z","durationMs":0,"inputUrl":"https://athlonsports.com/nba/phoenix-suns/suns-announce-devin-booker-update-injury-news-heat","host":"athlonsports.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":53,"textLength":3177,"fetchedUrl":"https://athlonsports.com/nba/phoenix-suns/suns-announce-devin-booker-update-injury-news-heat","error":null}
+ GET /api/extract?url=https%3A%2F%2Fathlonsports.com%2Fnba%2Fphoenix-suns%2Fsuns-announce-devin-booker-update-injury-news-heat 200 in 7ms (compile: 1966µs, render: 5ms)
+ GET /?tab=discovery 200 in 26ms (compile: 11ms, render: 15ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318042762
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318042767
+ GET /manifest.webmanifest 200 in 4ms (compile: 1208µs, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 25 items within 24 hours
+{"type":"search","requestId":"1eee7e98-c239-456b-b0a2-030e0217fffc","ts":"2026-01-25T05:14:03.220Z","durationMs":453,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":25,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318042752 200 in 463ms (compile: 6ms, render: 457ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"15f5bae9-4428-47bc-b187-50d2abbd3f3a","ts":"2026-01-25T05:14:03.237Z","durationMs":475,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318042752 200 in 480ms (compile: 1999µs, render: 478ms)
+ GET /reader?id=iy4h03&tab=discovery 200 in 21ms (compile: 3ms, render: 18ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318044669
+ GET /manifest.webmanifest 200 in 9ms (compile: 6ms, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"7002b52c-dde2-45e9-9713-2db84dff21a7","ts":"2026-01-25T05:14:05.116Z","durationMs":447,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 453ms (compile: 3ms, render: 451ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318045123
+{"type":"resolve","ts":"2026-01-25T05:14:05.486Z","requestId":"300c332a-3e4b-4a1d-8756-1a50435d882c","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":357,"inputHost":"news.google.com","publisherHost":"www.11alive.com","error":null}
+ POST /api/resolve 200 in 363ms (compile: 1567µs, render: 361ms)
+[Extract] Input URL: https://www.11alive.com/video/sports/locked-on/lo-atlanta/atlanta-hawks-show/atlanta-hawks-earn-second-straight-win-as-defense-shuts-down-phoenix-suns/535-8e77f2b6-7930-41d4-bbd1-c6c7ddacdcad
+[Extract] Fetching direct (non-Google) URL: https://www.11alive.com/video/sports/locked-on/lo-atlanta/atlanta-hawks-show/atlanta-hawks-earn-second-straight-win-as-defense-shuts-down-phoenix-suns/535-8e77f2b6-7930-41d4-bbd1-c6c7ddacdcad
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"29c69b17-6927-475b-8675-2b4b65f1232c","ts":"2026-01-25T05:14:05.571Z","durationMs":448,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 453ms (compile: 1642µs, render: 451ms)
+{"type":"resolve","ts":"2026-01-25T05:14:05.647Z","requestId":"c4ef1ff2-8ed9-4806-b06a-cfd1d6b0d1ee","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":515,"inputHost":"news.google.com","publisherHost":"www.11alive.com","error":null}
+ POST /api/resolve 200 in 522ms (compile: 5ms, render: 517ms)
+[Extract] Success via Readability: Atlanta Hawks earn second straight win as defense shuts down Phoenix Suns (fetch)
+{"type":"extract","requestId":"97ceb621-8a29-45fe-916b-e43cb9ab82b9","ts":"2026-01-25T05:14:06.235Z","durationMs":741,"inputUrl":"https://www.11alive.com/video/sports/locked-on/lo-atlanta/atlanta-hawks-show/atlanta-hawks-earn-second-straight-win-as-defense-shuts-down-phoenix-suns/535-8e77f2b6-7930-41d4-bbd1-c6c7ddacdcad","host":"www.11alive.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":73,"textLength":6745,"fetchedUrl":"https://www.11alive.com/video/sports/locked-on/lo-atlanta/atlanta-hawks-show/atlanta-hawks-earn-second-straight-win-as-defense-shuts-down-phoenix-suns/535-8e77f2b6-7930-41d4-bbd1-c6c7ddacdcad","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.11alive.com%2Fvideo%2Fsports%2Flocked-on%2Flo-atlanta%2Fatlanta-hawks-show%2Fatlanta-hawks-earn-second-straight-win-as-defense-shuts-down-phoenix-suns%2F535-8e77f2b6-7930-41d4-bbd1-c6c7ddacdcad 200 in 746ms (compile: 1983µs, render: 744ms)
+[Extract] Cache hit for: https://www.11alive.com/video/sports/locked-on/lo-atlanta/atlanta-hawks-show/atlanta-hawks-earn-second-straight-win-as-defense-shuts-down-phoenix-suns/535-8e77f2b6-7930-41d4-bbd1-c6c7ddacdcad
+{"type":"extract","requestId":"67298ac7-1584-4b90-9a2f-8cbf138d56a1","ts":"2026-01-25T05:14:06.238Z","durationMs":0,"inputUrl":"https://www.11alive.com/video/sports/locked-on/lo-atlanta/atlanta-hawks-show/atlanta-hawks-earn-second-straight-win-as-defense-shuts-down-phoenix-suns/535-8e77f2b6-7930-41d4-bbd1-c6c7ddacdcad","host":"www.11alive.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":73,"textLength":6745,"fetchedUrl":"https://www.11alive.com/video/sports/locked-on/lo-atlanta/atlanta-hawks-show/atlanta-hawks-earn-second-straight-win-as-defense-shuts-down-phoenix-suns/535-8e77f2b6-7930-41d4-bbd1-c6c7ddacdcad","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.11alive.com%2Fvideo%2Fsports%2Flocked-on%2Flo-atlanta%2Fatlanta-hawks-show%2Fatlanta-hawks-earn-second-straight-win-as-defense-shuts-down-phoenix-suns%2F535-8e77f2b6-7930-41d4-bbd1-c6c7ddacdcad 200 in 1863µs (compile: 715µs, render: 1149µs)
+ GET /?tab=discovery 200 in 25ms (compile: 4ms, render: 21ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318048577
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318048580
+ GET /manifest.webmanifest 200 in 3ms (compile: 919µs, render: 1656µs)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"4534f88d-2121-4bde-a2ad-449debe77e3d","ts":"2026-01-25T05:14:09.039Z","durationMs":459,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318048563 200 in 468ms (compile: 5ms, render: 463ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"26b2c705-9b97-4111-91ce-0a182ed453d0","ts":"2026-01-25T05:14:09.047Z","durationMs":470,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318048562 200 in 478ms (compile: 3ms, render: 475ms)
+ GET /reader?id=40zjph&tab=discovery 200 in 19ms (compile: 2ms, render: 17ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318051666
+ GET /manifest.webmanifest 200 in 4ms (compile: 1612µs, render: 3ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"64e9800b-3024-4127-bf4c-58109e0a259a","ts":"2026-01-25T05:14:12.126Z","durationMs":460,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 465ms (compile: 1369µs, render: 463ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318052134
+{"type":"resolve","ts":"2026-01-25T05:14:12.482Z","requestId":"d31770df-a5ad-4cc1-9467-f67139e70b5b","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":340,"inputHost":"news.google.com","publisherHost":"burncitysports.com","error":null}
+ POST /api/resolve 200 in 348ms (compile: 4ms, render: 344ms)
+[Extract] Input URL: https://burncitysports.com/2026/01/24/phoenix-suns-injuries-booker-green-1/
+[Extract] Fetching direct (non-Google) URL: https://burncitysports.com/2026/01/24/phoenix-suns-injuries-booker-green-1/
+{"type":"resolve","ts":"2026-01-25T05:14:12.500Z","requestId":"3ca0fe4d-eaf1-4995-8ade-7eb58faab3e0","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":354,"inputHost":"news.google.com","publisherHost":"burncitysports.com","error":null}
+ POST /api/resolve 200 in 364ms (compile: 7ms, render: 357ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"acf0cd5d-97a4-4502-84a0-fec1e581092a","ts":"2026-01-25T05:14:12.604Z","durationMs":470,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 476ms (compile: 1590µs, render: 474ms)
+[Extract] Success via Readability: Who steps up for the Phoenix Suns after injuries to Devin Booker and Jalen Green? - Burn City Sports Phoenix Sports (fetch)
+{"type":"extract","requestId":"16929de7-8896-446f-841b-bace8814d61c","ts":"2026-01-25T05:14:12.765Z","durationMs":275,"inputUrl":"https://burncitysports.com/2026/01/24/phoenix-suns-injuries-booker-green-1/","host":"burncitysports.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=UTF-8","titleLength":115,"textLength":3672,"fetchedUrl":"https://burncitysports.com/2026/01/24/phoenix-suns-injuries-booker-green-1/","error":null}
+ GET /api/extract?url=https%3A%2F%2Fburncitysports.com%2F2026%2F01%2F24%2Fphoenix-suns-injuries-booker-green-1%2F 200 in 282ms (compile: 2ms, render: 280ms)
+[Extract] Cache hit for: https://burncitysports.com/2026/01/24/phoenix-suns-injuries-booker-green-1/
+{"type":"extract","requestId":"606eb3c1-16eb-4d73-9ce7-8ba06596b69b","ts":"2026-01-25T05:14:12.774Z","durationMs":0,"inputUrl":"https://burncitysports.com/2026/01/24/phoenix-suns-injuries-booker-green-1/","host":"burncitysports.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=UTF-8","titleLength":115,"textLength":3672,"fetchedUrl":"https://burncitysports.com/2026/01/24/phoenix-suns-injuries-booker-green-1/","error":null}
+ GET /api/extract?url=https%3A%2F%2Fburncitysports.com%2F2026%2F01%2F24%2Fphoenix-suns-injuries-booker-green-1%2F 200 in 5ms (compile: 2ms, render: 3ms)
+ GET /?tab=discovery 200 in 24ms (compile: 3ms, render: 21ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318056305
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318056310
+ GET /manifest.webmanifest 200 in 4ms (compile: 1563µs, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"ddeddd9c-31f1-434a-b8ff-9a9bc15b75ab","ts":"2026-01-25T05:14:16.740Z","durationMs":435,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318056291 200 in 441ms (compile: 2ms, render: 439ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"a21c36ff-28e2-4832-8148-ef8a113bc05c","ts":"2026-01-25T05:14:16.765Z","durationMs":455,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318056292 200 in 460ms (compile: 1330µs, render: 459ms)
+ GET /reader?id=4hd1ol&tab=discovery 200 in 23ms (compile: 3ms, render: 20ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318058986
+ GET /manifest.webmanifest 200 in 3ms (compile: 1161µs, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"fa12e670-6751-4d74-b3ac-50bf0342f713","ts":"2026-01-25T05:14:19.399Z","durationMs":413,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 419ms (compile: 1865µs, render: 417ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318059407
+{"type":"resolve","ts":"2026-01-25T05:14:19.764Z","requestId":"680d5a03-4f53-4b9c-91d7-c67ea5d2a56d","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":350,"inputHost":"news.google.com","publisherHost":"www.thebiglead.com","error":null}
+ POST /api/resolve 200 in 357ms (compile: 1795µs, render: 356ms)
+[Extract] Input URL: https://www.thebiglead.com/phoenix-suns-unveil-nba-game-day-upgrade-with-fan-friendly-food-menu/
+[Extract] Fetching direct (non-Google) URL: https://www.thebiglead.com/phoenix-suns-unveil-nba-game-day-upgrade-with-fan-friendly-food-menu/
+{"type":"resolve","ts":"2026-01-25T05:14:19.779Z","requestId":"d25b8203-ec32-40a1-9137-465474210206","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":361,"inputHost":"news.google.com","publisherHost":"www.thebiglead.com","error":null}
+ POST /api/resolve 200 in 370ms (compile: 6ms, render: 364ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 25 items within 24 hours
+{"type":"search","requestId":"74d04aea-a8e3-4790-a2a5-c016ab6bebd6","ts":"2026-01-25T05:14:19.823Z","durationMs":416,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":25,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 423ms (compile: 2ms, render: 420ms)
+[Extract] Success via Readability: Phoenix Suns unveil NBA game-day upgrade with fan-friendly food menu (fetch)
+{"type":"extract","requestId":"9efa7022-8637-4182-901f-dc20c4d92482","ts":"2026-01-25T05:14:20.441Z","durationMs":666,"inputUrl":"https://www.thebiglead.com/phoenix-suns-unveil-nba-game-day-upgrade-with-fan-friendly-food-menu/","host":"www.thebiglead.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":68,"textLength":2045,"fetchedUrl":"https://www.thebiglead.com/phoenix-suns-unveil-nba-game-day-upgrade-with-fan-friendly-food-menu/","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.thebiglead.com%2Fphoenix-suns-unveil-nba-game-day-upgrade-with-fan-friendly-food-menu%2F 200 in 673ms (compile: 4ms, render: 669ms)
+[Extract] Cache hit for: https://www.thebiglead.com/phoenix-suns-unveil-nba-game-day-upgrade-with-fan-friendly-food-menu/
+{"type":"extract","requestId":"3002f771-a110-426f-b36a-1668fba6cafd","ts":"2026-01-25T05:14:20.446Z","durationMs":0,"inputUrl":"https://www.thebiglead.com/phoenix-suns-unveil-nba-game-day-upgrade-with-fan-friendly-food-menu/","host":"www.thebiglead.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":68,"textLength":2045,"fetchedUrl":"https://www.thebiglead.com/phoenix-suns-unveil-nba-game-day-upgrade-with-fan-friendly-food-menu/","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.thebiglead.com%2Fphoenix-suns-unveil-nba-game-day-upgrade-with-fan-friendly-food-menu%2F 200 in 4ms (compile: 1295µs, render: 2ms)
+ GET /?tab=discovery 200 in 26ms (compile: 2ms, render: 23ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318061836
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318061840
+ GET /manifest.webmanifest 200 in 6ms (compile: 4ms, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"422bd902-1659-4558-a785-5812da394607","ts":"2026-01-25T05:14:22.246Z","durationMs":406,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318061824 200 in 415ms (compile: 6ms, render: 409ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"1987ed00-6c58-479d-babf-4464932f47a2","ts":"2026-01-25T05:14:22.278Z","durationMs":442,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318061823 200 in 448ms (compile: 3ms, render: 445ms)
+ GET /reader?id=hfye9s&tab=discovery 200 in 22ms (compile: 5ms, render: 18ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318065051
+ GET /manifest.webmanifest 200 in 7ms (compile: 5ms, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"bc4855ed-6156-4808-87a8-c44ede3ad546","ts":"2026-01-25T05:14:25.479Z","durationMs":428,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 434ms (compile: 1799µs, render: 432ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318065485
+{"type":"resolve","ts":"2026-01-25T05:14:25.838Z","requestId":"f20fbd5e-3d5e-4f68-a9b9-de4d483d32b2","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":343,"inputHost":"news.google.com","publisherHost":"burncitysports.com","error":null}
+ POST /api/resolve 200 in 352ms (compile: 6ms, render: 346ms)
+[Extract] Input URL: https://burncitysports.com/2026/01/24/devin-bookers-injury-suns-fans-react/
+[Extract] Fetching direct (non-Google) URL: https://burncitysports.com/2026/01/24/devin-bookers-injury-suns-fans-react/
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"b5ebd5f0-9995-4501-82f3-6ede1550b0ad","ts":"2026-01-25T05:14:25.942Z","durationMs":457,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 462ms (compile: 1327µs, render: 460ms)
+[Extract] Success via Readability: Phoenix Suns fans react to Devin Booker's ankle injury after freak accident - Burn City Sports Phoenix Sports (fetch)
+{"type":"extract","requestId":"b4b8384f-b788-4254-95e0-53386fe693de","ts":"2026-01-25T05:14:26.107Z","durationMs":261,"inputUrl":"https://burncitysports.com/2026/01/24/devin-bookers-injury-suns-fans-react/","host":"burncitysports.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=UTF-8","titleLength":109,"textLength":3846,"fetchedUrl":"https://burncitysports.com/2026/01/24/devin-bookers-injury-suns-fans-react/","error":null}
+ GET /api/extract?url=https%3A%2F%2Fburncitysports.com%2F2026%2F01%2F24%2Fdevin-bookers-injury-suns-fans-react%2F 200 in 268ms (compile: 3ms, render: 265ms)
+{"type":"resolve","ts":"2026-01-25T05:14:26.121Z","requestId":"de22e31a-ab98-42d8-9bfd-7de4b4f6b74d","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":630,"inputHost":"news.google.com","publisherHost":"burncitysports.com","error":null}
+ POST /api/resolve 200 in 635ms (compile: 1591µs, render: 634ms)
+[Extract] Cache hit for: https://burncitysports.com/2026/01/24/devin-bookers-injury-suns-fans-react/
+{"type":"extract","requestId":"11111811-bd84-48b4-a143-81146cc8552c","ts":"2026-01-25T05:14:26.128Z","durationMs":0,"inputUrl":"https://burncitysports.com/2026/01/24/devin-bookers-injury-suns-fans-react/","host":"burncitysports.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=UTF-8","titleLength":109,"textLength":3846,"fetchedUrl":"https://burncitysports.com/2026/01/24/devin-bookers-injury-suns-fans-react/","error":null}
+ GET /api/extract?url=https%3A%2F%2Fburncitysports.com%2F2026%2F01%2F24%2Fdevin-bookers-injury-suns-fans-react%2F 200 in 4ms (compile: 1352µs, render: 3ms)
+ GET /?tab=discovery 200 in 22ms (compile: 3ms, render: 19ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318067954
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318067960
+ GET /manifest.webmanifest 200 in 7ms (compile: 5ms, render: 1817µs)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"35d759d3-b5fa-433c-88df-03d4a516bbdd","ts":"2026-01-25T05:14:28.341Z","durationMs":381,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318067940 200 in 386ms (compile: 1936µs, render: 384ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"c80191d8-6f37-466c-9d08-796df12bd23c","ts":"2026-01-25T05:14:28.358Z","durationMs":404,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318067939 200 in 411ms (compile: 4ms, render: 408ms)
+ GET /reader?id=wy6ym9&tab=discovery 200 in 21ms (compile: 3ms, render: 18ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318070409
+ GET /manifest.webmanifest 200 in 4ms (compile: 1328µs, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"6b885c97-7687-4519-b707-e328b7f52983","ts":"2026-01-25T05:14:30.823Z","durationMs":414,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 420ms (compile: 3ms, render: 417ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318070830
+{"type":"resolve","ts":"2026-01-25T05:14:31.173Z","requestId":"fc037f7b-c2d4-4066-9a8d-c342b9598f2e","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":331,"inputHost":"news.google.com","publisherHost":"www.mundodeportivo.com","error":null}
+ POST /api/resolve 200 in 342ms (compile: 6ms, render: 335ms)
+[Extract] Input URL: https://www.mundodeportivo.com/us/en/20260124/738897/devin-booker-raises-serious-injury-concerns-for-the-phoenix-suns.html
+[Extract] Fetching direct (non-Google) URL: https://www.mundodeportivo.com/us/en/20260124/738897/devin-booker-raises-serious-injury-concerns-for-the-phoenix-suns.html
+{"type":"resolve","ts":"2026-01-25T05:14:31.189Z","requestId":"900a3382-3ff9-49c1-a0a9-96dc8d122de2","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":351,"inputHost":"news.google.com","publisherHost":"www.mundodeportivo.com","error":null}
+ POST /api/resolve 200 in 359ms (compile: 2ms, render: 356ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"fa543983-8543-45d5-bf1d-00379a6a8e54","ts":"2026-01-25T05:14:31.263Z","durationMs":433,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 439ms (compile: 2ms, render: 437ms)
+[Extract] Success via Readability: Devin Booker raises serious injury concerns for the Phoenix Suns (fetch)
+{"type":"extract","requestId":"0f6bb420-12dc-4049-991c-3b5105f1b487","ts":"2026-01-25T05:14:31.757Z","durationMs":574,"inputUrl":"https://www.mundodeportivo.com/us/en/20260124/738897/devin-booker-raises-serious-injury-concerns-for-the-phoenix-suns.html","host":"www.mundodeportivo.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=UTF-8","titleLength":64,"textLength":4659,"fetchedUrl":"https://www.mundodeportivo.com/us/en/20260124/738897/devin-booker-raises-serious-injury-concerns-for-the-phoenix-suns.html","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.mundodeportivo.com%2Fus%2Fen%2F20260124%2F738897%2Fdevin-booker-raises-serious-injury-concerns-for-the-phoenix-suns.html 200 in 579ms (compile: 2ms, render: 577ms)
+[Extract] Cache hit for: https://www.mundodeportivo.com/us/en/20260124/738897/devin-booker-raises-serious-injury-concerns-for-the-phoenix-suns.html
+{"type":"extract","requestId":"b478b5b6-966e-4a2f-9be8-80cd044d816a","ts":"2026-01-25T05:14:31.760Z","durationMs":0,"inputUrl":"https://www.mundodeportivo.com/us/en/20260124/738897/devin-booker-raises-serious-injury-concerns-for-the-phoenix-suns.html","host":"www.mundodeportivo.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=UTF-8","titleLength":64,"textLength":4659,"fetchedUrl":"https://www.mundodeportivo.com/us/en/20260124/738897/devin-booker-raises-serious-injury-concerns-for-the-phoenix-suns.html","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.mundodeportivo.com%2Fus%2Fen%2F20260124%2F738897%2Fdevin-booker-raises-serious-injury-concerns-for-the-phoenix-suns.html 200 in 1859µs (compile: 750µs, render: 1108µs)
+ GET /?tab=discovery 200 in 22ms (compile: 3ms, render: 19ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318074027
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318074034
+ GET /manifest.webmanifest 200 in 3ms (compile: 1155µs, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"2b644925-5ec8-480e-963e-325d05c1b447","ts":"2026-01-25T05:14:34.440Z","durationMs":406,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318074016 200 in 412ms (compile: 3ms, render: 410ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"6aeb787c-6983-48d8-bea8-b99a4dea3fad","ts":"2026-01-25T05:14:34.511Z","durationMs":484,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318074015 200 in 489ms (compile: 1581µs, render: 487ms)
+ GET /reader?id=1myls2&tab=discovery 200 in 20ms (compile: 1973µs, render: 18ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318077113
+ GET /manifest.webmanifest 200 in 4ms (compile: 1579µs, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"33596d6a-75a6-4097-b307-d5b8f15f332e","ts":"2026-01-25T05:14:37.506Z","durationMs":392,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 398ms (compile: 2ms, render: 396ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318077511
+{"type":"resolve","ts":"2026-01-25T05:14:37.849Z","requestId":"3e40fa39-42a8-409c-992b-24c916b36bf7","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":332,"inputHost":"news.google.com","publisherHost":"heavy.com","error":null}
+ POST /api/resolve 200 in 337ms (compile: 1658µs, render: 335ms)
+[Extract] Input URL: https://heavy.com/sports/nba/phoenix-suns/devin-booker-injury/
+[Extract] Fetching direct (non-Google) URL: https://heavy.com/sports/nba/phoenix-suns/devin-booker-injury/
+{"type":"resolve","ts":"2026-01-25T05:14:37.860Z","requestId":"00a8692d-5103-4016-b171-d4b0b4bc5091","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":339,"inputHost":"news.google.com","publisherHost":"heavy.com","error":null}
+ POST /api/resolve 200 in 347ms (compile: 5ms, render: 342ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"344b0a9c-2ae8-411f-a8f1-b6c56d2656a4","ts":"2026-01-25T05:14:37.970Z","durationMs":459,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 463ms (compile: 1657µs, render: 461ms)
+[Extract] Success via Readability: Sports Doctor Predicts Worst Outcome for Devin Booker Injury (fetch)
+{"type":"extract","requestId":"ef7df8f5-81bb-49fb-8647-4f48ec762f13","ts":"2026-01-25T05:14:38.075Z","durationMs":219,"inputUrl":"https://heavy.com/sports/nba/phoenix-suns/devin-booker-injury/","host":"heavy.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":60,"textLength":3304,"fetchedUrl":"https://heavy.com/sports/nba/phoenix-suns/devin-booker-injury/","error":null}
+ GET /api/extract?url=https%3A%2F%2Fheavy.com%2Fsports%2Fnba%2Fphoenix-suns%2Fdevin-booker-injury%2F 200 in 224ms (compile: 1734µs, render: 222ms)
+[Extract] Cache hit for: https://heavy.com/sports/nba/phoenix-suns/devin-booker-injury/
+{"type":"extract","requestId":"1d71e046-675b-4b3b-8fbc-b2d5942f7a66","ts":"2026-01-25T05:14:38.079Z","durationMs":0,"inputUrl":"https://heavy.com/sports/nba/phoenix-suns/devin-booker-injury/","host":"heavy.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":60,"textLength":3304,"fetchedUrl":"https://heavy.com/sports/nba/phoenix-suns/devin-booker-injury/","error":null}
+ GET /api/extract?url=https%3A%2F%2Fheavy.com%2Fsports%2Fnba%2Fphoenix-suns%2Fdevin-booker-injury%2F 200 in 3ms (compile: 1250µs, render: 2ms)
+ GET /?tab=discovery 200 in 22ms (compile: 4ms, render: 19ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318080550
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318080553
+ GET /manifest.webmanifest 200 in 4ms (compile: 1397µs, render: 3ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"52b6fa79-4ad5-4b9b-b834-8e17f44e86f6","ts":"2026-01-25T05:14:40.931Z","durationMs":378,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318080536 200 in 386ms (compile: 5ms, render: 381ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"c16cb24f-2634-42ff-89d8-21d697efb0e3","ts":"2026-01-25T05:14:40.999Z","durationMs":449,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318080535 200 in 454ms (compile: 1715µs, render: 453ms)
+ GET /reader?id=txlev0&tab=discovery 200 in 26ms (compile: 5ms, render: 21ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318083638
+ GET /manifest.webmanifest 200 in 3ms (compile: 868µs, render: 1955µs)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"869df096-f4c0-44a8-bd5c-1aef3be3d2db","ts":"2026-01-25T05:14:44.060Z","durationMs":422,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 428ms (compile: 2ms, render: 425ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318084067
+{"type":"resolve","ts":"2026-01-25T05:14:44.420Z","requestId":"2bc80e8d-788c-4002-aa44-105ae9bc3599","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":343,"inputHost":"news.google.com","publisherHost":"www.islandernews.com","error":null}
+ POST /api/resolve 200 in 352ms (compile: 5ms, render: 347ms)
+[Extract] Input URL: https://www.islandernews.com/news/national/devin-booker-of-the-phoenix-suns-reacts-after-twisting-is-ankle-in-an-nba-loss/image_3dfa586a-622b-54db-bbb7-4543157c1e8a.html
+[Extract] Fetching direct (non-Google) URL: https://www.islandernews.com/news/national/devin-booker-of-the-phoenix-suns-reacts-after-twisting-is-ankle-in-an-nba-loss/image_3dfa586a-622b-54db-bbb7-4543157c1e8a.html
+{"type":"resolve","ts":"2026-01-25T05:14:44.446Z","requestId":"ed570ec4-ce2c-4eba-bfdd-202714bc5535","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":372,"inputHost":"news.google.com","publisherHost":"www.islandernews.com","error":null}
+ POST /api/resolve 200 in 378ms (compile: 1811µs, render: 376ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"fe3c5e76-35d3-4c7d-bf95-aa7ee02f8521","ts":"2026-01-25T05:14:44.478Z","durationMs":411,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 416ms (compile: 1500µs, render: 414ms)
+[Extract] Success via Readability: Devin Booker of the Phoenix Suns reacts after twisting is ankle in an NBA loss to the Atlanta Hawks (fetch)
+{"type":"extract","requestId":"c542ce25-c87d-4d1c-b2b4-2a90e213e673","ts":"2026-01-25T05:14:45.411Z","durationMs":981,"inputUrl":"https://www.islandernews.com/news/national/devin-booker-of-the-phoenix-suns-reacts-after-twisting-is-ankle-in-an-nba-loss/image_3dfa586a-622b-54db-bbb7-4543157c1e8a.html","host":"www.islandernews.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=UTF-8","titleLength":99,"textLength":576,"fetchedUrl":"https://www.islandernews.com/news/national/devin-booker-of-the-phoenix-suns-reacts-after-twisting-is-ankle-in-an-nba-loss/image_3dfa586a-622b-54db-bbb7-4543157c1e8a.html","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.islandernews.com%2Fnews%2Fnational%2Fdevin-booker-of-the-phoenix-suns-reacts-after-twisting-is-ankle-in-an-nba-loss%2Fimage_3dfa586a-622b-54db-bbb7-4543157c1e8a.html 200 in 987ms (compile: 2ms, render: 985ms)
+[Extract] Cache hit for: https://www.islandernews.com/news/national/devin-booker-of-the-phoenix-suns-reacts-after-twisting-is-ankle-in-an-nba-loss/image_3dfa586a-622b-54db-bbb7-4543157c1e8a.html
+{"type":"extract","requestId":"fd19f4cc-f3e5-4d8f-96bd-34685656a788","ts":"2026-01-25T05:14:45.414Z","durationMs":0,"inputUrl":"https://www.islandernews.com/news/national/devin-booker-of-the-phoenix-suns-reacts-after-twisting-is-ankle-in-an-nba-loss/image_3dfa586a-622b-54db-bbb7-4543157c1e8a.html","host":"www.islandernews.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=UTF-8","titleLength":99,"textLength":576,"fetchedUrl":"https://www.islandernews.com/news/national/devin-booker-of-the-phoenix-suns-reacts-after-twisting-is-ankle-in-an-nba-loss/image_3dfa586a-622b-54db-bbb7-4543157c1e8a.html","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.islandernews.com%2Fnews%2Fnational%2Fdevin-booker-of-the-phoenix-suns-reacts-after-twisting-is-ankle-in-an-nba-loss%2Fimage_3dfa586a-622b-54db-bbb7-4543157c1e8a.html 200 in 1828µs (compile: 806µs, render: 1022µs)
+ GET /?tab=discovery 200 in 24ms (compile: 4ms, render: 19ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318086728
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318086733
+ GET /manifest.webmanifest 200 in 4ms (compile: 1285µs, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"2fcaaa0c-c82e-47b6-81e9-4832b802ca6d","ts":"2026-01-25T05:14:47.171Z","durationMs":443,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318086716 200 in 448ms (compile: 1889µs, render: 447ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"f18449cc-5c9d-47b5-8488-24a49b1b2238","ts":"2026-01-25T05:14:47.216Z","durationMs":483,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318086717 200 in 488ms (compile: 1448µs, render: 486ms)
+ GET /reader?id=23h89r&tab=discovery 200 in 19ms (compile: 3ms, render: 17ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318089379
+ GET /manifest.webmanifest 200 in 4ms (compile: 1446µs, render: 3ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"139f4745-6d00-468c-862d-8c27c30b358f","ts":"2026-01-25T05:14:49.879Z","durationMs":500,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 506ms (compile: 1843µs, render: 504ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318089885
+{"type":"resolve","ts":"2026-01-25T05:14:50.220Z","requestId":"8ac5a647-9044-473d-9a24-024b3f800e7b","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":325,"inputHost":"news.google.com","publisherHost":"www.newsweek.com","error":null}
+ POST /api/resolve 200 in 334ms (compile: 5ms, render: 329ms)
+[Extract] Input URL: https://www.newsweek.com/sports/nba/suns-face-uncertainty-devin-booker-injury-11411229
+[Extract] Fetching direct (non-Google) URL: https://www.newsweek.com/sports/nba/suns-face-uncertainty-devin-booker-injury-11411229
+{"type":"resolve","ts":"2026-01-25T05:14:50.232Z","requestId":"c2b3ef23-1d89-48da-9fd0-1ea2eabc8efe","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":341,"inputHost":"news.google.com","publisherHost":"www.newsweek.com","error":null}
+ POST /api/resolve 200 in 347ms (compile: 1572µs, render: 345ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"220b060e-9209-497e-b91b-2322558799c7","ts":"2026-01-25T05:14:50.310Z","durationMs":425,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 429ms (compile: 1905µs, render: 427ms)
+[Extract] Success via Readability: Suns face uncertainty after Devin Booker injury (fetch)
+{"type":"extract","requestId":"ad06979a-78a8-46ae-ba1c-5171dad2c1ec","ts":"2026-01-25T05:14:50.623Z","durationMs":395,"inputUrl":"https://www.newsweek.com/sports/nba/suns-face-uncertainty-devin-booker-injury-11411229","host":"www.newsweek.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":47,"textLength":2220,"fetchedUrl":"https://www.newsweek.com/sports/nba/suns-face-uncertainty-devin-booker-injury-11411229","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.newsweek.com%2Fsports%2Fnba%2Fsuns-face-uncertainty-devin-booker-injury-11411229 200 in 399ms (compile: 1567µs, render: 398ms)
+[Extract] Cache hit for: https://www.newsweek.com/sports/nba/suns-face-uncertainty-devin-booker-injury-11411229
+{"type":"extract","requestId":"c64eb73c-8bd0-4b4b-ba72-eeb7dbdd9b52","ts":"2026-01-25T05:14:50.629Z","durationMs":0,"inputUrl":"https://www.newsweek.com/sports/nba/suns-face-uncertainty-devin-booker-injury-11411229","host":"www.newsweek.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":47,"textLength":2220,"fetchedUrl":"https://www.newsweek.com/sports/nba/suns-face-uncertainty-devin-booker-injury-11411229","error":null}
+ GET /api/extract?url=https%3A%2F%2Fwww.newsweek.com%2Fsports%2Fnba%2Fsuns-face-uncertainty-devin-booker-injury-11411229 200 in 3ms (compile: 966µs, render: 2ms)
+ GET /?tab=discovery 200 in 25ms (compile: 4ms, render: 21ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318093519
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318093524
+ GET /manifest.webmanifest 200 in 7ms (compile: 5ms, render: 1848µs)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"ea3966f3-cc1d-4f8e-b8e1-5dcbec12efc4","ts":"2026-01-25T05:14:53.919Z","durationMs":400,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318093504 200 in 406ms (compile: 2ms, render: 404ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"fd491b12-7afe-4093-a21a-8f2d86e31552","ts":"2026-01-25T05:14:53.925Z","durationMs":401,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318093505 200 in 406ms (compile: 1596µs, render: 405ms)
+ GET /reader?id=vy03yy&tab=discovery 200 in 22ms (compile: 3ms, render: 19ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318096682
+ GET /manifest.webmanifest 200 in 3ms (compile: 1183µs, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"79176c9b-3e19-42b0-b9e6-301c884e66d8","ts":"2026-01-25T05:14:57.071Z","durationMs":389,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 393ms (compile: 1816µs, render: 391ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318097078
+{"type":"resolve","ts":"2026-01-25T05:14:57.427Z","requestId":"190839f1-27db-4619-82b0-e01807c77395","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":338,"inputHost":"news.google.com","publisherHost":"nbaanalysis.net","error":null}
+ POST /api/resolve 200 in 348ms (compile: 6ms, render: 342ms)
+[Extract] Input URL: https://nbaanalysis.net/devin-booker-injury-update-suns-star-exits-hawks-game-with-right-ankle-injury-after-31-point-night/
+[Extract] Fetching direct (non-Google) URL: https://nbaanalysis.net/devin-booker-injury-update-suns-star-exits-hawks-game-with-right-ankle-injury-after-31-point-night/
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"41f03517-72db-43b5-8206-85917c0729d5","ts":"2026-01-25T05:14:57.485Z","durationMs":407,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 413ms (compile: 3ms, render: 411ms)
+{"type":"resolve","ts":"2026-01-25T05:14:57.563Z","requestId":"095289f9-48e2-47f3-acc0-75ebcf41be71","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":478,"inputHost":"news.google.com","publisherHost":"nbaanalysis.net","error":null}
+ POST /api/resolve 200 in 484ms (compile: 2ms, render: 482ms)
+[Extract] Detected blocking via status code: 403
+[Extract] Detected blocking, attempting Playwright fallback...
+[Extract] Playwright disabled (ENABLE_PLAYWRIGHT not set)
+{"type":"extract","requestId":"06f9e780-5999-4d16-b82b-4fdda2bd754d","ts":"2026-01-25T05:14:57.568Z","durationMs":129,"inputUrl":"https://nbaanalysis.net/devin-booker-injury-update-suns-star-exits-hawks-game-with-right-ankle-injury-after-31-point-night/","host":"nbaanalysis.net","success":false,"status":"blocked","playwrightUsed":false,"contentType":"text/html; charset=UTF-8","titleLength":0,"textLength":0,"fetchedUrl":"https://nbaanalysis.net/devin-booker-injury-update-suns-star-exits-hawks-game-with-right-ankle-injury-after-31-point-night/","error":"Site may be blocking requests (Playwright fallback disabled)"}
+ GET /api/extract?url=https%3A%2F%2Fnbaanalysis.net%2Fdevin-booker-injury-update-suns-star-exits-hawks-game-with-right-ankle-injury-after-31-point-night%2F 200 in 136ms (compile: 3ms, render: 133ms)
+[Extract] Input URL: https://nbaanalysis.net/devin-booker-injury-update-suns-star-exits-hawks-game-with-right-ankle-injury-after-31-point-night/
+[Extract] Fetching direct (non-Google) URL: https://nbaanalysis.net/devin-booker-injury-update-suns-star-exits-hawks-game-with-right-ankle-injury-after-31-point-night/
+[Extract] Detected blocking via status code: 403
+[Extract] Detected blocking, attempting Playwright fallback...
+[Extract] Playwright disabled (ENABLE_PLAYWRIGHT not set)
+{"type":"extract","requestId":"5add0823-0105-4624-847f-f777a15d58c5","ts":"2026-01-25T05:14:57.659Z","durationMs":83,"inputUrl":"https://nbaanalysis.net/devin-booker-injury-update-suns-star-exits-hawks-game-with-right-ankle-injury-after-31-point-night/","host":"nbaanalysis.net","success":false,"status":"blocked","playwrightUsed":false,"contentType":"text/html; charset=UTF-8","titleLength":0,"textLength":0,"fetchedUrl":"https://nbaanalysis.net/devin-booker-injury-update-suns-star-exits-hawks-game-with-right-ankle-injury-after-31-point-night/","error":"Site may be blocking requests (Playwright fallback disabled)"}
+ GET /api/extract?url=https%3A%2F%2Fnbaanalysis.net%2Fdevin-booker-injury-update-suns-star-exits-hawks-game-with-right-ankle-injury-after-31-point-night%2F 200 in 88ms (compile: 1784µs, render: 86ms)
+ GET /?tab=discovery 200 in 21ms (compile: 4ms, render: 17ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318100555
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318100559
+ GET /manifest.webmanifest 200 in 9ms (compile: 7ms, render: 1959µs)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"6a2bce8c-60b9-4077-90e3-dc8978845ea0","ts":"2026-01-25T05:15:00.979Z","durationMs":424,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318100542 200 in 430ms (compile: 2ms, render: 427ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 25 items within 24 hours
+{"type":"search","requestId":"06d55995-27bd-4018-bf75-c1eb9128a57c","ts":"2026-01-25T05:15:00.998Z","durationMs":439,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":25,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318100543 200 in 448ms (compile: 5ms, render: 443ms)
+ GET /reader?id=f5zuby&tab=discovery 200 in 21ms (compile: 2ms, render: 19ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318105741
+ GET /manifest.webmanifest 200 in 9ms (compile: 7ms, render: 2ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"2d6277ec-f760-4dc1-877d-8f3d743a8c10","ts":"2026-01-25T05:15:06.397Z","durationMs":656,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 661ms (compile: 1967µs, render: 659ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318106403
+{"type":"resolve","ts":"2026-01-25T05:15:06.799Z","requestId":"4c4e7dc7-7c1d-449d-88c6-74a68d61ba7b","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":390,"inputHost":"news.google.com","publisherHost":"heavy.com","error":null}
+ POST /api/resolve 200 in 395ms (compile: 1476µs, render: 394ms)
+[Extract] Input URL: https://heavy.com/sports/nba/atlanta-hawks/win-boosts-hawks-playoff-hopes/
+[Extract] Fetching direct (non-Google) URL: https://heavy.com/sports/nba/atlanta-hawks/win-boosts-hawks-playoff-hopes/
+{"type":"resolve","ts":"2026-01-25T05:15:06.826Z","requestId":"3cfb6143-f199-4889-b070-5ac7ac5bc71b","success":true,"cached":false,"strategy":"batchexecute","methodsTried":["base64_decode","batchexecute"],"durationMs":411,"inputHost":"news.google.com","publisherHost":"heavy.com","error":null}
+ POST /api/resolve 200 in 417ms (compile: 1614µs, render: 415ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"735f77e6-4e61-42af-82f7-0ae2fed54343","ts":"2026-01-25T05:15:06.842Z","durationMs":439,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns 200 in 443ms (compile: 1297µs, render: 442ms)
+[Extract] Success via Readability: Much-Needed Win vs. Phoenix Suns Boosts Hawks Playoff Hopes (fetch)
+{"type":"extract","requestId":"9bdbfdc0-49b5-4437-a2e2-c91a928d0723","ts":"2026-01-25T05:15:07.023Z","durationMs":217,"inputUrl":"https://heavy.com/sports/nba/atlanta-hawks/win-boosts-hawks-playoff-hopes/","host":"heavy.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":59,"textLength":3794,"fetchedUrl":"https://heavy.com/sports/nba/atlanta-hawks/win-boosts-hawks-playoff-hopes/","error":null}
+ GET /api/extract?url=https%3A%2F%2Fheavy.com%2Fsports%2Fnba%2Fatlanta-hawks%2Fwin-boosts-hawks-playoff-hopes%2F 200 in 221ms (compile: 1341µs, render: 220ms)
+[Extract] Cache hit for: https://heavy.com/sports/nba/atlanta-hawks/win-boosts-hawks-playoff-hopes/
+{"type":"extract","requestId":"51c54157-2cf6-4e31-b591-8aa483bdb48b","ts":"2026-01-25T05:15:07.030Z","durationMs":0,"inputUrl":"https://heavy.com/sports/nba/atlanta-hawks/win-boosts-hawks-playoff-hopes/","host":"heavy.com","success":true,"status":"ok","playwrightUsed":false,"contentType":"text/html; charset=utf-8","titleLength":59,"textLength":3794,"fetchedUrl":"https://heavy.com/sports/nba/atlanta-hawks/win-boosts-hawks-playoff-hopes/","error":null}
+ GET /api/extract?url=https%3A%2F%2Fheavy.com%2Fsports%2Fnba%2Fatlanta-hawks%2Fwin-boosts-hawks-playoff-hopes%2F 200 in 5ms (compile: 1546µs, render: 3ms)
+ GET /?tab=discovery 200 in 21ms (compile: 3ms, render: 18ms)
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318108947
+[API] Fetching RSS feed: https://news.google.com/rss/search?q=Phoenix%20Suns&hl=en-US&gl=US&ceid=US:en&cb=1769318108950
+ GET /manifest.webmanifest 200 in 9ms (compile: 7ms, render: 1951µs)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 26 items within 24 hours
+{"type":"search","requestId":"4c6186bd-b590-4116-b81b-b89680299220","ts":"2026-01-25T05:15:09.343Z","durationMs":393,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":26,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318108933 200 in 401ms (compile: 5ms, render: 395ms)
+[API] RSS fetched, parsing...
+[API] Parsed 102 items from RSS
+[API] 25 items within 24 hours
+{"type":"search","requestId":"cb40b7ce-6806-4420-b1cf-a73a44085c71","ts":"2026-01-25T05:15:09.409Z","durationMs":462,"query":"Phoenix Suns","rssUrlHost":"news.google.com","rssFetchStatus":200,"itemsReturned":25,"cacheBustUsed":true,"error":null}
+ GET /api/search?q=Phoenix+Suns&cb=1769318108932 200 in 466ms (compile: 3ms, render: 464ms)
