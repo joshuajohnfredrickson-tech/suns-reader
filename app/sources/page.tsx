@@ -95,20 +95,16 @@ export default function SourcesPage() {
             {trustedDomains.map((domain) => (
               <div
                 key={domain}
-                className="px-6 py-5 border border-border rounded-xl bg-background hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                className="flex items-center justify-between px-8 py-5 border border-border rounded-xl overflow-hidden bg-background hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
               >
-                <div className="flex items-center justify-between px-2">
-                  <div className="flex-1">
-                    <h3 className="font-medium text-base text-foreground">{domain}</h3>
-                  </div>
-                  <button
-                    onClick={() => handleRemove(domain)}
-                    className="px-4 py-3 min-h-[48px] text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
-                    style={{ touchAction: 'manipulation' }}
-                  >
-                    Remove
-                  </button>
-                </div>
+                <h3 className="font-medium text-base text-foreground">{domain}</h3>
+                <button
+                  onClick={() => handleRemove(domain)}
+                  className="px-4 py-3 min-h-[48px] text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                  style={{ touchAction: 'manipulation' }}
+                >
+                  Remove
+                </button>
               </div>
             ))}
           </div>
