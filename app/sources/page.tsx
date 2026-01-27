@@ -35,6 +35,10 @@ export default function SourcesPage() {
 
   return (
     <div className="flex flex-col h-screen bg-background text-foreground">
+      {/* DEBUG MARKER - REMOVE AFTER TESTING */}
+      <div className="fixed bottom-4 left-4 z-[9999] bg-yellow-300 text-black text-xs font-bold px-2 py-1 rounded">
+        DEBUG sources/page.tsx v1
+      </div>
       {/* Header */}
       <header className="flex items-center gap-2 px-4 py-4 sm:py-5 border-b border-border bg-background z-10">
         <button
@@ -95,7 +99,7 @@ export default function SourcesPage() {
             {trustedDomains.map((domain) => (
               <div
                 key={domain}
-                className="flex items-center justify-between px-6 py-5 border border-border rounded-xl bg-background hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                className="flex items-center justify-between px-6 py-5 border border-border rounded-xl bg-background hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors outline outline-4 outline-fuchsia-500 bg-green-500/10"
               >
                 <div className="flex-1">
                   <h3 className="font-medium text-base text-foreground">{domain}</h3>
