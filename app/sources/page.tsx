@@ -91,17 +91,18 @@ export default function SourcesPage() {
             </button>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-2">
             {trustedDomains.map((domain) => (
               <div
                 key={domain}
-                className="flex items-center justify-between border border-border rounded-xl bg-background hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
-                style={{ padding: '12px 18px' }}
+                className="flex items-center justify-between px-[18px] h-[52px] border border-border rounded-xl bg-background hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
               >
-                <h3 className="font-medium text-base text-foreground">{domain}</h3>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-medium text-base text-foreground leading-none truncate">{domain}</h3>
+                </div>
                 <button
                   onClick={() => handleRemove(domain)}
-                  className="flex items-center px-3 min-h-[44px] text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                  className="flex items-center justify-center h-[44px] px-3 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors shrink-0"
                   style={{ touchAction: 'manipulation' }}
                 >
                   Remove
