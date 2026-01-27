@@ -56,7 +56,7 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
                   <h3 className="text-base font-medium leading-snug text-foreground">
                     {article.title}
                   </h3>
-                  <div className="flex items-center justify-between gap-2 mt-1.5 text-xs text-zinc-500 dark:text-zinc-400">
+                  <div className="flex items-center justify-between gap-2 mt-1.5 pr-4 text-xs text-zinc-500 dark:text-zinc-400">
                     <div className="flex items-center gap-1.5">
                       <span>{article.source}</span>
                       <span>·</span>
