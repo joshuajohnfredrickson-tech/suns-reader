@@ -96,6 +96,7 @@ export default function SourcesPage() {
               <div
                 key={domain}
                 className="flex items-center justify-between px-8 py-5 border border-border rounded-xl overflow-hidden bg-background hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                style={{ paddingLeft: 40, paddingRight: 40, paddingTop: 20, paddingBottom: 20 }}
               >
                 <h3 className="font-medium text-base text-foreground">{domain}</h3>
                 <button
