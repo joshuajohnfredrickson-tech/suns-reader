@@ -27,11 +27,12 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
       {articles.map((article, index) => {
         const isTrusted = article.sourceDomain ? trustedDomains.includes(article.sourceDomain.toLowerCase()) : false;
         const isLast = index === articles.length - 1;
+        const showPill = showAddToTrusted && !isTrusted && article.sourceDomain;
 
         return (
           <div
             key={article.id}
-            className={!isLast ? 'border-b border-zinc-200/50 dark:border-zinc-800/50' : ''}
+            className={`relative ${!isLast ? 'border-b border-zinc-200/50 dark:border-zinc-800/50' : ''}`}
           >
             <Link
               href={`/reader?id=${article.id}&tab=${currentTab}`}
@@ -55,7 +56,7 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
                   <h3 className="text-base font-medium leading-snug text-foreground">
                     {article.title}
                   </h3>
-                  <div className="flex items-center gap-1.5 mt-1.5 text-xs text-zinc-500 dark:text-zinc-400">
+                  <div className={`flex items-center gap-1.5 mt-1.5 text-xs text-zinc-500 dark:text-zinc-400 ${showPill ? 'pr-20' : ''}`}>
                     <span>{article.source}</span>
                     <span>·</span>
                     <span>{article.timeAgo}</span>
@@ -64,18 +65,15 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
               </div>
             </Link>
 
-            {/* Add to Trusted button (Discovery tab only) - aligned with content column */}
-            {showAddToTrusted && !isTrusted && article.sourceDomain && (
-              <div className="grid grid-cols-[20px_1fr] gap-2 px-4 pb-4 pointer-events-auto">
-                <div /> {/* Empty spacer to align with dot column */}
-                <button
-                  onClick={(e) => handleAddToTrusted(e, article.sourceDomain!)}
-                  className="text-xs text-accent hover:underline font-medium text-left"
-                  style={{ touchAction: 'manipulation' }}
-                >
-                  + Add {article.sourceDomain} to Trusted
-                </button>
-              </div>
+            {/* Compact "+ Trusted" pill button - positioned at bottom-right of row */}
+            {showPill && (
+              <button
+                onClick={(e) => handleAddToTrusted(e, article.sourceDomain!)}
+                className="absolute right-4 bottom-5 inline-flex items-center justify-center h-7 px-2.5 text-xs font-medium leading-none rounded-full border border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-400 bg-transparent hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
+                style={{ touchAction: 'manipulation' }}
+              >
+                + Trusted
+              </button>
             )}
           </div>
         );
