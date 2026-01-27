@@ -65,7 +65,11 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
                     {showAction && (
                       <button
                         onClick={(e) => handleAddToTrusted(e, article.sourceDomain!)}
-                        className="absolute right-5 top-0 pointer-events-auto px-2 py-1 -my-1 text-xs font-medium text-accent hover:underline transition-colors"
+                        onPointerDown={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                        }}
+                        className="absolute right-5 top-0 z-10 pointer-events-auto px-4 py-3 -mx-2 -my-2 text-xs font-medium text-accent hover:underline transition-colors"
                         style={{ touchAction: 'manipulation' }}
                       >
                         Add to Trusted
