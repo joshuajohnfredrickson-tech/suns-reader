@@ -91,16 +91,16 @@ export default function SourcesPage() {
             </button>
           </div>
         ) : (
-          <div className="space-y-5">
+          <div className="space-y-3">
             {trustedDomains.map((domain) => (
               <div
                 key={domain}
-                className="flex items-center justify-between px-5 py-4 border border-border rounded-xl overflow-hidden bg-background hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                className="flex items-center justify-between px-6 py-4 border border-border rounded-xl bg-background hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
               >
                 <h3 className="font-medium text-base text-foreground">{domain}</h3>
                 <button
                   onClick={() => handleRemove(domain)}
-                  className="px-4 py-2 min-h-[44px] text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                  className="px-3 py-2 min-h-[44px] text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
                   style={{ touchAction: 'manipulation' }}
                 >
                   Remove
