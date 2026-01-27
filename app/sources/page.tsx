@@ -62,55 +62,55 @@ export default function SourcesPage() {
       {/* Content */}
       <div className="flex-1 overflow-y-auto px-4 py-6">
         <div className="max-w-xl mx-auto">
-        <div className="flex items-center justify-between mb-3" style={{ padding: '0 18px' }}>
-          <h1 className="text-2xl font-bold text-foreground">Trusted Sources</h1>
-          <button
-            onClick={handleResetToDefaults}
-            className="px-3 py-2 min-h-[44px] text-sm text-accent hover:bg-accent/10 rounded-lg transition-colors"
-            style={{ touchAction: 'manipulation' }}
-          >
-            Reset to Defaults
-          </button>
-        </div>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-6" style={{ padding: '0 18px' }}>
-          Manage which news sources appear in your Trusted tab.
-        </p>
-
-        {trustedDomains.length === 0 ? (
-          <div className="text-center py-16">
-            <div className="text-5xl mb-6">📰</div>
-            <p className="text-zinc-600 dark:text-zinc-400 mb-6">
-              No trusted sources yet.
-            </p>
+          <div className="flex items-center justify-between mb-3 px-[18px]">
+            <h1 className="text-2xl font-bold text-foreground">Trusted Sources</h1>
             <button
               onClick={handleResetToDefaults}
-              className="px-6 py-4 min-h-[48px] bg-accent text-white rounded-lg hover:opacity-90 active:opacity-80 transition-opacity"
+              className="flex items-center justify-center h-[44px] px-3 text-sm text-accent hover:bg-accent/10 rounded-lg transition-colors shrink-0"
               style={{ touchAction: 'manipulation' }}
             >
-              Load Default Sources
+              Reset to Defaults
             </button>
           </div>
-        ) : (
-          <div className="space-y-2">
-            {trustedDomains.map((domain) => (
-              <div
-                key={domain}
-                className="flex items-center justify-between px-[18px] h-[52px] border border-border rounded-xl bg-background hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+          <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-6 px-[18px]">
+            Manage which news sources appear in your Trusted tab.
+          </p>
+
+          {trustedDomains.length === 0 ? (
+            <div className="text-center py-16">
+              <div className="text-5xl mb-6">📰</div>
+              <p className="text-zinc-600 dark:text-zinc-400 mb-6">
+                No trusted sources yet.
+              </p>
+              <button
+                onClick={handleResetToDefaults}
+                className="px-6 py-4 min-h-[48px] bg-accent text-white rounded-lg hover:opacity-90 active:opacity-80 transition-opacity"
+                style={{ touchAction: 'manipulation' }}
               >
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-medium text-base text-foreground leading-none truncate">{domain}</h3>
-                </div>
-                <button
-                  onClick={() => handleRemove(domain)}
-                  className="flex items-center justify-center h-[44px] px-3 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors shrink-0"
-                  style={{ touchAction: 'manipulation' }}
+                Load Default Sources
+              </button>
+            </div>
+          ) : (
+            <div className="border border-border rounded-lg bg-background overflow-hidden">
+              {trustedDomains.map((domain, index) => (
+                <div
+                  key={domain}
+                  className={`flex items-center justify-between h-[48px] px-[18px] hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors${index < trustedDomains.length - 1 ? ' border-b border-border' : ''}`}
                 >
-                  Remove
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-medium text-base text-foreground leading-none truncate">{domain}</h3>
+                  </div>
+                  <button
+                    onClick={() => handleRemove(domain)}
+                    className="flex items-center justify-center h-[44px] px-3 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors shrink-0"
+                    style={{ touchAction: 'manipulation' }}
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
