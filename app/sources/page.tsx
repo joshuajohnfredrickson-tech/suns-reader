@@ -95,7 +95,7 @@ export default function SourcesPage() {
             {trustedDomains.map((domain) => (
               <div
                 key={domain}
-                className="flex items-center justify-between p-4 border border-border rounded-xl bg-background hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                className="flex items-center justify-between px-6 py-5 border border-border rounded-xl bg-background hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
               >
                 <div className="flex-1">
                   <h3 className="font-medium text-base text-foreground">{domain}</h3>
