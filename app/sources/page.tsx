@@ -60,7 +60,8 @@ export default function SourcesPage() {
       </header>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto px-5 sm:px-6 py-6 sm:py-8">
+      <div className="flex-1 overflow-y-auto px-4 py-6">
+        <div className="max-w-xl mx-auto">
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-bold text-foreground">Trusted Sources</h1>
           <button
@@ -110,6 +111,7 @@ export default function SourcesPage() {
             ))}
           </div>
         )}
+        </div>
       </div>
     </div>
   );
