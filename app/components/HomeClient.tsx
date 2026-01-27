@@ -15,13 +15,13 @@ import { purgeExpiredReadState, getReadStateForArticles } from '../lib/readState
 function Toast({ message, visible }: { message: string; visible: boolean }) {
   return (
     <div
-      className={`fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 px-8 py-5 bg-zinc-900 dark:bg-zinc-800 text-white text-lg font-medium rounded-2xl shadow-2xl transition-all duration-200 ${
+      className={`fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 min-w-[260px] px-10 py-6 bg-zinc-900 dark:bg-zinc-800 text-white text-lg leading-relaxed font-medium rounded-2xl shadow-2xl transition-all duration-300 ease-out ${
         visible
           ? 'opacity-100 scale-100'
-          : 'opacity-0 scale-95 pointer-events-none'
+          : 'opacity-0 scale-90 pointer-events-none'
       }`}
     >
-      <div className="flex items-center gap-3">
+      <div className="flex items-center justify-center gap-3 px-1">
         <svg
           className="w-6 h-6 text-green-400 shrink-0"
           fill="none"
@@ -64,7 +64,7 @@ export default function HomeClient() {
     setToast({ message, visible: true });
     toastTimeoutRef.current = setTimeout(() => {
       setToast(prev => ({ ...prev, visible: false }));
-    }, 2000);
+    }, 2800);
   }, []);
 
   useEffect(() => {
