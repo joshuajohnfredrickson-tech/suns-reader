@@ -34,7 +34,7 @@ export default function SourcesPage() {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-background text-foreground">
+    <div className="flex flex-col min-h-screen bg-background text-foreground">
       {/* Header */}
       <header className="flex items-center gap-2 px-4 py-4 sm:py-5 border-b border-border bg-background z-10">
         <button

@@ -206,7 +206,7 @@ export default function HomeClient() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-background text-foreground">
+    <div className="flex flex-col min-h-screen bg-background text-foreground">
       {/* Top Bar */}
       <header className="relative flex items-center justify-between px-4 pt-4 pb-2 sm:pt-5 sm:pb-2 bg-background z-10">
         {/* Empty spacer for centering */}

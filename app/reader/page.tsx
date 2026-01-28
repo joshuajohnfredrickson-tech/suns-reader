@@ -72,7 +72,7 @@ function ReaderContent() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-background text-foreground">
+      <div className="flex items-center justify-center min-h-screen bg-background text-foreground">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-accent mb-4"></div>
           <p className="text-zinc-600 dark:text-zinc-400">Loading article...</p>
@@ -83,7 +83,7 @@ function ReaderContent() {
 
   if (!article) {
     return (
-      <div className="flex items-center justify-center h-screen bg-background text-foreground">
+      <div className="flex items-center justify-center min-h-screen bg-background text-foreground">
         <div className="text-center">
           <h1 className="text-xl font-semibold mb-2">Article not found</h1>
           <button
@@ -104,7 +104,7 @@ function ReaderContent() {
 export default function ReaderPage() {
   return (
     <Suspense fallback={
-      <div className="flex items-center justify-center h-screen bg-background">
+      <div className="flex items-center justify-center min-h-screen bg-background">
         <div className="text-foreground">Loading...</div>
       </div>
     }>
