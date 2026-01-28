@@ -91,11 +91,11 @@ export default function SourcesPage() {
               </button>
             </div>
           ) : (
-            <div className="border border-border rounded-lg bg-background overflow-hidden">
-              {trustedDomains.map((domain, index) => (
+            <div className="border border-border/30 rounded-lg bg-background overflow-hidden divide-y divide-border/20">
+              {trustedDomains.map((domain) => (
                 <div
                   key={domain}
-                  className={`flex items-center justify-between h-[48px] px-[18px] hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors${index < trustedDomains.length - 1 ? ' border-b border-border' : ''}`}
+                  className="flex items-center justify-between h-[48px] px-6 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
                 >
                   <div className="flex-1 min-w-0">
                     <h3 className="font-medium text-base text-foreground leading-tight truncate">{domain}</h3>
