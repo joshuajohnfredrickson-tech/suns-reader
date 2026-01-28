@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ArticleList } from './ArticleList';
+import { ContentColumn } from './ContentColumn';
 import { LoadingState } from './LoadingState';
 import { ErrorState } from './ErrorState';
 import { EmptyState } from './EmptyState';
@@ -443,32 +444,34 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
       {/* Debug Panel - only shows when ?debug=1 is in URL and there's debug info */}
       {debugMode && debugInfo && <DebugPanel debug={debugInfo} onCopy={copyDebugInfo} />}
 
-      {/* Article List */}
-      {loading ? (
-        <LoadingState />
-      ) : error ? (
-        <ErrorState message={error} onRetry={fetchArticles} />
-      ) : activeTab === 'trusted' ? (
-        trustedArticles.length > 0 ? (
-          <ArticleList articles={trustedArticles} showAddToTrusted={false} onAddToTrusted={handleAddToTrusted} trustedDomains={trustedDomains} />
-        ) : trustedDomains.length === 0 ? (
-          <EmptyState
-            title="No Trusted Sources Yet"
-            message="Add sources from the Discovery tab to see articles from trusted sites here."
-            actionLabel="Go to Discovery"
-            onAction={() => handleTabChange('discovery')}
-          />
+      {/* Article List - centered on desktop */}
+      <ContentColumn className="flex-1 overflow-y-auto">
+        {loading ? (
+          <LoadingState />
+        ) : error ? (
+          <ErrorState message={error} onRetry={fetchArticles} />
+        ) : activeTab === 'trusted' ? (
+          trustedArticles.length > 0 ? (
+            <ArticleList articles={trustedArticles} showAddToTrusted={false} onAddToTrusted={handleAddToTrusted} trustedDomains={trustedDomains} />
+          ) : trustedDomains.length === 0 ? (
+            <EmptyState
+              title="No Trusted Sources Yet"
+              message="Add sources from the Discovery tab to see articles from trusted sites here."
+              actionLabel="Go to Discovery"
+              onAction={() => handleTabChange('discovery')}
+            />
+          ) : (
+            <EmptyState
+              title="No Articles Found"
+              message="No articles from trusted sources in the last 24 hours."
+              actionLabel="Go to Discovery"
+              onAction={() => handleTabChange('discovery')}
+            />
+          )
         ) : (
-          <EmptyState
-            title="No Articles Found"
-            message="No articles from trusted sources in the last 24 hours."
-            actionLabel="Go to Discovery"
-            onAction={() => handleTabChange('discovery')}
-          />
-        )
-      ) : (
-        <ArticleList articles={discoveryArticles} showAddToTrusted={true} onAddToTrusted={handleAddToTrusted} trustedDomains={trustedDomains} />
-      )}
+          <ArticleList articles={discoveryArticles} showAddToTrusted={true} onAddToTrusted={handleAddToTrusted} trustedDomains={trustedDomains} />
+        )}
+      </ContentColumn>
 
       {/* Toast */}
       <Toast message={toast.message} visible={toast.visible} />

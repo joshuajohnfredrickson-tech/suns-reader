@@ -23,7 +23,7 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
   };
 
   return (
-    <div className="flex-1 overflow-y-auto">
+    <div>
       {articles.map((article, index) => {
         const isTrusted = article.sourceDomain ? trustedDomains.includes(article.sourceDomain.toLowerCase()) : false;
         const isLast = index === articles.length - 1;

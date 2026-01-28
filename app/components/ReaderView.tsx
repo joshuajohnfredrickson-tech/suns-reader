@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Article } from '../types/article';
+import { ContentColumn } from './ContentColumn';
 import { resolvePublisherUrl } from '../lib/resolvePublisherUrl';
 import { normalizeTitle } from '../lib/utils';
 
@@ -324,9 +325,9 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
         )}
       </header>
 
-      {/* Article Content */}
-      <article className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        <div className="max-w-2xl mx-auto">
+      {/* Article Content - centered on desktop */}
+      <article className="flex-1 overflow-y-auto py-6 sm:py-8">
+        <ContentColumn className="px-4 sm:px-6">
           {/* Article Meta Header Block */}
           <div className="pt-4 pb-6 mb-8">
             {/* Title */}
@@ -365,7 +366,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
 
           {/* Content Area */}
           {renderContent()}
-        </div>
+        </ContentColumn>
       </article>
     </div>
   );
