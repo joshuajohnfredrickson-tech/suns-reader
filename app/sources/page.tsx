@@ -91,7 +91,7 @@ export default function SourcesPage() {
               </button>
             </div>
           ) : (
-            <div className="mx-4 border border-border rounded-lg bg-background overflow-hidden">
+            <div className="border border-border rounded-lg bg-background overflow-hidden">
               {trustedDomains.map((domain, index) => (
                 <div
                   key={domain}
