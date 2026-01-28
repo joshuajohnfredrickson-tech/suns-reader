@@ -28,28 +28,39 @@ interface DebugInfo {
 
 // Debug panel component
 function DebugPanel({ debug, onCopy }: { debug: DebugInfo; onCopy: () => void }) {
+  const hasError = !!debug.searchError;
+
+  // Style variants based on error state
+  const bgClass = hasError ? 'bg-red-950/50 border-red-800/50' : 'bg-green-950/50 border-green-800/50';
+  const labelClass = hasError ? 'text-red-400' : 'text-green-400';
+  const textClass = hasError ? 'text-red-200' : 'text-green-200';
+  const buttonClass = hasError ? 'bg-red-800/50 hover:bg-red-700/50 text-red-200' : 'bg-green-800/50 hover:bg-green-700/50 text-green-200';
+
   return (
-    <div className="mx-4 my-2 p-3 bg-red-950/50 border border-red-800/50 rounded-lg text-xs font-mono text-red-200">
+    <div className={`mx-4 my-2 p-3 border rounded-lg text-xs font-mono ${bgClass} ${textClass}`}>
       <div className="flex items-center justify-between mb-2">
-        <span className="font-semibold text-red-400">Debug Info</span>
+        <span className={`font-semibold ${labelClass}`}>
+          {hasError ? 'Debug Info (Error)' : 'Debug Info (OK)'}
+        </span>
         <button
           onClick={onCopy}
-          className="px-2 py-1 bg-red-800/50 hover:bg-red-700/50 rounded text-red-200 transition-colors"
+          className={`px-2 py-1 rounded transition-colors ${buttonClass}`}
         >
           Copy debug
         </button>
       </div>
       <div className="space-y-1 break-all">
-        <div><span className="text-red-400">Time:</span> {debug.timestamp}</div>
-        <div><span className="text-red-400">URL:</span> {debug.url}</div>
-        <div><span className="text-red-400">UA:</span> {debug.userAgent.slice(0, 80)}...</div>
-        <div><span className="text-red-400">Health:</span> {debug.healthStatus} {debug.healthResponse ? `- ${debug.healthResponse}` : ''}</div>
-        <div><span className="text-red-400">Search URL:</span> {debug.searchUrl}</div>
-        <div><span className="text-red-400">Search Status:</span> {debug.searchStatus ?? 'N/A'}</div>
-        <div><span className="text-red-400">Content-Type:</span> {debug.searchContentType ?? 'N/A'}</div>
-        <div><span className="text-red-400">Items:</span> {debug.itemCount}</div>
-        {debug.searchError && <div><span className="text-red-400">Error:</span> {debug.searchError}</div>}
-        {debug.searchResponsePreview && <div><span className="text-red-400">Response:</span> {debug.searchResponsePreview}</div>}
+        <div><span className={labelClass}>Time:</span> {debug.timestamp}</div>
+        <div><span className={labelClass}>URL:</span> {debug.url}</div>
+        <div><span className={labelClass}>UA:</span> {debug.userAgent.slice(0, 80)}...</div>
+        <div><span className={labelClass}>Health:</span> {debug.healthStatus}</div>
+        <div><span className={labelClass}>Search:</span> {debug.searchStatus ?? 'N/A'} · {debug.itemCount} items</div>
+        {hasError && (
+          <>
+            <div><span className={labelClass}>Error:</span> {debug.searchError}</div>
+            {debug.searchResponsePreview && <div><span className={labelClass}>Response:</span> {debug.searchResponsePreview}</div>}
+          </>
+        )}
       </div>
     </div>
   );
@@ -192,12 +203,16 @@ export default function HomeClient() {
       }
 
       const items: ArticleSummary[] = data.items || [];
-      if (debug) debug.itemCount = items.length;
+      if (debug) {
+        debug.itemCount = items.length;
 
-      // Show debug if no items (only in debug mode)
-      if (debug && items.length === 0) {
-        debug.searchError = 'Empty response (0 items)';
-        debug.searchResponsePreview = JSON.stringify(data).slice(0, 300);
+        // Mark as error if no items
+        if (items.length === 0) {
+          debug.searchError = 'Empty response (0 items)';
+          debug.searchResponsePreview = JSON.stringify(data).slice(0, 300);
+        }
+
+        // Always set debug info in debug mode (shows healthy state too)
         setDebugInfo(debug);
       }
 
