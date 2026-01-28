@@ -96,7 +96,6 @@ export default function SourcesPage() {
                 <div
                   key={domain}
                   className="flex items-center justify-between h-[48px] hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
-                  style={{ paddingLeft: '16px', paddingRight: '16px' }}
                 >
                   <div className="flex-1 min-w-0">
                     <h3 className="font-medium text-base text-foreground leading-tight truncate">{domain}</h3>
