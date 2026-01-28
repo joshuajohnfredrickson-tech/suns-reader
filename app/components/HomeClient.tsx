@@ -11,6 +11,50 @@ import { getRelativeTime, formatDate, normalizeTitle } from '../lib/utils';
 import { getTrustedDomains, addTrustedDomain } from '../lib/trustedDomains';
 import { purgeExpiredReadState, getReadStateForArticles } from '../lib/readState';
 
+// Debug info type
+interface DebugInfo {
+  timestamp: string;
+  url: string;
+  userAgent: string;
+  searchUrl: string;
+  searchStatus: number | null;
+  searchContentType: string | null;
+  searchError: string | null;
+  searchResponsePreview: string | null;
+  itemCount: number;
+  healthStatus: string;
+  healthResponse: string | null;
+}
+
+// Debug panel component
+function DebugPanel({ debug, onCopy }: { debug: DebugInfo; onCopy: () => void }) {
+  return (
+    <div className="mx-4 my-2 p-3 bg-red-950/50 border border-red-800/50 rounded-lg text-xs font-mono text-red-200">
+      <div className="flex items-center justify-between mb-2">
+        <span className="font-semibold text-red-400">Debug Info</span>
+        <button
+          onClick={onCopy}
+          className="px-2 py-1 bg-red-800/50 hover:bg-red-700/50 rounded text-red-200 transition-colors"
+        >
+          Copy debug
+        </button>
+      </div>
+      <div className="space-y-1 break-all">
+        <div><span className="text-red-400">Time:</span> {debug.timestamp}</div>
+        <div><span className="text-red-400">URL:</span> {debug.url}</div>
+        <div><span className="text-red-400">UA:</span> {debug.userAgent.slice(0, 80)}...</div>
+        <div><span className="text-red-400">Health:</span> {debug.healthStatus} {debug.healthResponse ? `- ${debug.healthResponse}` : ''}</div>
+        <div><span className="text-red-400">Search URL:</span> {debug.searchUrl}</div>
+        <div><span className="text-red-400">Search Status:</span> {debug.searchStatus ?? 'N/A'}</div>
+        <div><span className="text-red-400">Content-Type:</span> {debug.searchContentType ?? 'N/A'}</div>
+        <div><span className="text-red-400">Items:</span> {debug.itemCount}</div>
+        {debug.searchError && <div><span className="text-red-400">Error:</span> {debug.searchError}</div>}
+        {debug.searchResponsePreview && <div><span className="text-red-400">Response:</span> {debug.searchResponsePreview}</div>}
+      </div>
+    </div>
+  );
+}
+
 // Toast component
 function Toast({ message, visible }: { message: string; visible: boolean }) {
   return (
@@ -55,6 +99,7 @@ export default function HomeClient() {
     message: '',
     visible: false,
   });
+  const [debugInfo, setDebugInfo] = useState<DebugInfo | null>(null);
   const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const showToast = useCallback((message: string) => {
@@ -78,23 +123,79 @@ export default function HomeClient() {
   const fetchArticles = async () => {
     setLoading(true);
     setError(null);
+    setDebugInfo(null);
+
+    const debug: DebugInfo = {
+      timestamp: new Date().toISOString(),
+      url: typeof window !== 'undefined' ? window.location.href : '',
+      userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
+      searchUrl: '',
+      searchStatus: null,
+      searchContentType: null,
+      searchError: null,
+      searchResponsePreview: null,
+      itemCount: 0,
+      healthStatus: 'pending',
+      healthResponse: null,
+    };
+
+    // Check health endpoint
+    try {
+      const healthRes = await fetch('/api/health');
+      debug.healthStatus = healthRes.ok ? 'ok' : `error:${healthRes.status}`;
+      const healthData = await healthRes.json();
+      debug.healthResponse = JSON.stringify(healthData).slice(0, 100);
+    } catch (healthErr) {
+      debug.healthStatus = `failed:${healthErr instanceof Error ? healthErr.message : 'unknown'}`;
+    }
 
     try {
       // Add cache-buster to force fresh fetch on every refresh
       const cacheBust = Date.now();
-      const response = await fetch(`/api/search?q=Phoenix+Suns&cb=${cacheBust}`, {
+      const searchUrl = `/api/search?q=Phoenix+Suns&cb=${cacheBust}`;
+      debug.searchUrl = searchUrl;
+
+      const response = await fetch(searchUrl, {
         cache: 'no-store',
       });
+
+      debug.searchStatus = response.status;
+      debug.searchContentType = response.headers.get('content-type');
+
       if (!response.ok) {
+        const text = await response.text();
+        debug.searchResponsePreview = text.slice(0, 300);
+        debug.searchError = `HTTP ${response.status}`;
+        setDebugInfo(debug);
         throw new Error('Failed to fetch articles');
       }
 
-      const data = await response.json();
+      const text = await response.text();
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (parseErr) {
+        debug.searchError = `JSON parse failed: ${parseErr instanceof Error ? parseErr.message : 'unknown'}`;
+        debug.searchResponsePreview = text.slice(0, 300);
+        setDebugInfo(debug);
+        throw new Error('Failed to parse response');
+      }
+
       const items: ArticleSummary[] = data.items || [];
+      debug.itemCount = items.length;
+
+      // Show debug if no items
+      if (items.length === 0) {
+        debug.searchError = 'Empty response (0 items)';
+        debug.searchResponsePreview = JSON.stringify(data).slice(0, 300);
+        setDebugInfo(debug);
+      }
 
       setArticleSummaries(items);
     } catch (err) {
       console.error('Failed to fetch articles:', err);
+      debug.searchError = debug.searchError || (err instanceof Error ? err.message : 'Unknown error');
+      setDebugInfo(debug);
       setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setLoading(false);
@@ -106,6 +207,23 @@ export default function HomeClient() {
     setTrustedDomains(getTrustedDomains());
     showToast('Added to Trusted');
   }, [showToast]);
+
+  const copyDebugInfo = useCallback(() => {
+    if (debugInfo) {
+      const text = `Debug Info (${debugInfo.timestamp})
+URL: ${debugInfo.url}
+UserAgent: ${debugInfo.userAgent}
+Health: ${debugInfo.healthStatus} ${debugInfo.healthResponse || ''}
+Search URL: ${debugInfo.searchUrl}
+Search Status: ${debugInfo.searchStatus}
+Content-Type: ${debugInfo.searchContentType}
+Items: ${debugInfo.itemCount}
+Error: ${debugInfo.searchError || 'none'}
+Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
+      navigator.clipboard.writeText(text);
+      showToast('Debug copied');
+    }
+  }, [debugInfo, showToast]);
 
   useEffect(() => {
     setMounted(true);
@@ -294,6 +412,9 @@ export default function HomeClient() {
           Discovery
         </button>
       </nav>
+
+      {/* Debug Panel - only shows when there's an issue */}
+      {debugInfo && <DebugPanel debug={debugInfo} onCopy={copyDebugInfo} />}
 
       {/* Article List */}
       {loading ? (
