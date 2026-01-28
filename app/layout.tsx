@@ -49,7 +49,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} antialiased`}>
-        {children}
+        <div className="md:max-w-[1024px] md:mx-auto">
+          {children}
+        </div>
       </body>
     </html>
   );
