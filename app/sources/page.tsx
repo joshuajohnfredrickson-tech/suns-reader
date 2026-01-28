@@ -62,7 +62,7 @@ export default function SourcesPage() {
       {/* Content */}
       <div className="flex-1 overflow-y-auto py-6">
         <div className="mx-auto w-full max-w-[420px]" style={{ paddingLeft: '24px', paddingRight: '24px' }}>
-          <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center justify-between mb-3" style={{ paddingLeft: '12px', paddingRight: '12px' }}>
             <h1 className="text-2xl font-bold text-foreground">Trusted Sources</h1>
             <button
               onClick={handleResetToDefaults}
@@ -72,7 +72,7 @@ export default function SourcesPage() {
               Reset to Defaults
             </button>
           </div>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-6">
+          <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-6" style={{ paddingLeft: '12px', paddingRight: '12px' }}>
             Manage which news sources appear in your Trusted tab.
           </p>
 
@@ -96,6 +96,7 @@ export default function SourcesPage() {
                 <div
                   key={domain}
                   className="flex items-center justify-between h-[48px] hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                  style={{ paddingLeft: '12px', paddingRight: '12px' }}
                 >
                   <div className="flex-1 min-w-0">
                     <h3 className="font-medium text-base text-foreground leading-tight truncate">{domain}</h3>
