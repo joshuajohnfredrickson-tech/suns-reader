@@ -66,7 +66,7 @@ export default function SourcesPage() {
             <h1 className="text-2xl font-bold text-foreground">Trusted Sources</h1>
             <button
               onClick={handleResetToDefaults}
-              className="flex items-center justify-center h-[44px] px-3 text-sm text-accent hover:bg-accent/10 rounded-lg transition-colors shrink-0"
+              className="flex items-center justify-center h-[44px] pl-3 pr-0 text-sm text-accent hover:bg-accent/10 rounded-lg transition-colors shrink-0"
               style={{ touchAction: 'manipulation' }}
             >
               Reset to Defaults
@@ -102,7 +102,7 @@ export default function SourcesPage() {
                   </div>
                   <button
                     onClick={() => handleRemove(domain)}
-                    className="flex items-center justify-center h-[44px] px-3 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors shrink-0"
+                    className="flex items-center justify-center h-[44px] pl-3 pr-0 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors shrink-0"
                     style={{ touchAction: 'manipulation' }}
                   >
                     Remove
