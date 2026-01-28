@@ -88,6 +88,7 @@ function Toast({ message, visible }: { message: string; visible: boolean }) {
 export default function HomeClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const debugMode = searchParams.get('debug') === '1';
   const [activeTab, setActiveTab] = useState<'trusted' | 'discovery'>('trusted');
   const [mounted, setMounted] = useState(false);
   const [articleSummaries, setArticleSummaries] = useState<ArticleSummary[]>([]);
@@ -120,12 +121,13 @@ export default function HomeClient() {
     };
   }, []);
 
-  const fetchArticles = async () => {
+  const fetchArticles = useCallback(async () => {
     setLoading(true);
     setError(null);
     setDebugInfo(null);
 
-    const debug: DebugInfo = {
+    // Only collect debug info when debug mode is enabled
+    const debug: DebugInfo | null = debugMode ? {
       timestamp: new Date().toISOString(),
       url: typeof window !== 'undefined' ? window.location.href : '',
       userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
@@ -137,36 +139,42 @@ export default function HomeClient() {
       itemCount: 0,
       healthStatus: 'pending',
       healthResponse: null,
-    };
+    } : null;
 
-    // Check health endpoint
-    try {
-      const healthRes = await fetch('/api/health');
-      debug.healthStatus = healthRes.ok ? 'ok' : `error:${healthRes.status}`;
-      const healthData = await healthRes.json();
-      debug.healthResponse = JSON.stringify(healthData).slice(0, 100);
-    } catch (healthErr) {
-      debug.healthStatus = `failed:${healthErr instanceof Error ? healthErr.message : 'unknown'}`;
+    // Check health endpoint only in debug mode
+    if (debug) {
+      try {
+        const healthRes = await fetch('/api/health');
+        debug.healthStatus = healthRes.ok ? 'ok' : `error:${healthRes.status}`;
+        const healthData = await healthRes.json();
+        debug.healthResponse = JSON.stringify(healthData).slice(0, 100);
+      } catch (healthErr) {
+        debug.healthStatus = `failed:${healthErr instanceof Error ? healthErr.message : 'unknown'}`;
+      }
     }
 
     try {
       // Add cache-buster to force fresh fetch on every refresh
       const cacheBust = Date.now();
       const searchUrl = `/api/search?q=Phoenix+Suns&cb=${cacheBust}`;
-      debug.searchUrl = searchUrl;
+      if (debug) debug.searchUrl = searchUrl;
 
       const response = await fetch(searchUrl, {
         cache: 'no-store',
       });
 
-      debug.searchStatus = response.status;
-      debug.searchContentType = response.headers.get('content-type');
+      if (debug) {
+        debug.searchStatus = response.status;
+        debug.searchContentType = response.headers.get('content-type');
+      }
 
       if (!response.ok) {
         const text = await response.text();
-        debug.searchResponsePreview = text.slice(0, 300);
-        debug.searchError = `HTTP ${response.status}`;
-        setDebugInfo(debug);
+        if (debug) {
+          debug.searchResponsePreview = text.slice(0, 300);
+          debug.searchError = `HTTP ${response.status}`;
+          setDebugInfo(debug);
+        }
         throw new Error('Failed to fetch articles');
       }
 
@@ -175,17 +183,19 @@ export default function HomeClient() {
       try {
         data = JSON.parse(text);
       } catch (parseErr) {
-        debug.searchError = `JSON parse failed: ${parseErr instanceof Error ? parseErr.message : 'unknown'}`;
-        debug.searchResponsePreview = text.slice(0, 300);
-        setDebugInfo(debug);
+        if (debug) {
+          debug.searchError = `JSON parse failed: ${parseErr instanceof Error ? parseErr.message : 'unknown'}`;
+          debug.searchResponsePreview = text.slice(0, 300);
+          setDebugInfo(debug);
+        }
         throw new Error('Failed to parse response');
       }
 
       const items: ArticleSummary[] = data.items || [];
-      debug.itemCount = items.length;
+      if (debug) debug.itemCount = items.length;
 
-      // Show debug if no items
-      if (items.length === 0) {
+      // Show debug if no items (only in debug mode)
+      if (debug && items.length === 0) {
         debug.searchError = 'Empty response (0 items)';
         debug.searchResponsePreview = JSON.stringify(data).slice(0, 300);
         setDebugInfo(debug);
@@ -194,13 +204,15 @@ export default function HomeClient() {
       setArticleSummaries(items);
     } catch (err) {
       console.error('Failed to fetch articles:', err);
-      debug.searchError = debug.searchError || (err instanceof Error ? err.message : 'Unknown error');
-      setDebugInfo(debug);
+      if (debug) {
+        debug.searchError = debug.searchError || (err instanceof Error ? err.message : 'Unknown error');
+        setDebugInfo(debug);
+      }
       setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setLoading(false);
     }
-  };
+  }, [debugMode]);
 
   const handleAddToTrusted = useCallback((domain: string) => {
     addTrustedDomain(domain);
@@ -269,7 +281,7 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
       window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener('readStateChanged', handleReadStateChange);
     };
-  }, [searchParams]);
+  }, [searchParams, fetchArticles]);
 
   // Derive articles with read state - recomputes when readVersion changes
   const allArticles = useMemo(() => {
@@ -413,8 +425,8 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
         </button>
       </nav>
 
-      {/* Debug Panel - only shows when there's an issue */}
-      {debugInfo && <DebugPanel debug={debugInfo} onCopy={copyDebugInfo} />}
+      {/* Debug Panel - only shows when ?debug=1 is in URL and there's debug info */}
+      {debugMode && debugInfo && <DebugPanel debug={debugInfo} onCopy={copyDebugInfo} />}
 
       {/* Article List */}
       {loading ? (
