@@ -60,7 +60,7 @@ export default function SourcesPage() {
       </header>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto px-4 py-6">
+      <div className="flex-1 overflow-y-auto px-5 py-6">
         <div className="max-w-xl mx-auto">
           <div className="flex items-center justify-between mb-3 px-[18px]">
             <h1 className="text-2xl font-bold text-foreground">Trusted Sources</h1>
