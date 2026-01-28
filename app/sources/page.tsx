@@ -61,7 +61,7 @@ export default function SourcesPage() {
 
       {/* Content */}
       <div className="flex-1 overflow-y-auto py-6">
-        <div className="mx-auto w-full max-w-[420px] px-6">
+        <div className="mx-auto w-full max-w-[420px]" style={{ paddingLeft: '24px', paddingRight: '24px' }}>
           <div className="flex items-center justify-between mb-3 px-4">
             <h1 className="text-2xl font-bold text-foreground">Trusted Sources</h1>
             <button
