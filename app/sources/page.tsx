@@ -102,8 +102,8 @@ export default function SourcesPage() {
                   </div>
                   <button
                     onClick={() => handleRemove(domain)}
-                    className="h-[44px] text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors shrink-0"
-                    style={{ touchAction: 'manipulation', marginRight: '-8px', paddingLeft: '12px', paddingRight: '8px' }}
+                    className="text-sm text-red-600 dark:text-red-400 transition-colors"
+                    style={{ touchAction: 'manipulation' }}
                   >
                     Remove
                   </button>
