@@ -274,9 +274,9 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
   const originalUrl = extracted?.url || publisherUrl || article.url;
 
   return (
-    <div className="flex flex-col min-h-screen md:h-screen bg-background text-foreground">
-      {/* Sticky header wrapper - mobile only (desktop uses contained scroll) */}
-      <div className="sticky top-0 z-50 bg-background pt-[env(safe-area-inset-top)] md:static md:pt-0">
+    <div className="flex flex-col h-[100dvh] md:h-screen bg-background text-foreground">
+      {/* Header wrapper - static, outside scroll container */}
+      <div className="shrink-0 bg-background pt-[env(safe-area-inset-top)]">
         {/* Header */}
         <header className="flex items-center justify-between px-4 py-4 sm:py-5 border-b border-border bg-background">
           <button
@@ -328,8 +328,8 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
         </header>
       </div>
 
-      {/* Article Content - centered on desktop, scrolls via document on mobile */}
-      <article className="flex-1 md:overflow-y-auto py-6 sm:py-8">
+      {/* Article Content - scroll container for contained scrolling */}
+      <article className="flex-1 overflow-y-auto overscroll-y-contain py-6 sm:py-8">
         <ContentColumn className="px-4 sm:px-6">
           {/* Article Meta Header Block */}
           <div className="pt-4 pb-6 mb-8">

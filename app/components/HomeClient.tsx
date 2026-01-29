@@ -352,9 +352,9 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
   };
 
   return (
-    <div className="flex flex-col min-h-screen md:h-screen bg-background text-foreground">
-      {/* Sticky header wrapper - mobile only (desktop uses contained scroll) */}
-      <div className="sticky top-0 z-50 bg-background pt-[env(safe-area-inset-top)] md:static md:pt-0">
+    <div className="flex flex-col h-[100dvh] md:h-screen bg-background text-foreground">
+      {/* Header wrapper - static, outside scroll container */}
+      <div className="shrink-0 bg-background pt-[env(safe-area-inset-top)]">
         {/* Top Bar */}
         <header className="relative flex items-center justify-between px-4 pt-4 pb-2 sm:pt-5 sm:pb-2 bg-background">
         {/* Empty spacer for centering */}
@@ -447,8 +447,8 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
       {/* Debug Panel - only shows when ?debug=1 is in URL and there's debug info */}
       {debugMode && debugInfo && <DebugPanel debug={debugInfo} onCopy={copyDebugInfo} />}
 
-      {/* Article List - centered on desktop, scrolls via document on mobile */}
-      <ContentColumn className="flex-1 md:overflow-y-auto">
+      {/* Article List - scroll container for contained scrolling */}
+      <ContentColumn className="flex-1 overflow-y-auto overscroll-y-contain">
         {loading ? (
           <LoadingState />
         ) : error ? (

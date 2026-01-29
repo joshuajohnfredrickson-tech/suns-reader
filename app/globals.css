@@ -33,14 +33,7 @@
 html,
 body {
   height: 100%;
-}
-
-/* Desktop only: contained scrolling with fixed viewport height */
-@media (min-width: 768px) {
-  html,
-  body {
-    overflow: hidden;
-  }
+  overflow: hidden;
 }
 
 body {

@@ -34,9 +34,9 @@ export default function SourcesPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen md:h-screen bg-background text-foreground">
-      {/* Sticky header wrapper - mobile only (desktop uses contained scroll) */}
-      <div className="sticky top-0 z-50 bg-background pt-[env(safe-area-inset-top)] md:static md:pt-0">
+    <div className="flex flex-col h-[100dvh] md:h-screen bg-background text-foreground">
+      {/* Header wrapper - static, outside scroll container */}
+      <div className="shrink-0 bg-background pt-[env(safe-area-inset-top)]">
         {/* Header */}
         <header className="flex items-center gap-2 px-4 py-4 sm:py-5 border-b border-border bg-background">
           <button
@@ -62,8 +62,8 @@ export default function SourcesPage() {
         </header>
       </div>
 
-      {/* Content - flex centering on desktop, full-width with padding gutters on mobile */}
-      <div className="flex-1 md:overflow-y-auto py-6 md:flex md:justify-center">
+      {/* Content - scroll container for contained scrolling */}
+      <div className="flex-1 overflow-y-auto overscroll-y-contain py-6 md:flex md:justify-center">
         <div className="w-full max-w-[420px] md:flex-none" style={{ paddingLeft: '24px', paddingRight: '24px' }}>
           <div className="flex items-center justify-between mb-3" style={{ paddingLeft: '12px', paddingRight: '12px' }}>
             <h1 className="text-2xl font-bold text-foreground">Trusted Sources</h1>
