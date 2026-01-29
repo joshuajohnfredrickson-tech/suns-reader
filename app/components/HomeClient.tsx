@@ -105,9 +105,11 @@ export default function HomeClient() {
   const [mounted, setMounted] = useState(false);
   const [articleSummaries, setArticleSummaries] = useState<ArticleSummary[]>([]);
   const [trustedDomains, setTrustedDomains] = useState<string[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
+  const [isExplicitRefresh, setIsExplicitRefresh] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [readVersion, setReadVersion] = useState(0);
+  const hasFetchedRef = useRef(false);
   const [toast, setToast] = useState<{ message: string; visible: boolean }>({
     message: '',
     visible: false,
@@ -134,7 +136,7 @@ export default function HomeClient() {
   }, []);
 
   const fetchArticles = useCallback(async () => {
-    setLoading(true);
+    setIsFetching(true);
     setError(null);
     setDebugInfo(null);
 
@@ -226,7 +228,8 @@ export default function HomeClient() {
       }
       setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
-      setLoading(false);
+      setIsFetching(false);
+      setIsExplicitRefresh(false);
     }
   }, [debugMode]);
 
@@ -253,14 +256,17 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
     }
   }, [debugInfo, showToast]);
 
+  // Effect 1: Handle tab param from URL (view state only, no fetch)
   useEffect(() => {
-    setMounted(true);
-
-    // Load active tab from URL query param
     const tabParam = searchParams.get('tab');
     if (tabParam === 'discovery' || tabParam === 'trusted') {
       setActiveTab(tabParam);
     }
+  }, [searchParams]);
+
+  // Effect 2: One-time initialization and initial data fetch
+  useEffect(() => {
+    setMounted(true);
 
     // Load trusted domains
     setTrustedDomains(getTrustedDomains());
@@ -290,14 +296,17 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
     window.addEventListener('storage', handleStorageChange);
     window.addEventListener('readStateChanged', handleReadStateChange);
 
-    // Fetch articles on mount
-    fetchArticles();
+    // Fetch articles only on initial cold start (once)
+    if (!hasFetchedRef.current) {
+      hasFetchedRef.current = true;
+      fetchArticles();
+    }
 
     return () => {
       window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener('readStateChanged', handleReadStateChange);
     };
-  }, [searchParams, fetchArticles]);
+  }, [fetchArticles]);
 
   // Derive articles with read state - recomputes when readVersion changes
   const allArticles = useMemo(() => {
@@ -343,6 +352,7 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
   }
 
   const handleRefresh = () => {
+    setIsExplicitRefresh(true);
     fetchArticles();
   };
 
@@ -365,9 +375,9 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
         <div className="flex items-center gap-4">
           <button
             onClick={handleRefresh}
-            disabled={loading}
+            disabled={isFetching}
             className={`p-3 min-w-[48px] min-h-[48px] flex items-center justify-center rounded-lg transition-colors ${
-              loading
+              isFetching
                 ? 'opacity-50 cursor-not-allowed'
                 : 'hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700'
             }`}
@@ -375,7 +385,7 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
             style={{ touchAction: 'manipulation' }}
           >
             <svg
-              className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`}
+              className={`w-5 h-5 ${isExplicitRefresh ? 'animate-spin' : ''}`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -449,10 +459,11 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
 
       {/* Article List - scroll container for contained scrolling */}
       <ContentColumn className="flex-1 overflow-y-auto overscroll-y-contain">
-        {loading ? (
+        {/* Only show full LoadingState on cold start (no data yet) */}
+        {isFetching && articleSummaries.length === 0 ? (
           <LoadingState />
         ) : error ? (
-          <ErrorState message={error} onRetry={fetchArticles} />
+          <ErrorState message={error} onRetry={handleRefresh} />
         ) : activeTab === 'trusted' ? (
           trustedArticles.length > 0 ? (
             <ArticleList articles={trustedArticles} showAddToTrusted={false} onAddToTrusted={handleAddToTrusted} trustedDomains={trustedDomains} />
