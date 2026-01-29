@@ -274,7 +274,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
   const originalUrl = extracted?.url || publisherUrl || article.url;
 
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground">
+    <div className="flex flex-col min-h-screen md:h-screen bg-background text-foreground">
       {/* Header */}
       <header className="flex items-center justify-between px-4 py-4 sm:py-5 border-b border-border bg-background z-10">
         <button
@@ -325,8 +325,8 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
         )}
       </header>
 
-      {/* Article Content - centered on desktop */}
-      <article className="flex-1 overflow-y-auto py-6 sm:py-8">
+      {/* Article Content - centered on desktop, scrolls via document on mobile */}
+      <article className="flex-1 md:overflow-y-auto py-6 sm:py-8">
         <ContentColumn className="px-4 sm:px-6">
           {/* Article Meta Header Block */}
           <div className="pt-4 pb-6 mb-8">
