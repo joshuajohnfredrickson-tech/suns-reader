@@ -35,29 +35,32 @@ export default function SourcesPage() {
 
   return (
     <div className="flex flex-col min-h-screen md:h-screen bg-background text-foreground">
-      {/* Header */}
-      <header className="flex items-center gap-2 px-4 py-4 sm:py-5 border-b border-border bg-background z-10">
-        <button
-          onClick={handleBack}
-          className="flex items-center gap-2 -ml-2 px-3 py-3 min-h-[48px] rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
-          style={{ touchAction: 'manipulation' }}
-        >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+      {/* Sticky header wrapper - mobile only (desktop uses contained scroll) */}
+      <div className="sticky top-0 z-50 bg-background pt-[env(safe-area-inset-top)] md:static md:pt-0">
+        {/* Header */}
+        <header className="flex items-center gap-2 px-4 py-4 sm:py-5 border-b border-border bg-background">
+          <button
+            onClick={handleBack}
+            className="flex items-center gap-2 -ml-2 px-3 py-3 min-h-[48px] rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
+            style={{ touchAction: 'manipulation' }}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-          <span className="text-base font-medium">Back</span>
-        </button>
-      </header>
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+            <span className="text-base font-medium">Back</span>
+          </button>
+        </header>
+      </div>
 
       {/* Content - flex centering on desktop, full-width with padding gutters on mobile */}
       <div className="flex-1 md:overflow-y-auto py-6 md:flex md:justify-center">

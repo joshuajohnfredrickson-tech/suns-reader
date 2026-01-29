@@ -353,8 +353,10 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
 
   return (
     <div className="flex flex-col min-h-screen md:h-screen bg-background text-foreground">
-      {/* Top Bar */}
-      <header className="relative flex items-center justify-between px-4 pt-4 pb-2 sm:pt-5 sm:pb-2 bg-background z-10">
+      {/* Sticky header wrapper - mobile only (desktop uses contained scroll) */}
+      <div className="sticky top-0 z-50 bg-background pt-[env(safe-area-inset-top)] md:static md:pt-0">
+        {/* Top Bar */}
+        <header className="relative flex items-center justify-between px-4 pt-4 pb-2 sm:pt-5 sm:pb-2 bg-background">
         {/* Empty spacer for centering */}
         <div className="w-28" />
         {/* Centered title */}
@@ -415,31 +417,32 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
         </div>
       </header>
 
-      {/* Tabs */}
-      <nav className="flex border-b border-border bg-background z-10">
-        <button
-          onClick={() => handleTabChange('trusted')}
-          className={`flex-1 px-4 py-3.5 min-h-[44px] text-base font-medium transition-colors ${
-            activeTab === 'trusted'
-              ? 'text-accent border-b-2 border-accent'
-              : 'text-zinc-600 dark:text-zinc-400 hover:text-foreground'
-          }`}
-          style={{ touchAction: 'manipulation' }}
-        >
-          Trusted
-        </button>
-        <button
-          onClick={() => handleTabChange('discovery')}
-          className={`flex-1 px-4 py-3.5 min-h-[44px] text-base font-medium transition-colors ${
-            activeTab === 'discovery'
-              ? 'text-accent border-b-2 border-accent'
-              : 'text-zinc-600 dark:text-zinc-400 hover:text-foreground'
-          }`}
-          style={{ touchAction: 'manipulation' }}
-        >
-          Discovery
-        </button>
-      </nav>
+        {/* Tabs */}
+        <nav className="flex border-b border-border bg-background">
+          <button
+            onClick={() => handleTabChange('trusted')}
+            className={`flex-1 px-4 py-3.5 min-h-[44px] text-base font-medium transition-colors ${
+              activeTab === 'trusted'
+                ? 'text-accent border-b-2 border-accent'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-foreground'
+            }`}
+            style={{ touchAction: 'manipulation' }}
+          >
+            Trusted
+          </button>
+          <button
+            onClick={() => handleTabChange('discovery')}
+            className={`flex-1 px-4 py-3.5 min-h-[44px] text-base font-medium transition-colors ${
+              activeTab === 'discovery'
+                ? 'text-accent border-b-2 border-accent'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-foreground'
+            }`}
+            style={{ touchAction: 'manipulation' }}
+          >
+            Discovery
+          </button>
+        </nav>
+      </div>
 
       {/* Debug Panel - only shows when ?debug=1 is in URL and there's debug info */}
       {debugMode && debugInfo && <DebugPanel debug={debugInfo} onCopy={copyDebugInfo} />}

@@ -275,41 +275,17 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
 
   return (
     <div className="flex flex-col min-h-screen md:h-screen bg-background text-foreground">
-      {/* Header */}
-      <header className="flex items-center justify-between px-4 py-4 sm:py-5 border-b border-border bg-background z-10">
-        <button
-          onClick={onBack}
-          className="flex items-center gap-2 -ml-2 px-3 py-3 min-h-[48px] rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
-          style={{ touchAction: 'manipulation' }}
-        >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-          <span className="text-base font-medium">Back</span>
-        </button>
-
-        {/* Open Original - text link style */}
-        {originalUrl && (
-          <a
-            href={originalUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-3 py-3 min-h-[48px] min-w-[48px] text-accent hover:underline transition-colors no-underline"
+      {/* Sticky header wrapper - mobile only (desktop uses contained scroll) */}
+      <div className="sticky top-0 z-50 bg-background pt-[env(safe-area-inset-top)] md:static md:pt-0">
+        {/* Header */}
+        <header className="flex items-center justify-between px-4 py-4 sm:py-5 border-b border-border bg-background">
+          <button
+            onClick={onBack}
+            className="flex items-center gap-2 -ml-2 px-3 py-3 min-h-[48px] rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
             style={{ touchAction: 'manipulation' }}
           >
-            <span className="text-base font-medium">Open Original</span>
             <svg
-              className="w-5 h-5"
+              className="w-6 h-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -318,12 +294,39 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                d="M15 19l-7-7 7-7"
               />
             </svg>
-          </a>
-        )}
-      </header>
+            <span className="text-base font-medium">Back</span>
+          </button>
+
+          {/* Open Original - text link style */}
+          {originalUrl && (
+            <a
+              href={originalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-3 py-3 min-h-[48px] min-w-[48px] text-accent hover:underline transition-colors no-underline"
+              style={{ touchAction: 'manipulation' }}
+            >
+              <span className="text-base font-medium">Open Original</span>
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
+              </svg>
+            </a>
+          )}
+        </header>
+      </div>
 
       {/* Article Content - centered on desktop, scrolls via document on mobile */}
       <article className="flex-1 md:overflow-y-auto py-6 sm:py-8">
