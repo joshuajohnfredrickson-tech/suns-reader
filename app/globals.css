@@ -33,7 +33,14 @@
 html,
 body {
   height: 100%;
-  overflow: hidden;
+}
+
+/* Mobile only: disable document scrolling to prevent iOS Safari rubber-band affecting header */
+@media (max-width: 767px) {
+  html,
+  body {
+    overflow: hidden;
+  }
 }
 
 body {
