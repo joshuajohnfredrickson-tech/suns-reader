@@ -11,6 +11,7 @@ import { Article, ArticleSummary } from '../types/article';
 import { getRelativeTime, formatDate, normalizeTitle } from '../lib/utils';
 import { getTrustedDomains, addTrustedDomain } from '../lib/trustedDomains';
 import { purgeExpiredReadState, getReadStateForArticles } from '../lib/readState';
+import { SystemToast } from './SystemToast';
 
 // Feed cache constants
 const FEED_CACHE_KEY = 'suns-reader-feed-cache';
@@ -71,36 +72,6 @@ function DebugPanel({ debug, onCopy }: { debug: DebugInfo; onCopy: () => void })
   );
 }
 
-// Toast component
-function Toast({ message, visible }: { message: string; visible: boolean }) {
-  return (
-    <div
-      className={`fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 min-w-[320px] px-12 py-8 bg-zinc-900 dark:bg-zinc-800 text-white text-xl leading-relaxed font-medium rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] transition-all duration-300 ease-out ${
-        visible
-          ? 'opacity-100 scale-100'
-          : 'opacity-0 scale-90 pointer-events-none'
-      }`}
-    >
-      <div className="flex items-center justify-center gap-4 px-1">
-        <svg
-          className="w-8 h-8 text-green-400 shrink-0"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M5 13l4 4L19 7"
-          />
-        </svg>
-        <span>{message}</span>
-      </div>
-    </div>
-  );
-}
-
 export default function HomeClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -128,7 +99,7 @@ export default function HomeClient() {
     setToast({ message, visible: true });
     toastTimeoutRef.current = setTimeout(() => {
       setToast(prev => ({ ...prev, visible: false }));
-    }, 2800);
+    }, 1000);
   }, []);
 
   useEffect(() => {
@@ -387,6 +358,7 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
     const minSpinDuration = new Promise(resolve => setTimeout(resolve, 400));
     await Promise.all([fetchArticles(), minSpinDuration]);
     setIsExplicitRefresh(false);
+    showToast('Updated Just Now');
   };
 
   const handleTabChange = (tab: 'trusted' | 'discovery') => {
@@ -521,7 +493,7 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
       </ContentColumn>
 
       {/* Toast */}
-      <Toast message={toast.message} visible={toast.visible} />
+      <SystemToast message={toast.message} visible={toast.visible} />
     </div>
   );
 }
