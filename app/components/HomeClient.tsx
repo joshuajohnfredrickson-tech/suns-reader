@@ -12,6 +12,10 @@ import { getRelativeTime, formatDate, normalizeTitle } from '../lib/utils';
 import { getTrustedDomains, addTrustedDomain } from '../lib/trustedDomains';
 import { purgeExpiredReadState, getReadStateForArticles } from '../lib/readState';
 
+// Feed cache constants
+const FEED_CACHE_KEY = 'suns-reader-feed-cache';
+const FEED_CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
 // Debug info type
 interface DebugInfo {
   timestamp: string;
@@ -220,6 +224,16 @@ export default function HomeClient() {
       }
 
       setArticleSummaries(items);
+
+      // Cache articles to sessionStorage for instant back-navigation
+      try {
+        sessionStorage.setItem(FEED_CACHE_KEY, JSON.stringify({
+          ts: Date.now(),
+          articles: items,
+        }));
+      } catch (e) {
+        // Ignore storage errors (quota, etc.)
+      }
     } catch (err) {
       console.error('Failed to fetch articles:', err);
       if (debug) {
@@ -229,7 +243,7 @@ export default function HomeClient() {
       setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setIsFetching(false);
-      setIsExplicitRefresh(false);
+      // Note: isExplicitRefresh is reset by handleRefresh after min spin duration
     }
   }, [debugMode]);
 
@@ -296,10 +310,27 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
     window.addEventListener('storage', handleStorageChange);
     window.addEventListener('readStateChanged', handleReadStateChange);
 
-    // Fetch articles only on initial cold start (once)
+    // Try to rehydrate from sessionStorage cache for instant back-navigation
+    let hasCachedData = false;
+    try {
+      const cached = sessionStorage.getItem(FEED_CACHE_KEY);
+      if (cached) {
+        const { ts, articles } = JSON.parse(cached);
+        if (Date.now() - ts < FEED_CACHE_TTL && articles?.length > 0) {
+          setArticleSummaries(articles);
+          hasCachedData = true;
+        }
+      }
+    } catch (e) {
+      // Ignore parse errors
+    }
+
+    // Fetch articles only on initial cold start (once), skip if we have valid cache
     if (!hasFetchedRef.current) {
       hasFetchedRef.current = true;
-      fetchArticles();
+      if (!hasCachedData) {
+        fetchArticles();
+      }
     }
 
     return () => {
@@ -351,9 +382,11 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
     return null;
   }
 
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
     setIsExplicitRefresh(true);
-    fetchArticles();
+    const minSpinDuration = new Promise(resolve => setTimeout(resolve, 400));
+    await Promise.all([fetchArticles(), minSpinDuration]);
+    setIsExplicitRefresh(false);
   };
 
   const handleTabChange = (tab: 'trusted' | 'discovery') => {
