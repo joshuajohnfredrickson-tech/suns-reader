@@ -3,6 +3,7 @@
  */
 
 const STORAGE_KEY = 'suns-reader-trusted-domains';
+const DIRTY_FLAG_KEY = 'trustedDomainsDirty';
 
 // Default starter list of trusted domains
 export const DEFAULT_TRUSTED_DOMAINS = [
@@ -66,6 +67,7 @@ export function addTrustedDomain(domain: string): void {
     if (!domains.includes(cleanDomain)) {
       domains.push(cleanDomain);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(domains));
+      sessionStorage.setItem(DIRTY_FLAG_KEY, '1');
       window.dispatchEvent(new Event('trustedDomainsChanged'));
     }
   } catch (error) {
@@ -85,6 +87,7 @@ export function removeTrustedDomain(domain: string): void {
     const filtered = domains.filter(d => d !== cleanDomain);
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
+    sessionStorage.setItem(DIRTY_FLAG_KEY, '1');
     window.dispatchEvent(new Event('trustedDomainsChanged'));
   } catch (error) {
     console.error('Failed to remove trusted domain:', error);
@@ -110,6 +113,7 @@ export function resetToDefaults(): void {
 
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_TRUSTED_DOMAINS));
+    sessionStorage.setItem(DIRTY_FLAG_KEY, '1');
     window.dispatchEvent(new Event('trustedDomainsChanged'));
   } catch (error) {
     console.error('Failed to reset to defaults:', error);

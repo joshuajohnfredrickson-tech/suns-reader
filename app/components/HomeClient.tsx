@@ -249,11 +249,39 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
     }
   }, [searchParams]);
 
-  // Effect 2: Always rehydrate trustedDomains from localStorage on mount
-  // This ensures fresh data when returning from Settings page
-  useEffect(() => {
-    setTrustedDomains(getTrustedDomains());
+  // Helper: rehydrate trustedDomains if dirty flag is set
+  const rehydrateTrustedDomainsIfDirty = useCallback(() => {
+    if (sessionStorage.getItem('trustedDomainsDirty') === '1') {
+      setTrustedDomains(getTrustedDomains());
+      sessionStorage.removeItem('trustedDomainsDirty');
+    }
   }, []);
+
+  // Effect 2: Rehydrate trustedDomains on mount and when page becomes visible/focused
+  useEffect(() => {
+    // Always hydrate on mount
+    setTrustedDomains(getTrustedDomains());
+    // Also check dirty flag in case it was set while unmounted
+    rehydrateTrustedDomainsIfDirty();
+
+    const handleFocus = () => {
+      rehydrateTrustedDomainsIfDirty();
+    };
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        rehydrateTrustedDomainsIfDirty();
+      }
+    };
+
+    window.addEventListener('focus', handleFocus);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [rehydrateTrustedDomainsIfDirty]);
 
   // Effect 3: One-time initialization and initial data fetch
   useEffect(() => {
