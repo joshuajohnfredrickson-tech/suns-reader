@@ -462,35 +462,37 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
       {/* Debug Panel - only shows when ?debug=1 is in URL and there's debug info */}
       {debugMode && debugInfo && <DebugPanel debug={debugInfo} onCopy={copyDebugInfo} />}
 
-      {/* Article List - scroll container for contained scrolling */}
-      <ContentColumn className="flex-1 overflow-y-auto overscroll-y-contain">
-        {/* Only show full LoadingState on cold start (no data yet) */}
-        {isFetching && articleSummaries.length === 0 ? (
-          <LoadingState />
-        ) : error ? (
-          <ErrorState message={error} onRetry={handleRefresh} />
-        ) : activeTab === 'trusted' ? (
-          trustedArticles.length > 0 ? (
-            <ArticleList articles={trustedArticles} showAddToTrusted={false} onAddToTrusted={handleAddToTrusted} trustedDomains={trustedDomains} />
-          ) : trustedDomains.length === 0 ? (
-            <EmptyState
-              title="No Trusted Sources Yet"
-              message="Add sources from the Discovery tab to see articles from trusted sites here."
-              actionLabel="Go to Discovery"
-              onAction={() => handleTabChange('discovery')}
-            />
+      {/* Article List - full-width scroll container with centered content */}
+      <div className="flex-1 overflow-y-auto overscroll-y-contain">
+        <ContentColumn>
+          {/* Only show full LoadingState on cold start (no data yet) */}
+          {isFetching && articleSummaries.length === 0 ? (
+            <LoadingState />
+          ) : error ? (
+            <ErrorState message={error} onRetry={handleRefresh} />
+          ) : activeTab === 'trusted' ? (
+            trustedArticles.length > 0 ? (
+              <ArticleList articles={trustedArticles} showAddToTrusted={false} onAddToTrusted={handleAddToTrusted} trustedDomains={trustedDomains} />
+            ) : trustedDomains.length === 0 ? (
+              <EmptyState
+                title="No Trusted Sources Yet"
+                message="Add sources from the Discovery tab to see articles from trusted sites here."
+                actionLabel="Go to Discovery"
+                onAction={() => handleTabChange('discovery')}
+              />
+            ) : (
+              <EmptyState
+                title="No Articles Found"
+                message="No articles from trusted sources in the last 24 hours."
+                actionLabel="Go to Discovery"
+                onAction={() => handleTabChange('discovery')}
+              />
+            )
           ) : (
-            <EmptyState
-              title="No Articles Found"
-              message="No articles from trusted sources in the last 24 hours."
-              actionLabel="Go to Discovery"
-              onAction={() => handleTabChange('discovery')}
-            />
-          )
-        ) : (
-          <ArticleList articles={discoveryArticles} showAddToTrusted={true} onAddToTrusted={handleAddToTrusted} trustedDomains={trustedDomains} />
-        )}
-      </ContentColumn>
+            <ArticleList articles={discoveryArticles} showAddToTrusted={true} onAddToTrusted={handleAddToTrusted} trustedDomains={trustedDomains} />
+          )}
+        </ContentColumn>
+      </div>
 
       {/* Toast */}
       <SystemToast message={toast.message} visible={toast.visible} />
