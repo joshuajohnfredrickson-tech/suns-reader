@@ -280,9 +280,12 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
 
     // Listen for trusted domains change event
     const handleTrustedDomainsChange = () => {
-      setTrustedDomains(getTrustedDomains());
+      const freshDomains = getTrustedDomains();
+      console.log('[HomeClient] trustedDomainsChanged event received! freshDomains count:', freshDomains.length, 'first 3:', freshDomains.slice(0, 3));
+      setTrustedDomains(freshDomains);
     };
 
+    console.log('[HomeClient] Registering trustedDomainsChanged listener');
     window.addEventListener('storage', handleStorageChange);
     window.addEventListener('readStateChanged', handleReadStateChange);
     window.addEventListener('trustedDomainsChanged', handleTrustedDomainsChange);
@@ -342,18 +345,22 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
 
   // Derive trusted articles - recomputes when articles or trustedDomains change
   const trustedArticles = useMemo(() => {
-    return allArticles.filter(article =>
+    const result = allArticles.filter(article =>
       article.sourceDomain && trustedDomains.includes(article.sourceDomain.toLowerCase())
     );
+    console.log('[HomeClient] trustedArticles useMemo recomputed: trustedDomains.length=', trustedDomains.length, 'allArticles.length=', allArticles.length, 'trustedArticles.length=', result.length);
+    return result;
   }, [allArticles, trustedDomains]);
 
   // Derive discovery articles - exclude trusted sources for disjoint tabs
   const discoveryArticles = useMemo(() => {
-    return allArticles.filter(article =>
+    const result = allArticles.filter(article =>
       // Keep articles with no domain (don't accidentally drop them)
       // OR articles whose domain is NOT in the trusted list
       !article.sourceDomain || !trustedDomains.includes(article.sourceDomain.toLowerCase())
     );
+    console.log('[HomeClient] discoveryArticles useMemo recomputed: discoveryArticles.length=', result.length);
+    return result;
   }, [allArticles, trustedDomains]);
 
   if (!mounted) {
