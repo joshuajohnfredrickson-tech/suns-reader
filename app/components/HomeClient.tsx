@@ -278,8 +278,14 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
       setReadVersion(v => v + 1);
     };
 
+    // Listen for trusted domains change event
+    const handleTrustedDomainsChange = () => {
+      setTrustedDomains(getTrustedDomains());
+    };
+
     window.addEventListener('storage', handleStorageChange);
     window.addEventListener('readStateChanged', handleReadStateChange);
+    window.addEventListener('trustedDomainsChanged', handleTrustedDomainsChange);
 
     // Try to rehydrate from sessionStorage cache for instant back-navigation
     let hasCachedData = false;
@@ -307,6 +313,7 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
     return () => {
       window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener('readStateChanged', handleReadStateChange);
+      window.removeEventListener('trustedDomainsChanged', handleTrustedDomainsChange);
     };
   }, [fetchArticles]);
 
