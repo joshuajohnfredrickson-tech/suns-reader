@@ -66,7 +66,6 @@ export function addTrustedDomain(domain: string): void {
     if (!domains.includes(cleanDomain)) {
       domains.push(cleanDomain);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(domains));
-      console.log('[trustedDomains] addTrustedDomain: dispatching trustedDomainsChanged event');
       window.dispatchEvent(new Event('trustedDomainsChanged'));
     }
   } catch (error) {
@@ -86,7 +85,6 @@ export function removeTrustedDomain(domain: string): void {
     const filtered = domains.filter(d => d !== cleanDomain);
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
-    console.log('[trustedDomains] removeTrustedDomain: dispatching trustedDomainsChanged event, filtered count:', filtered.length);
     window.dispatchEvent(new Event('trustedDomainsChanged'));
   } catch (error) {
     console.error('Failed to remove trusted domain:', error);
@@ -112,7 +110,6 @@ export function resetToDefaults(): void {
 
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_TRUSTED_DOMAINS));
-    console.log('[trustedDomains] resetToDefaults: dispatching trustedDomainsChanged event');
     window.dispatchEvent(new Event('trustedDomainsChanged'));
   } catch (error) {
     console.error('Failed to reset to defaults:', error);

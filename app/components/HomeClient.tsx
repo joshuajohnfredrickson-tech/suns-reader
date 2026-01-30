@@ -249,12 +249,15 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
     }
   }, [searchParams]);
 
-  // Effect 2: One-time initialization and initial data fetch
+  // Effect 2: Always rehydrate trustedDomains from localStorage on mount
+  // This ensures fresh data when returning from Settings page
+  useEffect(() => {
+    setTrustedDomains(getTrustedDomains());
+  }, []);
+
+  // Effect 3: One-time initialization and initial data fetch
   useEffect(() => {
     setMounted(true);
-
-    // Load trusted domains
-    setTrustedDomains(getTrustedDomains());
 
     // Purge expired read state (older than 24 hours)
     purgeExpiredReadState();
@@ -280,12 +283,9 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
 
     // Listen for trusted domains change event
     const handleTrustedDomainsChange = () => {
-      const freshDomains = getTrustedDomains();
-      console.log('[HomeClient] trustedDomainsChanged event received! freshDomains count:', freshDomains.length, 'first 3:', freshDomains.slice(0, 3));
-      setTrustedDomains(freshDomains);
+      setTrustedDomains(getTrustedDomains());
     };
 
-    console.log('[HomeClient] Registering trustedDomainsChanged listener');
     window.addEventListener('storage', handleStorageChange);
     window.addEventListener('readStateChanged', handleReadStateChange);
     window.addEventListener('trustedDomainsChanged', handleTrustedDomainsChange);
@@ -345,22 +345,18 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
 
   // Derive trusted articles - recomputes when articles or trustedDomains change
   const trustedArticles = useMemo(() => {
-    const result = allArticles.filter(article =>
+    return allArticles.filter(article =>
       article.sourceDomain && trustedDomains.includes(article.sourceDomain.toLowerCase())
     );
-    console.log('[HomeClient] trustedArticles useMemo recomputed: trustedDomains.length=', trustedDomains.length, 'allArticles.length=', allArticles.length, 'trustedArticles.length=', result.length);
-    return result;
   }, [allArticles, trustedDomains]);
 
   // Derive discovery articles - exclude trusted sources for disjoint tabs
   const discoveryArticles = useMemo(() => {
-    const result = allArticles.filter(article =>
+    return allArticles.filter(article =>
       // Keep articles with no domain (don't accidentally drop them)
       // OR articles whose domain is NOT in the trusted list
       !article.sourceDomain || !trustedDomains.includes(article.sourceDomain.toLowerCase())
     );
-    console.log('[HomeClient] discoveryArticles useMemo recomputed: discoveryArticles.length=', result.length);
-    return result;
   }, [allArticles, trustedDomains]);
 
   if (!mounted) {
