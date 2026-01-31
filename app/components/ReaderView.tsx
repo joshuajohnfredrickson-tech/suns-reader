@@ -25,9 +25,6 @@ interface ExtractedContent {
   error?: string;
 }
 
-// Known domains that block reader mode
-const KNOWN_BLOCKED_DOMAINS = ['espn.com', 'espn.go.com'];
-
 /**
  * Check if URL is a Google News wrapper URL
  */
@@ -38,32 +35,6 @@ function isGoogleNewsUrl(url: string): boolean {
     return urlObj.hostname.includes('news.google.com');
   } catch {
     return false;
-  }
-}
-
-/**
- * Check if the error indicates a known domain blocking
- */
-function isKnownBlockedDomain(url: string, error?: string): { isBlocked: boolean; domain: string | null } {
-  if (!url) return { isBlocked: false, domain: null };
-
-  try {
-    const hostname = new URL(url).hostname.toLowerCase();
-    const blockedDomain = KNOWN_BLOCKED_DOMAINS.find(domain => hostname.includes(domain));
-
-    if (blockedDomain) {
-      // Check if error message confirms blocking
-      const errorLower = (error || '').toLowerCase();
-      const hasBlockingKeywords = errorLower.includes('blocking') ||
-                                   errorLower.includes('blocked') ||
-                                   errorLower.includes('may be blocking');
-
-      return { isBlocked: hasBlockingKeywords, domain: blockedDomain };
-    }
-
-    return { isBlocked: false, domain: null };
-  } catch {
-    return { isBlocked: false, domain: null };
   }
 }
 
@@ -153,35 +124,50 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
       );
     }
 
+    // Unified failure state - no technical distinctions exposed to users
     if (extracted?.error) {
-      const blockingInfo = isKnownBlockedDomain(
-        extracted?.url || publisherUrl || article.url || '',
-        extracted.error
-      );
+      const failureUrl = extracted?.url || publisherUrl || article.url;
 
       return (
         <div className="text-center py-12">
           <div className="text-4xl mb-4">📄</div>
           <h3 className="text-lg font-medium mb-2 text-foreground">
-            {blockingInfo.isBlocked
-              ? `${blockingInfo.domain === 'espn.com' ? 'ESPN' : blockingInfo.domain} blocks reader mode`
-              : "Reader view isn't available for this link"}
+            Reader mode isn't available for this article.
           </h3>
-          <p className="text-zinc-600 dark:text-zinc-400 mb-4">
-            {blockingInfo.isBlocked
-              ? 'This site prevents automated article extraction.'
-              : "This article couldn't be formatted for reading."}
+          <p className="text-zinc-600 dark:text-zinc-400 mb-6">
+            Some sources don't support simplified views.
           </p>
-          {process.env.NODE_ENV === 'development' && !blockingInfo.isBlocked && (
-            <p className="text-xs text-zinc-500 dark:text-zinc-500 mb-4">
-              Error: {extracted.error}
+          {/* Dev-only: show raw error for debugging */}
+          {process.env.NODE_ENV === 'development' && (
+            <p className="text-xs text-zinc-500 dark:text-zinc-500 mb-6">
+              Debug: {extracted.error}
             </p>
           )}
-          <p className="text-sm font-medium text-foreground">
-            {blockingInfo.isBlocked
-              ? 'Tap "Open Original" above to read the full article.'
-              : 'Click "Open Original" above to read the full article.'}
-          </p>
+          {/* Inline CTA - intentional redundancy with header button */}
+          {failureUrl && (
+            <a
+              href={failureUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-3 bg-accent text-white rounded-lg hover:opacity-90 active:opacity-80 transition-opacity"
+              style={{ touchAction: 'manipulation' }}
+            >
+              <span className="font-medium">Open original article</span>
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
+              </svg>
+            </a>
+          )}
         </div>
       );
     }
@@ -259,14 +245,42 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
       );
     }
 
+    // Fallback: no extracted content and no article.body
+    const fallbackUrl = extracted?.url || publisherUrl || article.url;
+
     return (
       <div className="text-center py-12">
-        <p className="text-zinc-600 dark:text-zinc-400 mb-4">
-          No content available.
+        <div className="text-4xl mb-4">📄</div>
+        <h3 className="text-lg font-medium mb-2 text-foreground">
+          Reader mode isn't available for this article.
+        </h3>
+        <p className="text-zinc-600 dark:text-zinc-400 mb-6">
+          Some sources don't support simplified views.
         </p>
-        <p className="text-sm text-zinc-500 dark:text-zinc-500">
-          Click "Open Original" above to read the article.
-        </p>
+        {fallbackUrl && (
+          <a
+            href={fallbackUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-3 bg-accent text-white rounded-lg hover:opacity-90 active:opacity-80 transition-opacity"
+            style={{ touchAction: 'manipulation' }}
+          >
+            <span className="font-medium">Open original article</span>
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+              />
+            </svg>
+          </a>
+        )}
       </div>
     );
   };
