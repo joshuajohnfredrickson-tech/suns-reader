@@ -33,9 +33,9 @@ export default function MarketingHomePage() {
       </section>
 
       {/* What is Suns Reader? */}
-      <section className="px-6 py-16 sm:py-20">
+      <section className="px-6 py-12 sm:py-20">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-6">What is Suns Reader?</h2>
+          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-8 sm:mb-6">What is Suns Reader?</h2>
           <p className="text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
             Suns Reader brings together recent Phoenix Suns articles from across the web and makes them easier to read — especially on mobile.
           </p>
@@ -43,10 +43,10 @@ export default function MarketingHomePage() {
       </section>
 
       {/* Bring the news to you */}
-      <section className="px-6 py-16 sm:py-20">
+      <section className="px-6 py-12 sm:py-20">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-6">Bring the news to you</h2>
-          <div className="space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
+          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-8 sm:mb-6">Bring the news to you</h2>
+          <div className="space-y-6 sm:space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
             <p>
               Hundreds of sites publish Suns content every day: local coverage, national outlets, blogs, and beat writers.
             </p>
@@ -61,10 +61,10 @@ export default function MarketingHomePage() {
       </section>
 
       {/* You are the algorithm */}
-      <section className="px-6 py-16 sm:py-20">
+      <section className="px-6 py-12 sm:py-20">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-6">You are the algorithm</h2>
-          <div className="space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
+          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-8 sm:mb-6">You are the algorithm</h2>
+          <div className="space-y-6 sm:space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
             <p>
               Finding articles is easy. Finding good articles is harder.
             </p>
@@ -94,10 +94,10 @@ export default function MarketingHomePage() {
       </section>
 
       {/* Clean reading experience */}
-      <section className="px-6 py-16 sm:py-20">
+      <section className="px-6 py-12 sm:py-20">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-6">A clean, distraction-free reading experience</h2>
-          <div className="space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
+          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-8 sm:mb-6">A clean, distraction-free reading experience</h2>
+          <div className="space-y-6 sm:space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
             <p>
               Tap an article and it opens in a simple, text-first reading view.
             </p>
@@ -117,10 +117,10 @@ export default function MarketingHomePage() {
       </section>
 
       {/* Free to use. No ads. */}
-      <section className="px-6 py-16 sm:py-20">
+      <section className="px-6 py-12 sm:py-20">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-6">Free to use. No ads.</h2>
-          <div className="space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
+          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-8 sm:mb-6">Free to use. No ads.</h2>
+          <div className="space-y-6 sm:space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
             <p>
               Suns Reader is free and does not run ads.
             </p>
@@ -136,9 +136,9 @@ export default function MarketingHomePage() {
       </section>
 
       {/* Use it like an app */}
-      <section className="px-6 py-16 sm:py-20">
+      <section className="px-6 py-12 sm:py-20">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-6">Use it like an app</h2>
+          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-8 sm:mb-6">Use it like an app</h2>
           <div className="space-y-8 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
             <p>
               Suns Reader works in your browser and can be added to your home screen.
@@ -193,40 +193,40 @@ export default function MarketingHomePage() {
       </section>
 
       {/* FAQ */}
-      <section className="px-6 py-16 sm:py-20">
+      <section className="px-6 py-12 sm:py-20">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-10">Frequently asked questions</h2>
-          <div className="space-y-10">
+          <div className="space-y-8 sm:space-y-10">
             <div>
-              <h3 className="text-lg font-medium text-foreground mb-3">Is Suns Reader free?</h3>
+              <h3 className="text-lg font-medium text-foreground mb-4">Is Suns Reader free?</h3>
               <p className="text-zinc-500 dark:text-zinc-400 leading-relaxed">
                 Yes. Suns Reader is free to use and does not show ads.
               </p>
             </div>
 
             <div>
-              <h3 className="text-lg font-medium text-foreground mb-3">Where does the content come from?</h3>
+              <h3 className="text-lg font-medium text-foreground mb-4">Where does the content come from?</h3>
               <p className="text-zinc-500 dark:text-zinc-400 leading-relaxed">
                 Suns Reader brings together recent articles published around the web by existing outlets. All articles are clearly attributed, with links to original sources.
               </p>
             </div>
 
             <div>
-              <h3 className="text-lg font-medium text-foreground mb-3">Does Suns Reader replace the original websites?</h3>
+              <h3 className="text-lg font-medium text-foreground mb-4">Does Suns Reader replace the original websites?</h3>
               <p className="text-zinc-500 dark:text-zinc-400 leading-relaxed">
                 No. Suns Reader is a reading tool. You can open the original article at any time.
               </p>
             </div>
 
             <div>
-              <h3 className="text-lg font-medium text-foreground mb-3">Do I need to install anything?</h3>
+              <h3 className="text-lg font-medium text-foreground mb-4">Do I need to install anything?</h3>
               <p className="text-zinc-500 dark:text-zinc-400 leading-relaxed">
                 No. You can use Suns Reader directly in your browser. Installing it is optional.
               </p>
             </div>
 
             <div>
-              <h3 className="text-lg font-medium text-foreground mb-3">Is this an official Phoenix Suns app?</h3>
+              <h3 className="text-lg font-medium text-foreground mb-4">Is this an official Phoenix Suns app?</h3>
               <p className="text-zinc-500 dark:text-zinc-400 leading-relaxed">
                 No. Suns Reader is an independent project built by a fan, for fans.
               </p>
