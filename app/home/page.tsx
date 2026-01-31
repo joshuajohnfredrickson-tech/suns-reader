@@ -8,11 +8,6 @@ export const metadata = {
 export default function MarketingHomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Deploy verification banner */}
-      <div className="sticky top-0 z-50 bg-yellow-400 text-black text-xl font-bold py-3 text-center">
-        DEPLOY CHECK: spacing-8 / mb-10 (Jan 30)
-      </div>
-
       {/* Hero Section */}
       <section className="px-6 py-16 sm:py-24 text-center">
         <div className="max-w-2xl mx-auto">
@@ -32,7 +27,7 @@ export default function MarketingHomePage() {
             href="/"
             className="inline-block px-10 py-4 bg-accent text-white text-lg font-semibold rounded-xl hover:opacity-90 active:opacity-80 transition-opacity shadow-lg shadow-accent/20"
           >
-            Open Suns Reader (deploy check)
+            Open Suns Reader
           </Link>
         </div>
       </section>
@@ -40,23 +35,31 @@ export default function MarketingHomePage() {
       {/* What is Suns Reader? */}
       <section className="px-6 py-12 sm:py-20">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-10 sm:mb-6">What is Suns Reader?</h2>
-          <p className="text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
-            Suns Reader brings together recent Phoenix Suns articles from across the web and makes them easier to read — especially on mobile.
-          </p>
+          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">What is Suns Reader?</h2>
+          <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
+            <p>
+              Suns Reader brings together recent Phoenix Suns articles from across the web.
+            </p>
+            <p>
+              It makes them easier to read — especially on mobile.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Bring the news to you */}
       <section className="px-6 py-12 sm:py-20">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-10 sm:mb-6">Bring the news to you</h2>
-          <div className="space-y-8 sm:space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
+          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">Bring the news to you</h2>
+          <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
             <p>
-              Hundreds of sites publish Suns content every day: local coverage, national outlets, blogs, and beat writers.
+              Hundreds of sites publish Suns content every day.
             </p>
             <p>
-              Suns Reader pulls recent Suns articles into a single feed so you don't have to hunt, refresh tabs, or remember which sites to check.
+              Local coverage. National outlets. Blogs. Beat writers.
+            </p>
+            <p>
+              Suns Reader pulls recent articles into a single feed so you don't have to hunt, refresh tabs, or remember which sites to check.
             </p>
             <p>
               Open the app and see what's new — simple as that.
@@ -68,13 +71,19 @@ export default function MarketingHomePage() {
       {/* You are the algorithm */}
       <section className="px-6 py-12 sm:py-20">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-10 sm:mb-6">You are the algorithm</h2>
-          <div className="space-y-8 sm:space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
+          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">You are the algorithm</h2>
+          <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
             <p>
-              Finding articles is easy. Finding good articles is harder.
+              Finding articles is easy.
             </p>
             <p>
-              The web is increasingly filled with spam, low-quality AI writing, and bloated sites. Suns Reader puts you back in control.
+              Finding good articles is harder.
+            </p>
+            <p>
+              The web is increasingly filled with spam, low-quality AI writing, and bloated sites.
+            </p>
+            <p>
+              Suns Reader puts you back in control.
             </p>
             <p>You can:</p>
             <ul className="space-y-4 sm:space-y-3 ml-1">
@@ -92,7 +101,10 @@ export default function MarketingHomePage() {
               </li>
             </ul>
             <p>
-              Set it once. Adjust over time. Enjoy a cleaner signal.
+              Set it once. Adjust over time.
+            </p>
+            <p>
+              Enjoy a cleaner signal.
             </p>
           </div>
         </div>
@@ -101,12 +113,12 @@ export default function MarketingHomePage() {
       {/* Clean reading experience */}
       <section className="px-6 py-12 sm:py-20">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-10 sm:mb-6">A clean, distraction-free reading experience</h2>
-          <div className="space-y-8 sm:space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
+          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">A clean, distraction-free reading experience</h2>
+          <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
             <p>
               Tap an article and it opens in a simple, text-first reading view.
             </p>
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <p>No pop-ups.</p>
               <p>No autoplay videos.</p>
               <p>No layout jumping.</p>
@@ -124,15 +136,18 @@ export default function MarketingHomePage() {
       {/* Free to use. No ads. */}
       <section className="px-6 py-12 sm:py-20">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-10 sm:mb-6">Free to use. No ads.</h2>
-          <div className="space-y-8 sm:space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
+          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">Free to use. No ads.</h2>
+          <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
             <p>
               Suns Reader is free and does not run ads.
             </p>
             <p>
-              It was built as a personal project by a Suns fan who wanted a calmer way to read — not as an ad platform or a data grab.
+              It was built as a personal project by a Suns fan who wanted a calmer way to read.
             </p>
-            <div className="space-y-1.5">
+            <p>
+              Not as an ad platform or a data grab.
+            </p>
+            <div className="space-y-2">
               <p>No sign-ups.</p>
               <p>No catch.</p>
             </div>
@@ -143,10 +158,13 @@ export default function MarketingHomePage() {
       {/* Use it like an app */}
       <section className="px-6 py-12 sm:py-20">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-10 sm:mb-6">Use it like an app</h2>
-          <div className="space-y-8 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
+          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">Use it like an app</h2>
+          <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
             <p>
-              Suns Reader works in your browser and can be added to your home screen.
+              Suns Reader works in your browser.
+            </p>
+            <p>
+              You can also add it to your home screen.
             </p>
 
             {/* Install instructions grid */}
@@ -191,7 +209,10 @@ export default function MarketingHomePage() {
             </div>
 
             <p>
-              Once installed, Suns Reader launches full-screen and behaves like a native app — without the App Store.
+              Once installed, Suns Reader launches full-screen and behaves like a native app.
+            </p>
+            <p>
+              No App Store required.
             </p>
           </div>
         </div>
