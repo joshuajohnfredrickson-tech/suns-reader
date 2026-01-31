@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
-import HomeClient from './components/HomeClient';
-import { LoadingState } from './components/LoadingState';
+import HomeClient from '../components/HomeClient';
+import { LoadingState } from '../components/LoadingState';
 
 export default function Home() {
   return (

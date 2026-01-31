@@ -1,12 +1,12 @@
 'use client';
 
 import { useSearchParams, useRouter } from 'next/navigation';
-import { ReaderView } from '../components/ReaderView';
-import { trustedArticles } from '../data/mockArticles';
+import { ReaderView } from '../../components/ReaderView';
+import { trustedArticles } from '../../data/mockArticles';
 import { Suspense, useEffect, useState } from 'react';
-import { Article } from '../types/article';
-import { getRelativeTime, formatDate } from '../lib/utils';
-import { markAsRead } from '../lib/readState';
+import { Article } from '../../types/article';
+import { getRelativeTime, formatDate } from '../../lib/utils';
+import { markAsRead } from '../../lib/readState';
 
 function ReaderContent() {
   const searchParams = useSearchParams();

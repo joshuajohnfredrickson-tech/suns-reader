@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getTrustedDomains, removeTrustedDomain, resetToDefaults } from '../lib/trustedDomains';
+import { getTrustedDomains, removeTrustedDomain, resetToDefaults } from '../../lib/trustedDomains';
 
 export default function SourcesPage() {
   const router = useRouter();
