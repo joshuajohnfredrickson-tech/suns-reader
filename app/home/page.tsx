@@ -8,6 +8,11 @@ export const metadata = {
 export default function MarketingHomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* Deploy verification banner */}
+      <div className="sticky top-0 z-50 bg-yellow-400 text-black text-xl font-bold py-3 text-center">
+        DEPLOY CHECK: spacing-8 / mb-10 (Jan 30)
+      </div>
+
       {/* Hero Section */}
       <section className="px-6 py-16 sm:py-24 text-center">
         <div className="max-w-2xl mx-auto">
@@ -27,7 +32,7 @@ export default function MarketingHomePage() {
             href="/"
             className="inline-block px-10 py-4 bg-accent text-white text-lg font-semibold rounded-xl hover:opacity-90 active:opacity-80 transition-opacity shadow-lg shadow-accent/20"
           >
-            Open Suns Reader
+            Open Suns Reader (deploy check)
           </Link>
         </div>
       </section>
