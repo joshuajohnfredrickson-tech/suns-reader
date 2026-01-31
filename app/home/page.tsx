@@ -221,8 +221,8 @@ export default function MarketingHomePage() {
       {/* FAQ */}
       <section className="px-6 py-12 sm:py-20">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-12 sm:mb-10">Frequently asked questions</h2>
-          <div className="space-y-10 sm:space-y-10">
+          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">Frequently asked questions</h2>
+          <div className="mt-6 sm:mt-5 space-y-10 sm:space-y-10">
             <div>
               <h3 className="text-lg font-medium text-foreground mb-4">Is Suns Reader free?</h3>
               <p className="text-zinc-500 dark:text-zinc-400 leading-relaxed">
@@ -264,16 +264,18 @@ export default function MarketingHomePage() {
       {/* Final CTA */}
       <section className="px-6 py-20 sm:py-28 text-center">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-6">Start reading</h2>
-          <p className="text-lg text-zinc-500 dark:text-zinc-400 mb-10">
-            If you follow the Suns and are tired of the noise, Suns Reader is built for you.
-          </p>
-          <Link
-            href="/"
-            className="inline-block px-10 py-4 bg-accent text-white text-lg font-semibold rounded-xl hover:opacity-90 active:opacity-80 transition-opacity shadow-lg shadow-accent/20"
-          >
-            Open Suns Reader
-          </Link>
+          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">Start reading</h2>
+          <div className="mt-6 sm:mt-5 space-y-5">
+            <p className="text-lg text-zinc-500 dark:text-zinc-400">
+              If you follow the Suns and are tired of the noise, Suns Reader is built for you.
+            </p>
+            <Link
+              href="/"
+              className="inline-block px-10 py-4 bg-accent text-white text-lg font-semibold rounded-xl hover:opacity-90 active:opacity-80 transition-opacity shadow-lg shadow-accent/20"
+            >
+              Open Suns Reader
+            </Link>
+          </div>
         </div>
       </section>
 
