@@ -1,14 +1,29 @@
 import Link from 'next/link';
 
-// Build stamp: 2024-home-v1
+// Build stamp for cache verification
+const BUILD_SHA = 'spacing-v2';
+
 export const metadata = {
   title: 'Suns Reader - The easiest way to follow the Phoenix Suns',
   description: 'The latest Suns coverage in one feed. No searching, no ads — just open and start reading. Free to use.',
 };
 
-export default function MarketingHomePage() {
+interface PageProps {
+  searchParams: Promise<{ debug?: string }>;
+}
+
+export default async function MarketingHomePage({ searchParams }: PageProps) {
+  const params = await searchParams;
+  const showDebug = params.debug === '1' || process.env.NODE_ENV !== 'production';
+
   return (
     <main className="min-h-screen bg-background text-foreground">
+      {/* Debug build stamp */}
+      {showDebug && (
+        <div className="fixed bottom-2 left-2 text-[10px] font-mono text-zinc-400 dark:text-zinc-600 bg-background/80 px-1.5 py-0.5 rounded z-50">
+          build: {BUILD_SHA}
+        </div>
+      )}
       <div className="max-w-2xl mx-auto px-6">
         {/* Hero Section */}
         <header className="pt-20 pb-8 sm:pt-28 sm:pb-10">
@@ -41,7 +56,7 @@ export default function MarketingHomePage() {
         <div className="mt-[28px] sm:mt-[36px] flex flex-col gap-[1.75rem] sm:gap-[2.5rem]">
           {/* Section 1: Aggregation */}
           <section>
-            <h2 className="text-xl font-semibold tracking-tight leading-tight">Bring the news to you.</h2>
+            <h2 className="text-xl font-semibold tracking-tight leading-[1.15]">Bring the news to you.</h2>
             <p className="mt-[2px] text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
               The latest Suns coverage is ready when you open the app.
             </p>
@@ -60,7 +75,7 @@ export default function MarketingHomePage() {
 
           {/* Section 2: Curation */}
           <section>
-            <h2 className="text-xl font-semibold tracking-tight leading-tight">Shape your own Suns feed.</h2>
+            <h2 className="text-xl font-semibold tracking-tight leading-[1.15]">Shape your own Suns feed.</h2>
             <p className="mt-[2px] text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
               Follow the sources you trust while still discovering new perspectives.
             </p>
@@ -82,7 +97,7 @@ export default function MarketingHomePage() {
 
           {/* Section 3: Reader */}
           <section>
-            <h2 className="text-xl font-semibold tracking-tight leading-tight">A better way to read.</h2>
+            <h2 className="text-xl font-semibold tracking-tight leading-[1.15]">A better way to read.</h2>
             <p className="mt-[2px] text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
               Articles open in a clean, readable format by default.
             </p>
@@ -101,7 +116,7 @@ export default function MarketingHomePage() {
 
           {/* Section 4: Install */}
           <section>
-            <h2 className="text-xl font-semibold tracking-tight leading-tight">Use it like an app.</h2>
+            <h2 className="text-xl font-semibold tracking-tight leading-[1.15]">Use it like an app.</h2>
             <p className="mt-[2px] text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
               Add Suns Reader to your home screen for the best experience.
             </p>
@@ -165,7 +180,7 @@ export default function MarketingHomePage() {
 
           {/* Section 5: Free / No ads */}
           <section>
-            <h2 className="text-xl font-semibold tracking-tight leading-tight">Free to use. No ads.</h2>
+            <h2 className="text-xl font-semibold tracking-tight leading-[1.15]">Free to use. No ads.</h2>
             <p className="mt-[2px] text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
               Suns Reader is free and designed purely for a better reading experience.
             </p>
@@ -181,13 +196,13 @@ export default function MarketingHomePage() {
 
           {/* Final CTA */}
           <section className="pb-16 sm:pb-24">
-            <h2 className="text-xl font-semibold tracking-tight leading-tight">Ready to start reading?</h2>
+            <h2 className="text-xl font-semibold tracking-tight leading-[1.15]">Ready to start reading?</h2>
             <p className="mt-[2px] text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
               Open Suns Reader and catch up on the latest Suns coverage.
             </p>
             <Link
               href="/app"
-              className="mt-[10px] inline-flex items-center gap-2 text-accent font-medium hover:underline transition-colors"
+              className="mt-[6px] inline-flex items-center gap-2 text-accent font-medium hover:underline transition-colors"
             >
               <span>Open Suns Reader</span>
               <svg
