@@ -7,10 +7,10 @@ export const metadata = {
 
 export default function MarketingHomePage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Hero Section */}
-      <section className="px-6 pt-20 pb-10 sm:pt-28 sm:pb-14">
-        <div className="max-w-2xl mx-auto">
+    <main className="min-h-screen bg-background text-foreground">
+      <div className="max-w-2xl mx-auto px-6">
+        {/* Hero Section */}
+        <header className="pt-20 pb-10 sm:pt-28 sm:pb-14">
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-5">Suns Reader</h1>
           <p className="text-xl sm:text-2xl text-zinc-500 dark:text-zinc-400 mb-10">
             The easiest way to follow the Phoenix Suns.
@@ -34,14 +34,12 @@ export default function MarketingHomePage() {
               />
             </svg>
           </Link>
-        </div>
-      </section>
+        </header>
 
-      {/* Content sections wrapper */}
-      <div className="space-y-14 sm:space-y-20">
-        {/* Section 1: Aggregation */}
-        <section className="px-6">
-          <div className="max-w-2xl mx-auto space-y-4 sm:space-y-5">
+        {/* Content sections */}
+        <div className="mt-10 sm:mt-14 space-y-14 sm:space-y-20">
+          {/* Section 1: Aggregation */}
+          <section className="space-y-4 sm:space-y-5">
             <div>
               <h2 className="text-xl font-semibold tracking-tight mb-1">Bring the news to you.</h2>
               <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
@@ -59,12 +57,10 @@ export default function MarketingHomePage() {
                 Open the app and start reading.
               </p>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Section 2: Curation */}
-        <section className="px-6">
-          <div className="max-w-2xl mx-auto space-y-4 sm:space-y-5">
+          {/* Section 2: Curation */}
+          <section className="space-y-4 sm:space-y-5">
             <div>
               <h2 className="text-xl font-semibold tracking-tight mb-1">Shape your own Suns feed.</h2>
               <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
@@ -85,12 +81,10 @@ export default function MarketingHomePage() {
                 Your feed evolves with you.
               </p>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Section 3: Reader */}
-        <section className="px-6">
-          <div className="max-w-2xl mx-auto space-y-4 sm:space-y-5">
+          {/* Section 3: Reader */}
+          <section className="space-y-4 sm:space-y-5">
             <div>
               <h2 className="text-xl font-semibold tracking-tight mb-1">A better way to read.</h2>
               <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
@@ -108,12 +102,10 @@ export default function MarketingHomePage() {
                 If you ever want the full site experience, you can still open the original article with one tap.
               </p>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Section 4: Install */}
-        <section className="px-6">
-          <div className="max-w-2xl mx-auto space-y-4 sm:space-y-5">
+          {/* Section 4: Install */}
+          <section className="space-y-4 sm:space-y-5">
             <div>
               <h2 className="text-xl font-semibold tracking-tight mb-1">Use it like an app.</h2>
               <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
@@ -162,7 +154,7 @@ export default function MarketingHomePage() {
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent/10 text-accent text-sm font-medium flex items-center justify-center">2</span>
-                      <span>Tap More (⋮)</span>
+                      <span>Tap the menu (three dots)</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent/10 text-accent text-sm font-medium flex items-center justify-center">3</span>
@@ -176,12 +168,10 @@ export default function MarketingHomePage() {
                 Once installed, Suns Reader launches full-screen and behaves like a native app.
               </p>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Section 5: Free / No ads */}
-        <section className="px-6">
-          <div className="max-w-2xl mx-auto space-y-4 sm:space-y-5">
+          {/* Section 5: Free / No ads */}
+          <section className="space-y-4 sm:space-y-5">
             <div>
               <h2 className="text-xl font-semibold tracking-tight mb-1">Free to use. No ads.</h2>
               <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
@@ -196,12 +186,10 @@ export default function MarketingHomePage() {
                 Suns Reader was built by a Suns fan who wanted an easier way to follow the team, ended up using it every day, and decided to share it with other Suns fans.
               </p>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Final CTA */}
-        <section className="px-6 pt-2 sm:pt-4 pb-16 sm:pb-24">
-          <div className="max-w-2xl mx-auto space-y-4 sm:space-y-5">
+          {/* Final CTA */}
+          <section className="space-y-4 sm:space-y-5 pb-16 sm:pb-24">
             <h2 className="text-xl font-semibold tracking-tight">Ready to start reading?</h2>
             <p className="text-base leading-7 sm:text-lg sm:leading-8 text-zinc-500 dark:text-zinc-400">
               Open Suns Reader and catch up on the latest Suns coverage.
@@ -225,12 +213,12 @@ export default function MarketingHomePage() {
                 />
               </svg>
             </Link>
-          </div>
-        </section>
+          </section>
+        </div>
       </div>
 
       {/* Footer spacing */}
       <div className="h-12" />
-    </div>
+    </main>
   );
 }
