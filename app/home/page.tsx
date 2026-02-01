@@ -1,5 +1,6 @@
 import Link from 'next/link';
 
+// Build stamp: 2024-home-v1
 export const metadata = {
   title: 'Suns Reader - The easiest way to follow the Phoenix Suns',
   description: 'The latest Suns coverage in one feed. No searching, no ads — just open and start reading. Free to use.',
@@ -40,13 +41,11 @@ export default function MarketingHomePage() {
         <div className="mt-[28px] sm:mt-[36px] flex flex-col gap-[1.75rem] sm:gap-[2.5rem]">
           {/* Section 1: Aggregation */}
           <section>
-            <div className="space-y-[2px]">
-              <h2 className="text-xl font-semibold tracking-tight">Bring the news to you.</h2>
-              <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
-                The latest Suns coverage is ready when you open the app.
-              </p>
-            </div>
-            <div className="mt-[12px] sm:mt-[14px] space-y-4 sm:space-y-5 text-base leading-7 sm:text-lg sm:leading-8 text-zinc-600 dark:text-zinc-300">
+            <h2 className="text-xl font-semibold tracking-tight leading-tight">Bring the news to you.</h2>
+            <p className="mt-[2px] text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
+              The latest Suns coverage is ready when you open the app.
+            </p>
+            <div className="mt-[10px] space-y-[14px] text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
               <p>
                 Dozens of outlets publish Suns news every day. Suns Reader gathers recent articles into one feed so you can see what's new instantly.
               </p>
@@ -61,13 +60,11 @@ export default function MarketingHomePage() {
 
           {/* Section 2: Curation */}
           <section>
-            <div className="space-y-[2px]">
-              <h2 className="text-xl font-semibold tracking-tight">Shape your own Suns feed.</h2>
-              <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
-                Follow the sources you trust while still discovering new perspectives.
-              </p>
-            </div>
-            <div className="mt-[12px] sm:mt-[14px] space-y-4 sm:space-y-5 text-base leading-7 sm:text-lg sm:leading-8 text-zinc-600 dark:text-zinc-300">
+            <h2 className="text-xl font-semibold tracking-tight leading-tight">Shape your own Suns feed.</h2>
+            <p className="mt-[2px] text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
+              Follow the sources you trust while still discovering new perspectives.
+            </p>
+            <div className="mt-[10px] space-y-[14px] text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
               <p>
                 Suns Reader starts with a trusted set of major outlets, but you're always in control.
               </p>
@@ -85,13 +82,11 @@ export default function MarketingHomePage() {
 
           {/* Section 3: Reader */}
           <section>
-            <div className="space-y-[2px]">
-              <h2 className="text-xl font-semibold tracking-tight">A better way to read.</h2>
-              <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
-                Articles open in a clean, readable format by default.
-              </p>
-            </div>
-            <div className="mt-[12px] sm:mt-[14px] space-y-4 sm:space-y-5 text-base leading-7 sm:text-lg sm:leading-8 text-zinc-600 dark:text-zinc-300">
+            <h2 className="text-xl font-semibold tracking-tight leading-tight">A better way to read.</h2>
+            <p className="mt-[2px] text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
+              Articles open in a clean, readable format by default.
+            </p>
+            <div className="mt-[10px] space-y-[14px] text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
               <p>
                 Instead of loading the original site first, Suns Reader opens articles directly in a simple reading view designed for your phone.
               </p>
@@ -106,13 +101,11 @@ export default function MarketingHomePage() {
 
           {/* Section 4: Install */}
           <section>
-            <div className="space-y-[2px]">
-              <h2 className="text-xl font-semibold tracking-tight">Use it like an app.</h2>
-              <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
-                Add Suns Reader to your home screen for the best experience.
-              </p>
-            </div>
-            <div className="mt-[12px] sm:mt-[14px] space-y-4 sm:space-y-5 text-base leading-7 sm:text-lg sm:leading-8 text-zinc-600 dark:text-zinc-300">
+            <h2 className="text-xl font-semibold tracking-tight leading-tight">Use it like an app.</h2>
+            <p className="mt-[2px] text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
+              Add Suns Reader to your home screen for the best experience.
+            </p>
+            <div className="mt-[10px] space-y-[14px] text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
               <p>
                 Suns Reader works instantly in your browser, but you can also install it on your phone so it opens just like a normal app.
               </p>
@@ -172,13 +165,11 @@ export default function MarketingHomePage() {
 
           {/* Section 5: Free / No ads */}
           <section>
-            <div className="space-y-[2px]">
-              <h2 className="text-xl font-semibold tracking-tight">Free to use. No ads.</h2>
-              <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
-                Suns Reader is free and designed purely for a better reading experience.
-              </p>
-            </div>
-            <div className="mt-[12px] sm:mt-[14px] space-y-4 sm:space-y-5 text-base leading-7 sm:text-lg sm:leading-8 text-zinc-600 dark:text-zinc-300">
+            <h2 className="text-xl font-semibold tracking-tight leading-tight">Free to use. No ads.</h2>
+            <p className="mt-[2px] text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
+              Suns Reader is free and designed purely for a better reading experience.
+            </p>
+            <div className="mt-[10px] space-y-[14px] text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
               <p>
                 There are no ads, accounts, or subscriptions — just Suns coverage in a clean, simple feed.
               </p>
@@ -190,33 +181,29 @@ export default function MarketingHomePage() {
 
           {/* Final CTA */}
           <section className="pb-16 sm:pb-24">
-            <div className="space-y-[2px]">
-              <h2 className="text-xl font-semibold tracking-tight">Ready to start reading?</h2>
-              <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
-                Open Suns Reader and catch up on the latest Suns coverage.
-              </p>
-            </div>
-            <div className="mt-[12px] sm:mt-[14px]">
-              <Link
-                href="/app"
-                className="inline-flex items-center gap-2 text-accent font-medium hover:underline transition-colors"
+            <h2 className="text-xl font-semibold tracking-tight leading-tight">Ready to start reading?</h2>
+            <p className="mt-[2px] text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
+              Open Suns Reader and catch up on the latest Suns coverage.
+            </p>
+            <Link
+              href="/app"
+              className="mt-[10px] inline-flex items-center gap-2 text-accent font-medium hover:underline transition-colors"
+            >
+              <span>Open Suns Reader</span>
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
               >
-                <span>Open Suns Reader</span>
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                  />
-                </svg>
-              </Link>
-            </div>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
+              </svg>
+            </Link>
           </section>
         </div>
       </div>
