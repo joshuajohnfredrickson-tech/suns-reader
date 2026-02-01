@@ -1,178 +1,132 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Suns Reader - A calmer way to follow Suns news',
-  description: 'All the latest Phoenix Suns articles. None of the noise. Free to use, no ads, built for a better daily reading experience.',
+  title: 'Suns Reader - The easiest way to follow the Phoenix Suns',
+  description: 'The latest Suns coverage in one feed. No searching, no ads — just open and start reading. Free to use.',
 };
 
 export default function MarketingHomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
-      <section className="px-6 py-16 sm:py-24 text-center">
+      <section className="px-6 pt-20 pb-16 sm:pt-28 sm:pb-20">
         <div className="max-w-2xl mx-auto">
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-5">Suns Reader</h1>
-          <p className="text-xl sm:text-2xl text-zinc-500 dark:text-zinc-400 mb-4">
-            A calmer way to follow Suns news.
+          <p className="text-xl sm:text-2xl text-zinc-500 dark:text-zinc-400 mb-10">
+            The easiest way to follow the Phoenix Suns.
           </p>
-          <p className="text-lg text-zinc-400 dark:text-zinc-500 mb-10">
-            All the latest articles. None of the noise.
-          </p>
-          <div className="text-sm text-zinc-400 dark:text-zinc-500 mb-12 space-y-1.5">
-            <p>Free to use.</p>
-            <p>No ads.</p>
-            <p>Built for a better daily reading experience.</p>
-          </div>
           <Link
-            href="/"
-            className="inline-block px-10 py-4 bg-accent text-white text-lg font-semibold rounded-xl hover:opacity-90 active:opacity-80 transition-opacity shadow-lg shadow-accent/20"
+            href="/app"
+            className="inline-flex items-center gap-2 text-accent font-medium hover:underline transition-colors"
           >
-            Open Suns Reader
+            <span>Open Suns Reader</span>
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+              />
+            </svg>
           </Link>
         </div>
       </section>
 
-      {/* What is Suns Reader? */}
-      <section className="px-6 py-12 sm:py-20">
+      {/* Section 1: Aggregation */}
+      <section className="px-6 py-14 sm:py-20">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">What is Suns Reader?</h2>
-          <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
+          <h2 className="text-xl font-semibold tracking-tight mb-2">Bring the news to you.</h2>
+          <p className="text-zinc-500 dark:text-zinc-400 mb-6">
+            The latest Suns coverage is ready when you open the app.
+          </p>
+          <div className="space-y-5 text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
             <p>
-              Suns Reader brings together recent Phoenix Suns articles from across the web.
+              Dozens of outlets publish Suns news every day. Suns Reader gathers recent articles into one feed so you can see what's new instantly.
             </p>
             <p>
-              It makes them easier to read — especially on mobile.
+              No searching. No sorting or filtering results.
+            </p>
+            <p>
+              Open the app and start reading.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Bring the news to you */}
-      <section className="px-6 py-12 sm:py-20">
+      {/* Section 2: Curation */}
+      <section className="px-6 py-14 sm:py-20">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">Bring the news to you</h2>
-          <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
+          <h2 className="text-xl font-semibold tracking-tight mb-2">Shape your own Suns feed.</h2>
+          <p className="text-zinc-500 dark:text-zinc-400 mb-6">
+            Follow the sources you trust while still discovering new perspectives.
+          </p>
+          <div className="space-y-5 text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
             <p>
-              Hundreds of sites publish Suns content every day.
+              Suns Reader starts with a trusted set of major outlets, but you're always in control.
             </p>
             <p>
-              Local coverage. National outlets. Blogs. Beat writers.
+              Keep your main feed focused on the sources you like, while the Discovery tab lets you explore coverage from writers in other markets — see how upcoming opponents view the matchup.
             </p>
             <p>
-              Suns Reader pulls recent articles into a single feed so you don't have to hunt, refresh tabs, or remember which sites to check.
+              Add sources you enjoy. Ignore the ones you don't.
             </p>
             <p>
-              Open the app and see what's new — simple as that.
+              Your feed evolves with you.
             </p>
           </div>
         </div>
       </section>
 
-      {/* You are the algorithm */}
-      <section className="px-6 py-12 sm:py-20">
+      {/* Section 3: Reader */}
+      <section className="px-6 py-14 sm:py-20">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">You are the algorithm</h2>
-          <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
+          <h2 className="text-xl font-semibold tracking-tight mb-2">A better way to read.</h2>
+          <p className="text-zinc-500 dark:text-zinc-400 mb-6">
+            Articles open in a clean, readable format by default.
+          </p>
+          <div className="space-y-5 text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
             <p>
-              Finding articles is easy.
+              Instead of loading the original site first, Suns Reader opens articles directly in a simple reading view designed for your phone.
             </p>
             <p>
-              Finding good articles is harder.
+              No pop-ups, autoplay videos, or layout jumps — just the article, formatted for comfortable reading.
             </p>
             <p>
-              The web is increasingly filled with spam, low-quality AI writing, and bloated sites.
-            </p>
-            <p>
-              Suns Reader puts you back in control.
-            </p>
-            <p>You can:</p>
-            <ul className="space-y-4 sm:space-y-3 ml-1">
-              <li className="flex items-start gap-3">
-                <span className="text-accent mt-1.5">•</span>
-                <span>discover new sources</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-accent mt-1.5">•</span>
-                <span>mark favorites as trusted</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-accent mt-1.5">•</span>
-                <span>shape a feed that reflects what you want to read</span>
-              </li>
-            </ul>
-            <p>
-              Set it once. Adjust over time.
-            </p>
-            <p>
-              Enjoy a cleaner signal.
+              If you ever want the full site experience, you can still open the original article with one tap.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Clean reading experience */}
-      <section className="px-6 py-12 sm:py-20">
+      {/* Section 4: Install */}
+      <section className="px-6 py-14 sm:py-20">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">A clean, distraction-free reading experience</h2>
-          <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
+          <h2 className="text-xl font-semibold tracking-tight mb-2">Use it like an app.</h2>
+          <p className="text-zinc-500 dark:text-zinc-400 mb-6">
+            Add Suns Reader to your home screen for the best experience.
+          </p>
+          <div className="space-y-6 text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
             <p>
-              Tap an article and it opens in a simple, text-first reading view.
-            </p>
-            <div className="space-y-2">
-              <p>No pop-ups.</p>
-              <p>No autoplay videos.</p>
-              <p>No layout jumping.</p>
-            </div>
-            <p>
-              Just the article, formatted to be readable on your phone.
-            </p>
-            <p className="text-zinc-400 dark:text-zinc-500">
-              You can always open the original article if you want the full site experience.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Free to use. No ads. */}
-      <section className="px-6 py-12 sm:py-20">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">Free to use. No ads.</h2>
-          <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
-            <p>
-              Suns Reader is free and does not run ads.
+              Suns Reader works instantly in your browser, but you can also install it on your phone so it opens just like a normal app.
             </p>
             <p>
-              It was built as a personal project by a Suns fan who wanted a calmer way to read.
+              No app store search or downloads required — just add it to your home screen and start reading.
             </p>
-            <p>
-              Not as an ad platform or a data grab.
-            </p>
-            <div className="space-y-2">
-              <p>No sign-ups.</p>
-              <p>No catch.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Use it like an app */}
-      <section className="px-6 py-12 sm:py-20">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">Use it like an app</h2>
-          <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5 text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
-            <p>
-              Suns Reader works in your browser.
-            </p>
-            <p>
-              You can also add it to your home screen.
+            <p className="text-zinc-500 dark:text-zinc-400">
+              Open Suns Reader on your phone to install it.
             </p>
 
             {/* Install instructions grid */}
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid sm:grid-cols-2 gap-4 pt-2">
               {/* iPhone instructions */}
               <div className="p-5 rounded-xl border border-border/50 bg-zinc-50/50 dark:bg-zinc-900/50">
                 <h3 className="text-base font-semibold text-foreground mb-4">iPhone (Safari)</h3>
-                <ol className="space-y-3 text-base">
+                <ol className="space-y-3 text-base text-zinc-600 dark:text-zinc-300">
                   <li className="flex items-start gap-3">
                     <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent/10 text-accent text-sm font-medium flex items-center justify-center">1</span>
                     <span>Open Suns Reader in Safari</span>
@@ -191,7 +145,7 @@ export default function MarketingHomePage() {
               {/* Android instructions */}
               <div className="p-5 rounded-xl border border-border/50 bg-zinc-50/50 dark:bg-zinc-900/50">
                 <h3 className="text-base font-semibold text-foreground mb-4">Android (Chrome)</h3>
-                <ol className="space-y-3 text-base">
+                <ol className="space-y-3 text-base text-zinc-600 dark:text-zinc-300">
                   <li className="flex items-start gap-3">
                     <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent/10 text-accent text-sm font-medium flex items-center justify-center">1</span>
                     <span>Open Suns Reader in Chrome</span>
@@ -211,71 +165,54 @@ export default function MarketingHomePage() {
             <p>
               Once installed, Suns Reader launches full-screen and behaves like a native app.
             </p>
-            <p>
-              No App Store required.
-            </p>
           </div>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="px-6 py-12 sm:py-20">
+      {/* Section 5: Free / No ads */}
+      <section className="px-6 py-14 sm:py-20">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">Frequently asked questions</h2>
-          <div className="mt-6 sm:mt-5 space-y-10 sm:space-y-10">
-            <div>
-              <h3 className="text-lg font-medium text-foreground mb-4">Is Suns Reader free?</h3>
-              <p className="text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                Yes. Suns Reader is free to use and does not show ads.
-              </p>
-            </div>
-
-            <div>
-              <h3 className="text-lg font-medium text-foreground mb-4">Where does the content come from?</h3>
-              <p className="text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                Suns Reader brings together recent articles published around the web by existing outlets. All articles are clearly attributed, with links to original sources.
-              </p>
-            </div>
-
-            <div>
-              <h3 className="text-lg font-medium text-foreground mb-4">Does Suns Reader replace the original websites?</h3>
-              <p className="text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                No. Suns Reader is a reading tool. You can open the original article at any time.
-              </p>
-            </div>
-
-            <div>
-              <h3 className="text-lg font-medium text-foreground mb-4">Do I need to install anything?</h3>
-              <p className="text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                No. You can use Suns Reader directly in your browser. Installing it is optional.
-              </p>
-            </div>
-
-            <div>
-              <h3 className="text-lg font-medium text-foreground mb-4">Is this an official Phoenix Suns app?</h3>
-              <p className="text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                No. Suns Reader is an independent project built by a fan, for fans.
-              </p>
-            </div>
+          <h2 className="text-xl font-semibold tracking-tight mb-2">Free to use. No ads.</h2>
+          <p className="text-zinc-500 dark:text-zinc-400 mb-6">
+            Suns Reader is free and designed purely for a better reading experience.
+          </p>
+          <div className="space-y-5 text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
+            <p>
+              There are no ads, accounts, or subscriptions — just Suns coverage in a clean, simple feed.
+            </p>
+            <p>
+              Suns Reader was built by a Suns fan who wanted an easier way to follow the team, ended up using it every day, and decided to share it with other Suns fans.
+            </p>
           </div>
         </div>
       </section>
 
       {/* Final CTA */}
-      <section className="px-6 py-20 sm:py-28 text-center">
+      <section className="px-6 py-16 sm:py-24">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">Start reading</h2>
-          <div className="mt-6 sm:mt-5 space-y-5">
-            <p className="text-lg text-zinc-500 dark:text-zinc-400">
-              If you follow the Suns and are tired of the noise, Suns Reader is built for you.
-            </p>
-            <Link
-              href="/"
-              className="inline-block px-10 py-4 bg-accent text-white text-lg font-semibold rounded-xl hover:opacity-90 active:opacity-80 transition-opacity shadow-lg shadow-accent/20"
+          <h2 className="text-xl font-semibold tracking-tight mb-4">Ready to start reading?</h2>
+          <p className="text-lg text-zinc-500 dark:text-zinc-400 mb-6">
+            Open Suns Reader and catch up on the latest Suns coverage.
+          </p>
+          <Link
+            href="/app"
+            className="inline-flex items-center gap-2 text-accent font-medium hover:underline transition-colors"
+          >
+            <span>Open Suns Reader</span>
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
             >
-              Open Suns Reader
-            </Link>
-          </div>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+              />
+            </svg>
+          </Link>
         </div>
       </section>
 
