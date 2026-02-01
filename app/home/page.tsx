@@ -15,9 +15,9 @@ export default function MarketingHomePage() {
       <main className="min-h-screen bg-background text-foreground">
         <div className="max-w-2xl mx-auto px-6">
           {/* Hero Section */}
-          <header className="pt-20 pb-8 sm:pt-28 sm:pb-10">
+          <header className="pt-10 pb-8 sm:pt-14 sm:pb-10">
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-5">Suns Reader</h1>
-            <p className="text-xl sm:text-2xl text-zinc-500 dark:text-zinc-400 mb-10">
+            <p className="text-xl sm:text-2xl text-zinc-500 dark:text-zinc-400 mb-4">
               The easiest way to follow the Phoenix Suns.
             </p>
             <Link
@@ -42,7 +42,7 @@ export default function MarketingHomePage() {
           </header>
 
           {/* Content sections */}
-          <div className="mt-7 sm:mt-9 flex flex-col gap-7 sm:gap-10">
+          <div className="mt-4 flex flex-col gap-7 sm:gap-10">
             {/* Section 1: Aggregation */}
             <section data-debug-section="1-aggregation">
               <h2 data-debug-h2 className="text-xl font-semibold tracking-tight leading-[1.15]">Bring the news to you.</h2>
