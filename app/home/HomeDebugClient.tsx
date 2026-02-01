@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef, ReactNode } from 'react';
+import { useEffect, useState, useRef, ReactNode, Suspense } from 'react';
 import { useSearchParams, usePathname } from 'next/navigation';
 
 interface SectionMeasurements {
@@ -15,17 +15,8 @@ interface HomeDebugClientProps {
   buildId: string;
 }
 
-// Debug outline colors
-const OUTLINE_COLORS = {
-  section: 'outline-red-500',
-  h2: 'outline-blue-500',
-  subhead: 'outline-green-500',
-  body: 'outline-yellow-500',
-  cta: 'outline-purple-500',
-  cards: 'outline-pink-500',
-};
-
-export function HomeDebugClient({ children, buildId }: HomeDebugClientProps) {
+// Inner component that uses useSearchParams (requires Suspense)
+function HomeDebugInner({ children, buildId }: HomeDebugClientProps) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const [measurements, setMeasurements] = useState<SectionMeasurements[]>([]);
@@ -158,5 +149,14 @@ export function HomeDebugClient({ children, buildId }: HomeDebugClientProps) {
         </div>
       )}
     </div>
+  );
+}
+
+// Outer component with Suspense boundary
+export function HomeDebugClient({ children, buildId }: HomeDebugClientProps) {
+  return (
+    <Suspense fallback={<div>{children}</div>}>
+      <HomeDebugInner buildId={buildId}>{children}</HomeDebugInner>
+    </Suspense>
   );
 }
