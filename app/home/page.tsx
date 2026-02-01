@@ -37,16 +37,16 @@ export default function MarketingHomePage() {
         </header>
 
         {/* Content sections */}
-        <div className="mt-8 sm:mt-10 flex flex-col gap-[1.75rem] sm:gap-[2.5rem]">
+        <div className="mt-[40px] sm:mt-[48px] flex flex-col gap-[1.75rem] sm:gap-[2.5rem]">
           {/* Section 1: Aggregation */}
           <section>
-            <div className="space-y-1">
+            <div className="space-y-[4px]">
               <h2 className="text-xl font-semibold tracking-tight">Bring the news to you.</h2>
               <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
                 The latest Suns coverage is ready when you open the app.
               </p>
             </div>
-            <div className="mt-7 sm:mt-8 space-y-4 sm:space-y-5 text-base leading-7 sm:text-lg sm:leading-8 text-zinc-600 dark:text-zinc-300">
+            <div className="mt-[18px] sm:mt-[22px] space-y-4 sm:space-y-5 text-base leading-7 sm:text-lg sm:leading-8 text-zinc-600 dark:text-zinc-300">
               <p>
                 Dozens of outlets publish Suns news every day. Suns Reader gathers recent articles into one feed so you can see what's new instantly.
               </p>
@@ -61,13 +61,13 @@ export default function MarketingHomePage() {
 
           {/* Section 2: Curation */}
           <section>
-            <div className="space-y-1">
+            <div className="space-y-[4px]">
               <h2 className="text-xl font-semibold tracking-tight">Shape your own Suns feed.</h2>
               <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
                 Follow the sources you trust while still discovering new perspectives.
               </p>
             </div>
-            <div className="mt-7 sm:mt-8 space-y-4 sm:space-y-5 text-base leading-7 sm:text-lg sm:leading-8 text-zinc-600 dark:text-zinc-300">
+            <div className="mt-[18px] sm:mt-[22px] space-y-4 sm:space-y-5 text-base leading-7 sm:text-lg sm:leading-8 text-zinc-600 dark:text-zinc-300">
               <p>
                 Suns Reader starts with a trusted set of major outlets, but you're always in control.
               </p>
@@ -85,13 +85,13 @@ export default function MarketingHomePage() {
 
           {/* Section 3: Reader */}
           <section>
-            <div className="space-y-1">
+            <div className="space-y-[4px]">
               <h2 className="text-xl font-semibold tracking-tight">A better way to read.</h2>
               <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
                 Articles open in a clean, readable format by default.
               </p>
             </div>
-            <div className="mt-7 sm:mt-8 space-y-4 sm:space-y-5 text-base leading-7 sm:text-lg sm:leading-8 text-zinc-600 dark:text-zinc-300">
+            <div className="mt-[18px] sm:mt-[22px] space-y-4 sm:space-y-5 text-base leading-7 sm:text-lg sm:leading-8 text-zinc-600 dark:text-zinc-300">
               <p>
                 Instead of loading the original site first, Suns Reader opens articles directly in a simple reading view designed for your phone.
               </p>
@@ -106,13 +106,13 @@ export default function MarketingHomePage() {
 
           {/* Section 4: Install */}
           <section>
-            <div className="space-y-1">
+            <div className="space-y-[4px]">
               <h2 className="text-xl font-semibold tracking-tight">Use it like an app.</h2>
               <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
                 Add Suns Reader to your home screen for the best experience.
               </p>
             </div>
-            <div className="mt-7 sm:mt-8 space-y-4 sm:space-y-5 text-base leading-7 sm:text-lg sm:leading-8 text-zinc-600 dark:text-zinc-300">
+            <div className="mt-[18px] sm:mt-[22px] space-y-4 sm:space-y-5 text-base leading-7 sm:text-lg sm:leading-8 text-zinc-600 dark:text-zinc-300">
               <p>
                 Suns Reader works instantly in your browser, but you can also install it on your phone so it opens just like a normal app.
               </p>
@@ -172,13 +172,13 @@ export default function MarketingHomePage() {
 
           {/* Section 5: Free / No ads */}
           <section>
-            <div className="space-y-1">
+            <div className="space-y-[4px]">
               <h2 className="text-xl font-semibold tracking-tight">Free to use. No ads.</h2>
               <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
                 Suns Reader is free and designed purely for a better reading experience.
               </p>
             </div>
-            <div className="mt-7 sm:mt-8 space-y-4 sm:space-y-5 text-base leading-7 sm:text-lg sm:leading-8 text-zinc-600 dark:text-zinc-300">
+            <div className="mt-[18px] sm:mt-[22px] space-y-4 sm:space-y-5 text-base leading-7 sm:text-lg sm:leading-8 text-zinc-600 dark:text-zinc-300">
               <p>
                 There are no ads, accounts, or subscriptions — just Suns coverage in a clean, simple feed.
               </p>
@@ -190,13 +190,13 @@ export default function MarketingHomePage() {
 
           {/* Final CTA */}
           <section className="pb-16 sm:pb-24">
-            <div className="space-y-1">
+            <div className="space-y-[4px]">
               <h2 className="text-xl font-semibold tracking-tight">Ready to start reading?</h2>
               <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
                 Open Suns Reader and catch up on the latest Suns coverage.
               </p>
             </div>
-            <div className="mt-7 sm:mt-8">
+            <div className="mt-[18px] sm:mt-[22px]">
               <Link
                 href="/app"
                 className="inline-flex items-center gap-2 text-accent font-medium hover:underline transition-colors"
