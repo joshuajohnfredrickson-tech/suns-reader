@@ -3,11 +3,20 @@
 import { useEffect, useState, useRef, ReactNode, Suspense } from 'react';
 import { useSearchParams, usePathname } from 'next/navigation';
 
+interface ComputedStyles {
+  h2LineHeight: string;
+  subheadMarginTop: string;
+  subheadLineHeight: string;
+  bodyMarginTop: string;
+  ctaMarginTop: string | null;
+}
+
 interface SectionMeasurements {
   sectionName: string;
   gapA: number; // subhead top - h2 bottom
   gapB: number; // body top - subhead bottom
   gapC: number | null; // cta top - body bottom (if CTA exists)
+  computed: ComputedStyles;
 }
 
 interface HomeDebugClientProps {
@@ -35,14 +44,28 @@ function HomeDebugInner({ children, buildId }: HomeDebugClientProps) {
 
       sections.forEach((section) => {
         const sectionName = section.getAttribute('data-debug-section') || 'unknown';
-        const h2 = section.querySelector('[data-debug-h2]');
-        const subhead = section.querySelector('[data-debug-subhead]');
-        const body = section.querySelector('[data-debug-body]');
-        const cta = section.querySelector('[data-debug-cta]');
+        const h2 = section.querySelector('[data-debug-h2]') as HTMLElement | null;
+        const subhead = section.querySelector('[data-debug-subhead]') as HTMLElement | null;
+        const body = section.querySelector('[data-debug-body]') as HTMLElement | null;
+        const cta = section.querySelector('[data-debug-cta]') as HTMLElement | null;
 
         let gapA = 0;
         let gapB = 0;
         let gapC: number | null = null;
+
+        // Get computed styles
+        const h2Styles = h2 ? window.getComputedStyle(h2) : null;
+        const subheadStyles = subhead ? window.getComputedStyle(subhead) : null;
+        const bodyStyles = body ? window.getComputedStyle(body) : null;
+        const ctaStyles = cta ? window.getComputedStyle(cta) : null;
+
+        const computed: ComputedStyles = {
+          h2LineHeight: h2Styles?.lineHeight || 'n/a',
+          subheadMarginTop: subheadStyles?.marginTop || 'n/a',
+          subheadLineHeight: subheadStyles?.lineHeight || 'n/a',
+          bodyMarginTop: bodyStyles?.marginTop || 'n/a',
+          ctaMarginTop: ctaStyles?.marginTop || null,
+        };
 
         if (h2 && subhead) {
           const h2Rect = h2.getBoundingClientRect();
@@ -66,7 +89,7 @@ function HomeDebugInner({ children, buildId }: HomeDebugClientProps) {
           gapC = Math.round(ctaRect.top - bodyRect.bottom);
         }
 
-        newMeasurements.push({ sectionName, gapA, gapB, gapC });
+        newMeasurements.push({ sectionName, gapA, gapB, gapC, computed });
       });
 
       setMeasurements(newMeasurements);
@@ -112,7 +135,7 @@ function HomeDebugInner({ children, buildId }: HomeDebugClientProps) {
 
       {/* Debug overlay */}
       {isDebug && (
-        <div className="fixed bottom-2 left-2 z-50 max-w-[320px] max-h-[50vh] overflow-auto bg-black/90 text-white text-[10px] font-mono p-3 rounded-lg shadow-lg">
+        <div className="fixed bottom-2 left-2 z-50 max-w-[340px] max-h-[60vh] overflow-auto bg-black/90 text-white text-[10px] font-mono p-3 rounded-lg shadow-lg">
           <div className="space-y-2">
             {/* Build info */}
             <div className="border-b border-white/20 pb-2">
@@ -132,16 +155,33 @@ function HomeDebugInner({ children, buildId }: HomeDebugClientProps) {
             </div>
 
             {/* Measurements */}
-            <div className="space-y-2">
-              <div className="text-zinc-400">Gaps (px):</div>
+            <div className="space-y-3">
+              <div className="text-zinc-400">Gaps & Computed Styles:</div>
               {measurements.map((m, i) => (
-                <div key={i} className="pl-2 border-l border-white/20">
+                <div key={i} className="pl-2 border-l border-white/20 space-y-1">
                   <div className="text-zinc-300 font-medium">{m.sectionName}</div>
-                  <div>A (h2→sub): <span className="text-blue-400">{m.gapA}px</span></div>
-                  <div>B (sub→body): <span className="text-yellow-400">{m.gapB}px</span></div>
-                  {m.gapC !== null && (
-                    <div>C (body→cta): <span className="text-purple-400">{m.gapC}px</span></div>
-                  )}
+
+                  {/* Gap measurements */}
+                  <div className="text-zinc-500">Gaps:</div>
+                  <div className="pl-2">
+                    <div>A (h2→sub): <span className="text-blue-400">{m.gapA}px</span></div>
+                    <div>B (sub→body): <span className="text-yellow-400">{m.gapB}px</span></div>
+                    {m.gapC !== null && (
+                      <div>C (body→cta): <span className="text-purple-400">{m.gapC}px</span></div>
+                    )}
+                  </div>
+
+                  {/* Computed styles */}
+                  <div className="text-zinc-500">Computed:</div>
+                  <div className="pl-2 text-[9px]">
+                    <div>h2 lh: <span className="text-cyan-400">{m.computed.h2LineHeight}</span></div>
+                    <div>sub mt: <span className="text-green-400">{m.computed.subheadMarginTop}</span></div>
+                    <div>sub lh: <span className="text-cyan-400">{m.computed.subheadLineHeight}</span></div>
+                    <div>body mt: <span className="text-yellow-400">{m.computed.bodyMarginTop}</span></div>
+                    {m.computed.ctaMarginTop && (
+                      <div>cta mt: <span className="text-purple-400">{m.computed.ctaMarginTop}</span></div>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>

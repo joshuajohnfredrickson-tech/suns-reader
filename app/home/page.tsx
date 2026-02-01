@@ -42,14 +42,14 @@ export default function MarketingHomePage() {
           </header>
 
           {/* Content sections */}
-          <div className="mt-[28px] sm:mt-[36px] flex flex-col gap-[1.75rem] sm:gap-[2.5rem]">
+          <div className="mt-7 sm:mt-9 flex flex-col gap-7 sm:gap-10">
             {/* Section 1: Aggregation */}
             <section data-debug-section="1-aggregation">
               <h2 data-debug-h2 className="text-xl font-semibold tracking-tight leading-[1.15]">Bring the news to you.</h2>
-              <p data-debug-subhead className="mt-[2px] text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
+              <p data-debug-subhead className="mt-0.5 text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
                 The latest Suns coverage is ready when you open the app.
               </p>
-              <div data-debug-body className="mt-[10px] space-y-[14px] text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
+              <div data-debug-body className="mt-2.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
                 <p>
                   Dozens of outlets publish Suns news every day. Suns Reader gathers recent articles into one feed so you can see what's new instantly.
                 </p>
@@ -65,10 +65,10 @@ export default function MarketingHomePage() {
             {/* Section 2: Curation */}
             <section data-debug-section="2-curation">
               <h2 data-debug-h2 className="text-xl font-semibold tracking-tight leading-[1.15]">Shape your own Suns feed.</h2>
-              <p data-debug-subhead className="mt-[2px] text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
+              <p data-debug-subhead className="mt-0.5 text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
                 Follow the sources you trust while still discovering new perspectives.
               </p>
-              <div data-debug-body className="mt-[10px] space-y-[14px] text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
+              <div data-debug-body className="mt-2.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
                 <p>
                   Suns Reader starts with a trusted set of major outlets, but you're always in control.
                 </p>
@@ -87,10 +87,10 @@ export default function MarketingHomePage() {
             {/* Section 3: Reader */}
             <section data-debug-section="3-reader">
               <h2 data-debug-h2 className="text-xl font-semibold tracking-tight leading-[1.15]">A better way to read.</h2>
-              <p data-debug-subhead className="mt-[2px] text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
+              <p data-debug-subhead className="mt-0.5 text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
                 Articles open in a clean, readable format by default.
               </p>
-              <div data-debug-body className="mt-[10px] space-y-[14px] text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
+              <div data-debug-body className="mt-2.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
                 <p>
                   Instead of loading the original site first, Suns Reader opens articles directly in a simple reading view designed for your phone.
                 </p>
@@ -106,10 +106,10 @@ export default function MarketingHomePage() {
             {/* Section 4: Install */}
             <section data-debug-section="4-install">
               <h2 data-debug-h2 className="text-xl font-semibold tracking-tight leading-[1.15]">Use it like an app.</h2>
-              <p data-debug-subhead className="mt-[2px] text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
+              <p data-debug-subhead className="mt-0.5 text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
                 Add Suns Reader to your home screen for the best experience.
               </p>
-              <div data-debug-body className="mt-[10px] space-y-[14px] text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
+              <div data-debug-body className="mt-2.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
                 <p>
                   Suns Reader works instantly in your browser, but you can also install it on your phone so it opens just like a normal app.
                 </p>
@@ -170,10 +170,10 @@ export default function MarketingHomePage() {
             {/* Section 5: Free / No ads */}
             <section data-debug-section="5-free">
               <h2 data-debug-h2 className="text-xl font-semibold tracking-tight leading-[1.15]">Free to use. No ads.</h2>
-              <p data-debug-subhead className="mt-[2px] text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
+              <p data-debug-subhead className="mt-0.5 text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
                 Suns Reader is free and designed purely for a better reading experience.
               </p>
-              <div data-debug-body className="mt-[10px] space-y-[14px] text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
+              <div data-debug-body className="mt-2.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
                 <p>
                   There are no ads, accounts, or subscriptions — just Suns coverage in a clean, simple feed.
                 </p>
@@ -186,13 +186,13 @@ export default function MarketingHomePage() {
             {/* Final CTA */}
             <section data-debug-section="6-cta" className="pb-16 sm:pb-24">
               <h2 data-debug-h2 className="text-xl font-semibold tracking-tight leading-[1.15]">Ready to start reading?</h2>
-              <p data-debug-subhead className="mt-[2px] text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
+              <p data-debug-subhead className="mt-0.5 text-sm sm:text-base text-zinc-500 dark:text-zinc-400 leading-snug">
                 Open Suns Reader and catch up on the latest Suns coverage.
               </p>
               <Link
                 data-debug-cta
                 href="/app"
-                className="mt-[6px] inline-flex items-center gap-2 text-accent font-medium hover:underline transition-colors"
+                className="mt-1.5 inline-flex items-center gap-2 text-accent font-medium hover:underline transition-colors"
               >
                 <span>Open Suns Reader</span>
                 <svg
