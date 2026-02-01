@@ -37,9 +37,9 @@ export default function MarketingHomePage() {
         </header>
 
         {/* Content sections */}
-        <div className="mt-10 sm:mt-14 space-y-14 sm:space-y-20">
+        <div className="mt-10 sm:mt-14 flex flex-col gap-[3.5rem] sm:gap-[5rem]">
           {/* Section 1: Aggregation */}
-          <section className="space-y-4 sm:space-y-5">
+          <section className="space-y-4 sm:space-y-5 outline outline-1 outline-white/10">
             <div>
               <h2 className="text-xl font-semibold tracking-tight mb-1">Bring the news to you.</h2>
               <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
@@ -60,7 +60,7 @@ export default function MarketingHomePage() {
           </section>
 
           {/* Section 2: Curation */}
-          <section className="space-y-4 sm:space-y-5">
+          <section className="space-y-4 sm:space-y-5 outline outline-1 outline-white/10">
             <div>
               <h2 className="text-xl font-semibold tracking-tight mb-1">Shape your own Suns feed.</h2>
               <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
@@ -84,7 +84,7 @@ export default function MarketingHomePage() {
           </section>
 
           {/* Section 3: Reader */}
-          <section className="space-y-4 sm:space-y-5">
+          <section className="space-y-4 sm:space-y-5 outline outline-1 outline-white/10">
             <div>
               <h2 className="text-xl font-semibold tracking-tight mb-1">A better way to read.</h2>
               <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
@@ -105,7 +105,7 @@ export default function MarketingHomePage() {
           </section>
 
           {/* Section 4: Install */}
-          <section className="space-y-4 sm:space-y-5">
+          <section className="space-y-4 sm:space-y-5 outline outline-1 outline-white/10">
             <div>
               <h2 className="text-xl font-semibold tracking-tight mb-1">Use it like an app.</h2>
               <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
@@ -171,7 +171,7 @@ export default function MarketingHomePage() {
           </section>
 
           {/* Section 5: Free / No ads */}
-          <section className="space-y-4 sm:space-y-5">
+          <section className="space-y-4 sm:space-y-5 outline outline-1 outline-white/10">
             <div>
               <h2 className="text-xl font-semibold tracking-tight mb-1">Free to use. No ads.</h2>
               <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
@@ -189,7 +189,7 @@ export default function MarketingHomePage() {
           </section>
 
           {/* Final CTA */}
-          <section className="space-y-4 sm:space-y-5 pb-16 sm:pb-24">
+          <section className="space-y-4 sm:space-y-5 pb-16 sm:pb-24 outline outline-1 outline-white/10">
             <h2 className="text-xl font-semibold tracking-tight">Ready to start reading?</h2>
             <p className="text-base leading-7 sm:text-lg sm:leading-8 text-zinc-500 dark:text-zinc-400">
               Open Suns Reader and catch up on the latest Suns coverage.
