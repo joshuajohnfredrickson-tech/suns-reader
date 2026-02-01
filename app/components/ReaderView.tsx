@@ -343,10 +343,10 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
       </div>
 
       {/* Article Content - scroll container for contained scrolling */}
-      <article className="flex-1 overflow-y-auto overscroll-y-contain py-6 sm:py-8">
+      <article className="flex-1 overflow-y-auto overscroll-y-contain py-4 sm:py-6">
         <ContentColumn className="px-4 sm:px-6">
           {/* Article Meta Header Block */}
-          <div className="pt-4 pb-6 mb-8">
+          <div className="pt-2 pb-6 mb-8">
             {/* Title */}
             <h1 className="text-xl sm:text-2xl font-semibold leading-snug mb-5 text-foreground">
               {normalizeTitle(extracted?.title || article.title, extracted?.siteName || article.source)}

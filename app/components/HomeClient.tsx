@@ -409,7 +409,7 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
       {/* Header wrapper - static, outside scroll container */}
       <div className="shrink-0 bg-background pt-[env(safe-area-inset-top)]">
         {/* Top Bar */}
-        <header className="relative flex items-center justify-between px-4 pt-4 pb-2 sm:pt-5 sm:pb-2 bg-background">
+        <header className="relative flex items-center justify-between px-4 pt-3 pb-2 sm:pt-4 sm:pb-2 bg-background">
         {/* Empty spacer for centering */}
         <div className="w-28" />
         {/* Centered title */}
