@@ -1,5 +1,5 @@
-import { MarketingContent } from '../../components/MarketingContent';
-import { MarketingDebugClient } from '../../components/MarketingDebugClient';
+import { MarketingContent } from '../components/MarketingContent';
+import { MarketingDebugClient } from '../components/MarketingDebugClient';
 
 // Build ID: prefer Vercel's commit SHA, fallback to timestamp
 const BUILD_ID = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || 'debug-v3';
