@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Suns Reader",
     short_name: "Suns Reader",
-    start_url: "/",
+    start_url: "/app?tab=trusted",
     display: "standalone",
     background_color: "#1a0a2e",
     theme_color: "#1a0a2e",

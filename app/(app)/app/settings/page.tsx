@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getTrustedDomains, removeTrustedDomain, resetToDefaults } from '../../lib/trustedDomains';
+import { getTrustedDomains, removeTrustedDomain, resetToDefaults } from '../../../lib/trustedDomains';
 
-export default function SourcesPage() {
+export default function SettingsPage() {
   const router = useRouter();
   const [trustedDomains, setTrustedDomains] = useState<string[]>([]);
   const [mounted, setMounted] = useState(false);
@@ -26,7 +26,7 @@ export default function SourcesPage() {
 
 
   const handleBack = () => {
-    router.back();
+    router.push('/app?tab=trusted');
   };
 
   if (!mounted) {

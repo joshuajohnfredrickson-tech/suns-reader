@@ -1,9 +1,9 @@
 'use client';
 
 /**
- * Layout for app routes (/, /reader, /sources)
+ * Layout for app routes (/app, /app/reader, /app/settings)
  * Applies mobile scroll-lock to prevent iOS Safari rubber-banding on sticky headers.
- * This does NOT apply to /home (marketing page) which uses normal document scrolling.
+ * This does NOT apply to marketing pages (/ and /home) which use normal document scrolling.
  */
 export default function AppLayout({
   children,

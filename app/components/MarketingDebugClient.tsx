@@ -19,13 +19,13 @@ interface SectionMeasurements {
   computed: ComputedStyles;
 }
 
-interface HomeDebugClientProps {
+interface MarketingDebugClientProps {
   children: ReactNode;
   buildId: string;
 }
 
 // Inner component that uses useSearchParams (requires Suspense)
-function HomeDebugInner({ children, buildId }: HomeDebugClientProps) {
+function MarketingDebugInner({ children, buildId }: MarketingDebugClientProps) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const [measurements, setMeasurements] = useState<SectionMeasurements[]>([]);
@@ -193,10 +193,10 @@ function HomeDebugInner({ children, buildId }: HomeDebugClientProps) {
 }
 
 // Outer component with Suspense boundary
-export function HomeDebugClient({ children, buildId }: HomeDebugClientProps) {
+export function MarketingDebugClient({ children, buildId }: MarketingDebugClientProps) {
   return (
     <Suspense fallback={<div>{children}</div>}>
-      <HomeDebugInner buildId={buildId}>{children}</HomeDebugInner>
+      <MarketingDebugInner buildId={buildId}>{children}</MarketingDebugInner>
     </Suspense>
   );
 }

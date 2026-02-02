@@ -401,7 +401,7 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
 
   const handleTabChange = (tab: 'trusted' | 'discovery') => {
     setActiveTab(tab);
-    router.push(`/?tab=${tab}`, { scroll: false });
+    router.push(`/app?tab=${tab}`, { scroll: false });
   };
 
   return (
@@ -442,7 +442,7 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
             </svg>
           </button>
           <button
-            onClick={() => window.location.href = '/sources'}
+            onClick={() => window.location.href = '/app/settings'}
             className="p-3 min-w-[48px] min-h-[48px] flex items-center justify-center rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
             aria-label="Manage Sources"
             style={{ touchAction: 'manipulation' }}
