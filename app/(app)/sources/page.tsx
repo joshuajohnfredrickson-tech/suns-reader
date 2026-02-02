@@ -38,7 +38,7 @@ export default function SourcesPage() {
       {/* Header wrapper - static, outside scroll container */}
       <div className="shrink-0 bg-background pt-[env(safe-area-inset-top)]">
         {/* Header */}
-        <header className="flex items-center gap-2 px-4 py-4 sm:py-5 border-b border-border bg-background">
+        <header className="flex items-center gap-2 px-4 py-2.5 sm:py-3 border-b border-border bg-background">
           <button
             onClick={handleBack}
             className="flex items-center gap-2 -ml-2 px-3 py-3 min-h-[48px] rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
@@ -75,7 +75,7 @@ export default function SourcesPage() {
               Reset to Defaults
             </button>
           </div>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-6" style={{ paddingLeft: '12px', paddingRight: '12px' }}>
+          <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-4" style={{ paddingLeft: '12px', paddingRight: '12px' }}>
             Manage which news sources appear in your Trusted tab.
           </p>
 
@@ -98,7 +98,7 @@ export default function SourcesPage() {
               {trustedDomains.map((domain) => (
                 <div
                   key={domain}
-                  className="flex items-center justify-between h-[48px] hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                  className="flex items-center justify-between h-[44px] hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
                   style={{ paddingLeft: '12px', paddingRight: '12px' }}
                 >
                   <div className="flex-1 min-w-0">
