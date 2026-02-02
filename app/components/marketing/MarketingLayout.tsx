@@ -40,13 +40,13 @@ export function MarketingLayout({ children }: MarketingLayoutProps) {
       </header>
 
       {/* Main content */}
-      <main className="flex-1">
+      <main className="flex-1 pb-6 sm:pb-8">
         {children}
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border/50 pb-[calc(env(safe-area-inset-bottom)+24px)]">
-        <nav className="max-w-2xl mx-auto px-6 pt-6 pb-4">
+      <footer className="border-t border-border/50">
+        <nav className="max-w-2xl mx-auto px-6 py-4">
           <ul className="flex items-center gap-6 text-sm text-zinc-500 dark:text-zinc-400">
             <li>
               <Link
@@ -74,6 +74,8 @@ export function MarketingLayout({ children }: MarketingLayoutProps) {
             </li>
           </ul>
         </nav>
+        {/* iOS safe area spacer */}
+        <div className="h-[env(safe-area-inset-bottom)]" />
       </footer>
     </div>
   );
