@@ -18,10 +18,13 @@ export default function AboutPage() {
           <h2 className="text-xl font-semibold tracking-tight leading-[1.15]">What is Suns Reader?</h2>
           <div className="mt-3.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
             <p>
-              Suns Reader is a free news aggregator built specifically for Phoenix Suns fans. It gathers the latest Suns coverage from dozens of sources into one clean, easy-to-read feed.
+              Suns Reader is a free news reader for Phoenix Suns fans. It gathers the latest Suns coverage from dozens of outlets into one clean, easy-to-read feed.
             </p>
             <p>
-              No accounts, no ads, no subscriptions — just the news you want to read.
+              No accounts, no ads, and no subscriptions — just Suns coverage in one place.
+            </p>
+            <p>
+              Built by a longtime Suns fan in Phoenix.
             </p>
           </div>
         </section>
@@ -31,10 +34,32 @@ export default function AboutPage() {
           <h2 className="text-xl font-semibold tracking-tight leading-[1.15]">Why it exists</h2>
           <div className="mt-3.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
             <p>
-              Following the Suns used to mean bouncing between multiple websites, apps, and social media feeds. It was frustrating to miss important stories or wade through clickbait to find quality coverage.
+              Following the Suns online usually means jumping between search results, social feeds, and multiple websites — often wading through duplicate articles, clickbait, betting sites, fantasy content, and SEO noise just to find real coverage.
             </p>
             <p>
-              Suns Reader was created to solve that problem — a single place to catch up on everything Suns, built by a fan who uses it every day.
+              Suns Reader was built to make catching up on Suns news quick and clutter-free.
+            </p>
+            <p>
+              I originally built it just for myself — partly to scratch a personal itch and partly to see if I could actually build something like this.
+            </p>
+            <p>
+              After using it a few times a day, it became clear it genuinely made following the team easier, so I decided to share it with other Suns fans too.
+            </p>
+          </div>
+        </section>
+
+        {/* Section: Built by a Suns fan */}
+        <section>
+          <h2 className="text-xl font-semibold tracking-tight leading-[1.15]">Built by a Suns fan</h2>
+          <div className="mt-3.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
+            <p>
+              I've followed the Suns since the 1988–89 season, from the Tom Chambers era through the Barkley Finals run, the Steve Nash "Seven Seconds or Less" years, and today's Booker era.
+            </p>
+            <p>
+              Like many fans, watching the games is only part of it — I also enjoy digging into box scores, reading recaps, and following Suns coverage throughout the season.
+            </p>
+            <p>
+              Suns Reader is simply a tool built by a longtime fan who wanted a better way to keep up with the team.
             </p>
           </div>
         </section>
@@ -44,23 +69,26 @@ export default function AboutPage() {
           <h2 className="text-xl font-semibold tracking-tight leading-[1.15]">How it works</h2>
           <div className="mt-3.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
             <p>
-              Suns Reader monitors RSS feeds and other sources from sports news outlets, team beat writers, and independent journalists. New articles are automatically collected and displayed in a chronological feed.
+              Suns Reader monitors RSS feeds and sports news sources covering the Suns and displays recent articles in a chronological feed.
             </p>
             <p>
-              When you tap an article, it opens in a clean reading view — no pop-ups, no autoplay videos, just the content. You can always open the original site if you prefer.
+              When you open an article, it loads in a clean reading view without pop-ups or autoplay videos, while still allowing you to open the original source if you prefer.
             </p>
             <p>
-              You can customize your feed by choosing which sources to follow and discover new perspectives in the Discovery tab.
+              You can also customize your feed by choosing trusted sources while discovering new perspectives in the Discovery tab.
             </p>
           </div>
         </section>
 
         {/* Section: Support Suns Reader */}
-        <section className="pb-16 sm:pb-24">
+        <section>
           <h2 className="text-xl font-semibold tracking-tight leading-[1.15]">Support Suns Reader</h2>
           <div className="mt-3.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
             <p>
-              Suns Reader is free to use and will stay that way. If you find it useful and want to support its development, donations help cover hosting costs and future improvements.
+              Suns Reader is free to use and will stay that way.
+            </p>
+            <p>
+              If you use it regularly and find it helpful, donations help cover hosting costs and the time needed to keep the project running and improving.
             </p>
             <p className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border/50 bg-zinc-50/50 dark:bg-zinc-900/50 text-zinc-500 dark:text-zinc-400">
               Donation link coming soon.
