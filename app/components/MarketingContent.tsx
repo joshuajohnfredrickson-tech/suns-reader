@@ -6,8 +6,7 @@ interface MarketingContentProps {
 
 export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingContentProps) {
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      <div className="max-w-2xl mx-auto px-6">
+    <div className="max-w-2xl mx-auto px-6">
         {/* Hero Section */}
         <header className="pt-10 pb-7 sm:pt-14 sm:pb-10">
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-5">Suns Reader</h1>
@@ -209,6 +208,6 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
 
       {/* Footer spacing */}
       <div className="h-12" />
-    </main>
+    </div>
   );
 }
