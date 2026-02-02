@@ -1,13 +1,18 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { getTrustedDomains, removeTrustedDomain, resetToDefaults } from '../../../lib/trustedDomains';
 
-export default function SettingsPage() {
+function SettingsContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [trustedDomains, setTrustedDomains] = useState<string[]>([]);
   const [mounted, setMounted] = useState(false);
+
+  // Read tab from URL, default to 'trusted' if missing or invalid
+  const tabParam = searchParams.get('tab');
+  const returnTab = tabParam === 'discovery' ? 'discovery' : 'trusted';
 
   useEffect(() => {
     setMounted(true);
@@ -24,9 +29,8 @@ export default function SettingsPage() {
     setTrustedDomains(getTrustedDomains());
   };
 
-
   const handleBack = () => {
-    router.push('/app?tab=trusted');
+    router.push(`/app?tab=${returnTab}`);
   };
 
   if (!mounted) {
@@ -118,5 +122,13 @@ export default function SettingsPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SettingsPage() {
+  return (
+    <Suspense fallback={null}>
+      <SettingsContent />
+    </Suspense>
   );
 }
