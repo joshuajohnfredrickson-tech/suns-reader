@@ -21,7 +21,7 @@ export default function MarketingHomePage() {
               The easiest way to follow the Phoenix Suns.
             </p>
             <Link
-              href="/app"
+              href="/?tab=trusted"
               className="inline-flex items-center gap-2 text-accent font-medium hover:underline transition-colors"
             >
               <span>Open Suns Reader</span>
@@ -191,7 +191,7 @@ export default function MarketingHomePage() {
               </p>
               <Link
                 data-debug-cta
-                href="/app"
+                href="/?tab=trusted"
                 className="mt-3.5 inline-flex items-center gap-2 text-accent font-medium hover:underline transition-colors"
               >
                 <span>Open Suns Reader</span>
