@@ -17,6 +17,9 @@ import { SystemToast } from './SystemToast';
 const FEED_CACHE_KEY = 'suns-reader-feed-cache';
 const FEED_CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
+// Donate URL (placeholder)
+const DONATE_URL = 'https://example.com/donate';
+
 // Debug info type
 interface DebugInfo {
   timestamp: string;
@@ -410,8 +413,29 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
       <div className="shrink-0 bg-background pt-[env(safe-area-inset-top)]">
         {/* Top Bar */}
         <header className="relative flex items-center justify-between px-4 pt-2 pb-1 sm:pt-2.5 sm:pb-1 bg-background">
-        {/* Empty spacer for centering */}
-        <div className="w-28" />
+        {/* Donate link */}
+        <a
+          href={DONATE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1.5 text-sm text-zinc-500 dark:text-zinc-400 hover:text-foreground transition-colors"
+          style={{ touchAction: 'manipulation' }}
+        >
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+            />
+          </svg>
+          <span>Donate</span>
+        </a>
         {/* Centered title */}
         <h1 className="absolute left-1/2 -translate-x-1/2 text-xl font-semibold">Suns Reader</h1>
         {/* Right-aligned buttons */}
