@@ -292,7 +292,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
       {/* Header wrapper - static, outside scroll container */}
       <div className="shrink-0 bg-background pt-[env(safe-area-inset-top)]">
         {/* Header */}
-        <header className="flex items-center justify-between px-4 py-4 sm:py-5 border-b border-border bg-background">
+        <header className="flex items-center justify-between px-4 py-2.5 sm:py-3 border-b border-border bg-background">
           <button
             onClick={onBack}
             className="flex items-center gap-2 -ml-2 px-3 py-3 min-h-[48px] rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
@@ -346,7 +346,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
       <article className="flex-1 overflow-y-auto overscroll-y-contain py-4 sm:py-6">
         <ContentColumn className="px-4 sm:px-6">
           {/* Article Meta Header Block */}
-          <div className="pt-2 pb-6 mb-8">
+          <div className="pt-2 pb-4 mb-6">
             {/* Title */}
             <h1 className="text-xl sm:text-2xl font-semibold leading-snug mb-5 text-foreground">
               {normalizeTitle(extracted?.title || article.title, extracted?.siteName || article.source)}
