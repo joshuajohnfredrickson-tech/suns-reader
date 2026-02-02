@@ -40,13 +40,13 @@ export function MarketingLayout({ children }: MarketingLayoutProps) {
       </header>
 
       {/* Main content */}
-      <main className="flex-1 pb-12 sm:pb-16">
+      <main className="flex-1">
         {children}
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border/50">
-        <nav className="max-w-2xl mx-auto px-6 py-6">
+      <footer className="border-t border-border/50 pb-[calc(env(safe-area-inset-bottom)+24px)]">
+        <nav className="max-w-2xl mx-auto px-6 pt-6 pb-4">
           <ul className="flex items-center gap-6 text-sm text-zinc-500 dark:text-zinc-400">
             <li>
               <Link
