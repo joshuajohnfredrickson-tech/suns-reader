@@ -409,7 +409,7 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
       {/* Header wrapper - static, outside scroll container */}
       <div className="shrink-0 bg-background pt-[env(safe-area-inset-top)]">
         {/* Top Bar */}
-        <header className="relative flex items-center justify-between px-4 pt-3 pb-2 sm:pt-4 sm:pb-2 bg-background">
+        <header className="relative flex items-center justify-between px-4 pt-2 pb-1 sm:pt-2.5 sm:pb-1 bg-background">
         {/* Empty spacer for centering */}
         <div className="w-28" />
         {/* Centered title */}
@@ -474,7 +474,7 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
         <nav className="flex border-b border-border bg-background">
           <button
             onClick={() => handleTabChange('trusted')}
-            className={`flex-1 px-4 py-3.5 min-h-[44px] text-base font-medium transition-colors ${
+            className={`flex-1 px-4 py-2.5 min-h-[44px] text-base font-medium transition-colors ${
               activeTab === 'trusted'
                 ? 'text-accent border-b-2 border-accent'
                 : 'text-zinc-600 dark:text-zinc-400 hover:text-foreground'
@@ -485,7 +485,7 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
           </button>
           <button
             onClick={() => handleTabChange('discovery')}
-            className={`flex-1 px-4 py-3.5 min-h-[44px] text-base font-medium transition-colors ${
+            className={`flex-1 px-4 py-2.5 min-h-[44px] text-base font-medium transition-colors ${
               activeTab === 'discovery'
                 ? 'text-accent border-b-2 border-accent'
                 : 'text-zinc-600 dark:text-zinc-400 hover:text-foreground'

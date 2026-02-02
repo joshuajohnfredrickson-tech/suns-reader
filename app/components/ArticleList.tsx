@@ -36,7 +36,7 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
           >
             <Link
               href={`/reader?id=${article.id}&tab=${currentTab}`}
-              className="block w-full px-4 py-5 hover:bg-zinc-50 dark:hover:bg-zinc-900 active:bg-zinc-100 dark:active:bg-zinc-800 transition-colors no-underline"
+              className="block w-full px-4 py-3.5 hover:bg-zinc-50 dark:hover:bg-zinc-900 active:bg-zinc-100 dark:active:bg-zinc-800 transition-colors no-underline"
               style={{ touchAction: 'manipulation' }}
             >
               {/* 2-column grid: dot column + content column */}
