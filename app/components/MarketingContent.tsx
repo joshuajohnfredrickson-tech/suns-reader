@@ -8,7 +8,7 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
   return (
     <div className="max-w-2xl mx-auto px-6">
         {/* Hero Section */}
-        <header className="pt-10 pb-7 sm:pt-14 sm:pb-10">
+        <header className="pt-6 pb-7 sm:pt-8 sm:pb-10">
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-5">Suns Reader</h1>
           <p className="text-xl sm:text-2xl text-zinc-500 dark:text-zinc-400 mb-4">
             The easiest way to follow the Phoenix Suns.
@@ -204,9 +204,6 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
             </Link>
           </section>
         </div>
-
-        {/* Footer spacing */}
-        <div className="h-12" />
       </div>
   );
 }
