@@ -177,7 +177,7 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
           </section>
 
           {/* Final CTA */}
-          <section data-debug-section="6-cta" className="pb-16 sm:pb-24">
+          <section data-debug-section="6-cta">
             <h2 data-debug-h2 className="text-xl font-semibold tracking-tight leading-[1.15]">Ready to start reading?</h2>
             <p data-debug-subhead className="mt-0.5 text-base text-zinc-600 dark:text-zinc-400 leading-snug">
               Open Suns Reader and catch up on the latest Suns coverage.
