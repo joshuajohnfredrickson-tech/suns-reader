@@ -204,10 +204,9 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
             </Link>
           </section>
         </div>
-      </div>
 
-      {/* Footer spacing */}
-      <div className="h-12" />
-    </div>
+        {/* Footer spacing */}
+        <div className="h-12" />
+      </div>
   );
 }
