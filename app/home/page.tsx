@@ -49,7 +49,7 @@ export default function MarketingHomePage() {
               <p data-debug-subhead className="mt-0.5 text-base text-zinc-600 dark:text-zinc-400 leading-snug">
                 The latest Suns coverage is ready when you open the app.
               </p>
-              <div data-debug-body className="mt-1.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
+              <div data-debug-body className="mt-3.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
                 <p>
                   Dozens of outlets publish Suns news every day. Suns Reader gathers recent articles into one feed so you can see what's new instantly.
                 </p>
@@ -68,7 +68,7 @@ export default function MarketingHomePage() {
               <p data-debug-subhead className="mt-0.5 text-base text-zinc-600 dark:text-zinc-400 leading-snug">
                 Follow the sources you trust while still discovering new perspectives.
               </p>
-              <div data-debug-body className="mt-1.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
+              <div data-debug-body className="mt-3.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
                 <p>
                   Suns Reader starts with a trusted set of major outlets, but you're always in control.
                 </p>
@@ -90,7 +90,7 @@ export default function MarketingHomePage() {
               <p data-debug-subhead className="mt-0.5 text-base text-zinc-600 dark:text-zinc-400 leading-snug">
                 Articles open in a clean, readable format by default.
               </p>
-              <div data-debug-body className="mt-1.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
+              <div data-debug-body className="mt-3.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
                 <p>
                   Instead of loading the original site first, Suns Reader opens articles directly in a simple reading view designed for your phone.
                 </p>
@@ -109,7 +109,7 @@ export default function MarketingHomePage() {
               <p data-debug-subhead className="mt-0.5 text-base text-zinc-600 dark:text-zinc-400 leading-snug">
                 Add Suns Reader to your home screen for the best experience.
               </p>
-              <div data-debug-body className="mt-1.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
+              <div data-debug-body className="mt-3.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
                 <p>
                   Suns Reader works instantly in your browser, but you can also install it on your phone so it opens just like a normal app.
                 </p>
@@ -173,7 +173,7 @@ export default function MarketingHomePage() {
               <p data-debug-subhead className="mt-0.5 text-base text-zinc-600 dark:text-zinc-400 leading-snug">
                 Suns Reader is free and designed purely for a better reading experience.
               </p>
-              <div data-debug-body className="mt-1.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
+              <div data-debug-body className="mt-3.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
                 <p>
                   There are no ads, accounts, or subscriptions — just Suns coverage in a clean, simple feed.
                 </p>
@@ -192,7 +192,7 @@ export default function MarketingHomePage() {
               <Link
                 data-debug-cta
                 href="/app"
-                className="mt-1.5 inline-flex items-center gap-2 text-accent font-medium hover:underline transition-colors"
+                className="mt-3.5 inline-flex items-center gap-2 text-accent font-medium hover:underline transition-colors"
               >
                 <span>Open Suns Reader</span>
                 <svg
