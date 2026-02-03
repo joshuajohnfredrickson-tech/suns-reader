@@ -4,11 +4,18 @@ import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getTrustedDomains, removeTrustedDomain, resetToDefaults } from '../../../lib/trustedDomains';
 import { SettingsSection } from '../../../components/settings/SettingsSection';
+import {
+  ThemePreference,
+  getStoredThemePreference,
+  setStoredThemePreference,
+  applyTheme,
+} from '../../../lib/theme';
 
 function SettingsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [trustedDomains, setTrustedDomains] = useState<string[]>([]);
+  const [themePreference, setThemePreference] = useState<ThemePreference>('system');
   const [mounted, setMounted] = useState(false);
 
   // Read tab from URL, default to 'trusted' if missing or invalid
@@ -18,6 +25,7 @@ function SettingsContent() {
   useEffect(() => {
     setMounted(true);
     setTrustedDomains(getTrustedDomains());
+    setThemePreference(getStoredThemePreference());
   }, []);
 
   const handleRemove = (domain: string) => {
@@ -28,6 +36,12 @@ function SettingsContent() {
   const handleResetToDefaults = () => {
     resetToDefaults();
     setTrustedDomains(getTrustedDomains());
+  };
+
+  const handleThemeChange = (preference: ThemePreference) => {
+    setThemePreference(preference);
+    setStoredThemePreference(preference);
+    applyTheme(preference);
   };
 
   const handleBack = () => {
@@ -128,13 +142,57 @@ function SettingsContent() {
             description="Choose how Suns Reader looks."
             dividerAfter={false}
           >
-            <div className="border border-border/30 rounded-lg bg-background overflow-hidden">
-              <div
-                className="flex items-center h-[44px] text-zinc-500 dark:text-zinc-400"
-                style={{ paddingLeft: '12px', paddingRight: '12px' }}
+            <div className="border border-border/30 rounded-lg bg-background overflow-hidden divide-y divide-border/20">
+              {/* System option */}
+              <label
+                className="flex items-center gap-3 min-h-[44px] py-2.5 px-3 cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                style={{ touchAction: 'manipulation' }}
               >
-                <span className="text-sm">Theme options coming next.</span>
-              </div>
+                <input
+                  type="radio"
+                  name="theme"
+                  value="system"
+                  checked={themePreference === 'system'}
+                  onChange={() => handleThemeChange('system')}
+                  className="w-4 h-4 text-accent accent-accent"
+                />
+                <div className="flex-1">
+                  <span className="text-base font-medium text-foreground">System</span>
+                  <p className="text-sm text-zinc-500 dark:text-zinc-400">Match your device settings</p>
+                </div>
+              </label>
+
+              {/* Light option */}
+              <label
+                className="flex items-center gap-3 h-[44px] px-3 cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                style={{ touchAction: 'manipulation' }}
+              >
+                <input
+                  type="radio"
+                  name="theme"
+                  value="light"
+                  checked={themePreference === 'light'}
+                  onChange={() => handleThemeChange('light')}
+                  className="w-4 h-4 text-accent accent-accent"
+                />
+                <span className="text-base font-medium text-foreground">Light</span>
+              </label>
+
+              {/* Dark option */}
+              <label
+                className="flex items-center gap-3 h-[44px] px-3 cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                style={{ touchAction: 'manipulation' }}
+              >
+                <input
+                  type="radio"
+                  name="theme"
+                  value="dark"
+                  checked={themePreference === 'dark'}
+                  onChange={() => handleThemeChange('dark')}
+                  className="w-4 h-4 text-accent accent-accent"
+                />
+                <span className="text-base font-medium text-foreground">Dark</span>
+              </label>
             </div>
           </SettingsSection>
         </div>

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -48,12 +49,35 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var preference = localStorage.getItem('themePreference');
+                  var isDark = preference === 'dark' ||
+                    (preference !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                  if (isDark) {
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.style.colorScheme = 'dark';
+                  } else {
+                    document.documentElement.style.colorScheme = 'light';
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className={`${inter.variable} antialiased`}>
-        <div className="w-full md:flex md:justify-center">
-          <div className="w-full md:max-w-[1024px] md:flex-none">
-            {children}
+        <ThemeProvider>
+          <div className="w-full md:flex md:justify-center">
+            <div className="w-full md:max-w-[1024px] md:flex-none">
+              {children}
+            </div>
           </div>
-        </div>
+        </ThemeProvider>
       </body>
     </html>
   );
