@@ -90,9 +90,14 @@ export default function AboutPage() {
             <p>
               If you use it regularly and find it helpful, donations help cover hosting costs and the time needed to keep the project running and improving.
             </p>
-            <p className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border/50 bg-zinc-50/50 dark:bg-zinc-900/50 text-zinc-500 dark:text-zinc-400">
-              Donation link coming soon.
-            </p>
+            <a
+              href="https://buymeacoffee.com/sunsreader"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border/50 bg-zinc-50/50 dark:bg-zinc-900/50 text-zinc-500 dark:text-zinc-400 hover:text-foreground hover:border-border transition-colors"
+            >
+              Support Suns Reader
+            </a>
           </div>
         </section>
       </div>

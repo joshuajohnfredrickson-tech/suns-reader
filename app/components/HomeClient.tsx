@@ -17,8 +17,8 @@ import { SystemToast } from './SystemToast';
 const FEED_CACHE_KEY = 'suns-reader-feed-cache';
 const FEED_CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
-// Donate URL (placeholder)
-const DONATE_URL = 'https://example.com/donate';
+// Donate URL
+const DONATE_URL = 'https://buymeacoffee.com/sunsreader';
 
 // Debug info type
 interface DebugInfo {
