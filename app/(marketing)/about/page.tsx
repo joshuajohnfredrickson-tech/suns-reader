@@ -94,9 +94,22 @@ export default function AboutPage() {
               href="https://buymeacoffee.com/sunsreader"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-zinc-200 dark:border-white/15 bg-zinc-100 dark:bg-white/10 text-zinc-700 dark:text-white/90 hover:bg-zinc-200 dark:hover:bg-white/15 hover:border-zinc-300 dark:hover:border-white/25 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 dark:focus:ring-offset-zinc-900 transition-colors font-medium"
+              className="inline-flex items-center gap-2 text-accent font-medium hover:underline transition-colors"
             >
-              Support Suns Reader
+              <span>Support Suns Reader</span>
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
+              </svg>
             </a>
           </div>
         </section>
