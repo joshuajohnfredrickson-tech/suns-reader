@@ -26,7 +26,7 @@ export function SettingsSection({
       )}
       {children}
       {dividerAfter && (
-        <div className="border-b border-border/30 mt-3 mb-2" />
+        <div className="border-b border-border/30 my-2" />
       )}
     </section>
   );
