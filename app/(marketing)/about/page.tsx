@@ -8,7 +8,28 @@ export default function AboutPage() {
     <div className="max-w-2xl mx-auto px-6">
       {/* Page Header */}
       <header className="pt-6 pb-7 sm:pt-8 sm:pb-10">
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">About Suns Reader</h1>
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-5">About Suns Reader</h1>
+        <a
+          href="https://buymeacoffee.com/sunsreader"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-accent font-medium hover:underline transition-colors"
+        >
+          <span>Support Suns Reader</span>
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+            />
+          </svg>
+        </a>
       </header>
 
       {/* Content sections */}
