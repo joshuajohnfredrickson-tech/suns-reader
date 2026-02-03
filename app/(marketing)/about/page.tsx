@@ -94,7 +94,7 @@ export default function AboutPage() {
               href="https://buymeacoffee.com/sunsreader"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border/50 bg-zinc-50/50 dark:bg-zinc-900/50 text-zinc-500 dark:text-zinc-400 hover:text-foreground hover:border-border transition-colors"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-zinc-200 dark:border-white/15 bg-zinc-100 dark:bg-white/10 text-zinc-700 dark:text-white/90 hover:bg-zinc-200 dark:hover:bg-white/15 hover:border-zinc-300 dark:hover:border-white/25 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 dark:focus:ring-offset-zinc-900 transition-colors font-medium"
             >
               Support Suns Reader
             </a>
