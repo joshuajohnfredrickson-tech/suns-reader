@@ -42,6 +42,13 @@ function SettingsContent() {
     setThemePreference(preference);
     setStoredThemePreference(preference);
     applyTheme(preference);
+
+    // Debug logging (temporary)
+    console.log('[Theme Debug]', {
+      preference,
+      htmlClassName: document.documentElement.className,
+      colorScheme: getComputedStyle(document.documentElement).colorScheme,
+    });
   };
 
   const handleBack = () => {

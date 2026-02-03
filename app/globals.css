@@ -1,10 +1,20 @@
 @import "tailwindcss";
 
+/* Configure Tailwind v4 for class-based dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
   --border: #e5e5e5;
   --accent: #3b82f6;
+}
+
+.dark {
+  --background: #000000;
+  --foreground: #ededed;
+  --border: #262626;
+  --accent: #60a5fa;
 }
 
 @theme inline {
@@ -13,15 +23,6 @@
   --color-border: var(--border);
   --color-accent: var(--accent);
   --font-sans: var(--font-inter);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #000000;
-    --foreground: #ededed;
-    --border: #262626;
-    --accent: #60a5fa;
-  }
 }
 
 *,
@@ -50,11 +51,9 @@ button {
   cursor: pointer;
 }
 
-@media (prefers-color-scheme: dark) {
-  a,
-  button {
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
-  }
+.dark a,
+.dark button {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Reader content styling for extracted HTML articles */
@@ -144,10 +143,8 @@ button {
   text-align: center;
 }
 
-@media (prefers-color-scheme: dark) {
-  .reader-content figcaption {
-    color: #a1a1aa;
-  }
+.dark .reader-content figcaption {
+  color: #a1a1aa;
 }
 
 .reader-content blockquote {
@@ -158,10 +155,8 @@ button {
   font-style: italic;
 }
 
-@media (prefers-color-scheme: dark) {
-  .reader-content blockquote {
-    color: #a1a1aa;
-  }
+.dark .reader-content blockquote {
+  color: #a1a1aa;
 }
 
 .reader-content hr {
@@ -179,10 +174,8 @@ button {
   font-size: 0.875rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  .reader-content pre {
-    background: #18181b;
-  }
+.dark .reader-content pre {
+  background: #18181b;
 }
 
 .reader-content code {
@@ -208,10 +201,8 @@ button {
   background: #f4f4f5;
 }
 
-@media (prefers-color-scheme: dark) {
-  .reader-content th {
-    background: #18181b;
-  }
+.dark .reader-content th {
+  background: #18181b;
 }
 
 .reader-content strong {
