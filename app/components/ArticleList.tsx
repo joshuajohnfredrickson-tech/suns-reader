@@ -56,10 +56,10 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
                   <h3 className="text-base font-medium leading-snug text-foreground">
                     {article.title}
                   </h3>
-                  <div className={`relative mt-1.5 text-xs text-zinc-500 dark:text-zinc-400 ${showAction ? 'pr-24' : ''}`}>
-                    <div className="flex items-center gap-1.5">
+                  <div className="flex items-baseline justify-between gap-3 mt-1.5 text-xs leading-tight text-zinc-500 dark:text-zinc-400">
+                    <div className="min-w-0 flex-1 truncate">
                       <span>{article.source}</span>
-                      <span>·</span>
+                      <span className="mx-1.5">·</span>
                       <span>{article.timeAgo}</span>
                     </div>
                     {showAction && (
@@ -69,7 +69,7 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
                           e.preventDefault();
                           e.stopPropagation();
                         }}
-                        className="absolute right-5 top-0 z-10 pointer-events-auto px-4 py-3 -mx-2 -my-2 text-xs font-medium text-accent hover:underline transition-colors"
+                        className="flex-none whitespace-nowrap pointer-events-auto px-4 py-3 -mx-2 -my-2 text-xs font-medium leading-tight text-accent hover:underline transition-colors"
                         style={{ touchAction: 'manipulation' }}
                       >
                         Add to Trusted
