@@ -163,8 +163,10 @@ function SettingsContent() {
                   onChange={() => handleThemeChange('system')}
                   className="w-4 h-4 text-accent accent-accent"
                 />
-                <span className="text-base font-medium text-foreground">System</span>
-                <span className="flex-1 text-sm text-zinc-500 dark:text-zinc-400 text-right truncate">Match your device settings</span>
+                <span className="flex items-center gap-1.5 min-w-0 truncate">
+                  <span className="text-base font-medium text-foreground">System</span>
+                  <span className="text-sm text-zinc-500 dark:text-zinc-400">(match your device settings)</span>
+                </span>
               </label>
 
               {/* Light option */}
