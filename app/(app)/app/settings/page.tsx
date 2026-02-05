@@ -247,14 +247,14 @@ function SettingsContent() {
                 className="flex items-center w-full h-[44px] px-3 text-left hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
                 style={{ touchAction: 'manipulation' }}
               >
-                <span className="text-base font-medium text-foreground">Mark all as read</span>
+                <span className="text-base font-medium text-accent">Mark all as read</span>
               </button>
               <button
                 onClick={handleMarkAllAsUnread}
                 className="flex items-center w-full h-[44px] px-3 text-left hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
                 style={{ touchAction: 'manipulation' }}
               >
-                <span className="text-base font-medium text-foreground">Mark all as unread</span>
+                <span className="text-base font-medium text-accent">Mark all as unread</span>
               </button>
             </div>
           </SettingsSection>
