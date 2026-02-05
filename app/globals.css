@@ -213,11 +213,11 @@ button {
   font-style: italic;
 }
 
-/* Reader text size overrides */
+/* Reader text size overrides — !important wins over Tailwind sm:text-lg */
 .reader-content.text-size-large {
-  font-size: 1.12em;
+  font-size: 1.12em !important;
 }
 
 .reader-content.text-size-larger {
-  font-size: 1.25em;
+  font-size: 1.25em !important;
 }

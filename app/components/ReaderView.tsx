@@ -348,7 +348,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
           <div ref={textSizeRef} className="relative justify-self-center">
             <button
               onClick={() => setShowTextSizeMenu(prev => !prev)}
-              className="flex items-center justify-center px-3 py-2 min-h-[44px] min-w-[44px] rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors text-base font-serif font-medium text-foreground"
+              className="inline-flex items-center justify-center h-10 w-10 rounded-lg text-base font-semibold text-foreground hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
               style={{ touchAction: 'manipulation' }}
               aria-label="Text size"
               aria-expanded={showTextSizeMenu}
