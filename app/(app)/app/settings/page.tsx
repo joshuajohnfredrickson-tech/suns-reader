@@ -10,6 +10,8 @@ import {
   setStoredThemePreference,
   applyTheme,
 } from '../../../lib/theme';
+import { markAllAsRead, clearAllReadState } from '../../../lib/readState';
+import { SystemToast } from '../../../components/SystemToast';
 
 function SettingsContent() {
   const router = useRouter();
@@ -17,6 +19,10 @@ function SettingsContent() {
   const [trustedDomains, setTrustedDomains] = useState<string[]>([]);
   const [themePreference, setThemePreference] = useState<ThemePreference>('system');
   const [mounted, setMounted] = useState(false);
+  const [toast, setToast] = useState<{ message: string; visible: boolean }>({
+    message: '',
+    visible: false,
+  });
 
   // Read tab from URL, default to 'trusted' if missing or invalid
   const tabParam = searchParams.get('tab');
@@ -53,6 +59,33 @@ function SettingsContent() {
 
   const handleBack = () => {
     router.push(`/app?tab=${returnTab}`);
+  };
+
+  const showToast = (message: string) => {
+    setToast({ message, visible: true });
+    setTimeout(() => {
+      setToast(prev => ({ ...prev, visible: false }));
+    }, 1000);
+  };
+
+  const handleMarkAllAsRead = () => {
+    try {
+      const stored = localStorage.getItem('suns-reader-latest-article-ids');
+      if (stored) {
+        const ids = JSON.parse(stored);
+        if (Array.isArray(ids) && ids.length > 0) {
+          markAllAsRead(ids);
+          showToast('Articles marked as read');
+        }
+      }
+    } catch (error) {
+      console.error('Failed to mark all as read:', error);
+    }
+  };
+
+  const handleMarkAllAsUnread = () => {
+    clearAllReadState();
+    showToast('Articles marked as unread');
   };
 
   if (!mounted) {
@@ -147,7 +180,6 @@ function SettingsContent() {
           <SettingsSection
             title="Appearance"
             description="Choose how Suns Reader looks."
-            dividerAfter={false}
           >
             <div className="border border-border/30 rounded-lg bg-background overflow-hidden divide-y divide-border/20">
               {/* System option */}
@@ -202,8 +234,35 @@ function SettingsContent() {
               </label>
             </div>
           </SettingsSection>
+
+          {/* Read Status Section */}
+          <SettingsSection
+            title="Read Status"
+            description="Control the blue dot read indicators. This only affects this device."
+            dividerAfter={false}
+          >
+            <div className="border border-border/30 rounded-lg bg-background overflow-hidden divide-y divide-border/20">
+              <button
+                onClick={handleMarkAllAsRead}
+                className="flex items-center w-full h-[44px] px-3 text-left hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                style={{ touchAction: 'manipulation' }}
+              >
+                <span className="text-base font-medium text-foreground">Mark all as read</span>
+              </button>
+              <button
+                onClick={handleMarkAllAsUnread}
+                className="flex items-center w-full h-[44px] px-3 text-left hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                style={{ touchAction: 'manipulation' }}
+              >
+                <span className="text-base font-medium text-foreground">Mark all as unread</span>
+              </button>
+            </div>
+          </SettingsSection>
         </div>
       </div>
+
+      {/* Toast */}
+      <SystemToast message={toast.message} visible={toast.visible} />
     </div>
   );
 }

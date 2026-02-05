@@ -123,6 +123,31 @@ export function getReadStateForArticles(articleIds: string[]): { [id: string]: b
 }
 
 /**
+ * Mark multiple articles as read
+ */
+export function markAllAsRead(articleIds: string[]): void {
+  if (typeof window === 'undefined') return;
+  if (articleIds.length === 0) return;
+
+  try {
+    const readState = getReadStateMap();
+    const now = Date.now();
+
+    for (const id of articleIds) {
+      readState[id] = now;
+    }
+
+    saveReadStateMap(readState);
+    console.log(`[ReadState] Marked ${articleIds.length} articles as read`);
+
+    // Emit custom event to notify components of read state change
+    window.dispatchEvent(new Event('readStateChanged'));
+  } catch (error) {
+    console.error('Failed to mark all as read:', error);
+  }
+}
+
+/**
  * Clear all read state
  */
 export function clearAllReadState(): void {

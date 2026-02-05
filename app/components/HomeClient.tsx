@@ -390,6 +390,14 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
     );
   }, [allArticles, trustedDomains]);
 
+  // Sync article IDs to localStorage for Settings "Mark all as read" feature
+  useEffect(() => {
+    if (allArticles.length > 0) {
+      const ids = allArticles.map(a => a.id);
+      localStorage.setItem('suns-reader-latest-article-ids', JSON.stringify(ids));
+    }
+  }, [allArticles]);
+
   if (!mounted) {
     return null;
   }
