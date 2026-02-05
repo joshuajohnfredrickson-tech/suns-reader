@@ -418,7 +418,7 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
           href={DONATE_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 h-10 text-sm font-medium text-foreground hover:text-foreground/80 active:text-foreground/60 transition-colors"
+          className="-ml-2 px-2 inline-flex items-center gap-2 h-10 text-sm font-medium text-foreground hover:text-foreground/80 active:text-foreground/60 rounded-lg transition-colors"
           style={{ touchAction: 'manipulation' }}
         >
           <svg
