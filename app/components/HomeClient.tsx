@@ -418,11 +418,11 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
           href={DONATE_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 text-sm text-zinc-500 dark:text-zinc-400 hover:text-foreground transition-colors"
+          className="inline-flex items-center gap-2 h-10 text-sm font-medium text-foreground hover:text-foreground/80 active:text-foreground/60 transition-colors"
           style={{ touchAction: 'manipulation' }}
         >
           <svg
-            className="w-4 h-4"
+            className="w-5 h-5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
