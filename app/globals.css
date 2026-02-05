@@ -213,11 +213,21 @@ button {
   font-style: italic;
 }
 
-/* Reader text size overrides — !important wins over Tailwind sm:text-lg */
+/* Reader text size overrides
+   Default is text-base (16px) and sm:text-lg (18px) via Tailwind.
+   Use explicit rem values so Large/Larger are always bigger than Default. */
 .reader-content.text-size-large {
-  font-size: 1.12em !important;
+  font-size: 1.125rem !important; /* 18px: bigger than 16px default */
+}
+.reader-content.text-size-larger {
+  font-size: 1.25rem !important;  /* 20px */
 }
 
-.reader-content.text-size-larger {
-  font-size: 1.25em !important;
+@media (min-width: 640px) {
+  .reader-content.text-size-large {
+    font-size: 1.25rem !important;  /* 20px: bigger than 18px default */
+  }
+  .reader-content.text-size-larger {
+    font-size: 1.375rem !important; /* 22px */
+  }
 }
