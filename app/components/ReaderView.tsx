@@ -323,7 +323,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
               className="flex items-center gap-2 px-3 py-3 min-h-[48px] min-w-[48px] text-accent hover:underline transition-colors no-underline"
               style={{ touchAction: 'manipulation' }}
             >
-              <span className="text-base font-medium">Open Original</span>
+              <span className="text-base font-medium">Original</span>
               <svg
                 className="w-5 h-5"
                 fill="none"
@@ -346,7 +346,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
       <article className="flex-1 overflow-y-auto overscroll-y-contain py-4 sm:py-6">
         <ContentColumn className="px-4 sm:px-6">
           {/* Article Meta Header Block */}
-          <div className="pt-2 pb-4 mb-6">
+          <div className="pt-2 mb-6">
             {/* Title */}
             <h1 className="text-xl sm:text-2xl font-semibold leading-snug mb-5 text-foreground">
               {normalizeTitle(extracted?.title || article.title, extracted?.siteName || article.source)}
