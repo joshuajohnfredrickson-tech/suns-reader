@@ -6,6 +6,7 @@ import { ContentColumn } from './ContentColumn';
 import { resolvePublisherUrl } from '../lib/resolvePublisherUrl';
 import { normalizeTitle } from '../lib/utils';
 import { TextSizePreference, getStoredTextSize, setStoredTextSize, getTextSizeClass } from '../lib/textSize';
+import { getCachedExtract, setCachedExtract } from '../lib/extractCache';
 
 interface ReaderViewProps {
   article: Article;
@@ -83,7 +84,9 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
       try {
         const isGoogleNews = isGoogleNewsUrl(article.url);
 
-        // Step 1: If Google News URL, MUST resolve first
+        // Step 1: Determine the final URL (resolve Google News if needed)
+        let finalUrl: string;
+
         if (isGoogleNews) {
           setLoadingMessage('Resolving article URL...');
           const resolved = await resolvePublisherUrl(article.url);
@@ -91,12 +94,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
           if (resolved) {
             setPublisherUrl(resolved);
             console.log('[ReaderView] Resolved publisher URL:', resolved);
-
-            // Step 2: Extract article content using the resolved URL
-            setLoadingMessage('Loading article...');
-            const response = await fetch(`/api/extract?url=${encodeURIComponent(resolved)}`);
-            const data = await response.json();
-            setExtracted(data);
+            finalUrl = resolved;
           } else {
             // Resolution failed - DO NOT call /api/extract with wrapper URL
             console.error('[ReaderView] Failed to resolve Google News URL');
@@ -106,14 +104,33 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
               url: article.url,
               error: 'Could not resolve publisher URL',
             });
+            setLoading(false);
+            return;
           }
         } else {
-          // Not a Google News URL - extract directly
           setPublisherUrl(article.url);
-          setLoadingMessage('Loading article...');
-          const response = await fetch(`/api/extract?url=${encodeURIComponent(article.url)}`);
-          const data = await response.json();
-          setExtracted(data);
+          finalUrl = article.url;
+        }
+
+        // Step 2: Check client-side cache (skip in debug mode)
+        if (!debug) {
+          const cached = getCachedExtract(finalUrl);
+          if (cached) {
+            setExtracted(cached);
+            setLoading(false);
+            return;
+          }
+        }
+
+        // Step 3: Fetch from server
+        setLoadingMessage('Loading article...');
+        const response = await fetch(`/api/extract?url=${encodeURIComponent(finalUrl)}`);
+        const data = await response.json();
+        setExtracted(data);
+
+        // Step 4: Cache successful extractions (skip in debug mode)
+        if (!debug && data?.success && data?.contentHtml) {
+          setCachedExtract(finalUrl, data);
         }
       } catch (error) {
         console.error('Failed to extract article:', error);
@@ -129,7 +146,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
     };
 
     fetchExtractedContent();
-  }, [article.url]);
+  }, [article.url, debug]);
 
   // Compute content node to avoid complex nested ternaries
   const renderContent = () => {
