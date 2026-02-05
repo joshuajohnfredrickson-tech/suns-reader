@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Article } from '../types/article';
 import { ContentColumn } from './ContentColumn';
 import { resolvePublisherUrl } from '../lib/resolvePublisherUrl';
 import { normalizeTitle } from '../lib/utils';
+import { TextSizePreference, getStoredTextSize, setStoredTextSize, getTextSizeClass } from '../lib/textSize';
 
 interface ReaderViewProps {
   article: Article;
@@ -43,6 +44,34 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
   const [loading, setLoading] = useState(true);
   const [loadingMessage, setLoadingMessage] = useState('Loading article...');
   const [publisherUrl, setPublisherUrl] = useState<string | null>(null);
+  const [textSize, setTextSize] = useState<TextSizePreference>('default');
+  const [showTextSizeMenu, setShowTextSizeMenu] = useState(false);
+  const textSizeRef = useRef<HTMLDivElement>(null);
+
+  // Load text size preference from localStorage on mount
+  useEffect(() => {
+    setTextSize(getStoredTextSize());
+  }, []);
+
+  // Close text size popover on click outside
+  useEffect(() => {
+    if (!showTextSizeMenu) return;
+
+    const handleClickOutside = (e: MouseEvent) => {
+      if (textSizeRef.current && !textSizeRef.current.contains(e.target as Node)) {
+        setShowTextSizeMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showTextSizeMenu]);
+
+  const handleTextSizeChange = useCallback((size: TextSizePreference) => {
+    setTextSize(size);
+    setStoredTextSize(size);
+    setShowTextSizeMenu(false);
+  }, []);
 
   useEffect(() => {
     const fetchExtractedContent = async () => {
@@ -118,7 +147,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
     if (extracted?.success && extracted.contentHtml) {
       return (
         <div
-          className="reader-content text-base sm:text-lg leading-8 text-foreground"
+          className={`reader-content text-base sm:text-lg leading-8 text-foreground ${getTextSizeClass(textSize)}`}
           dangerouslySetInnerHTML={{ __html: extracted.contentHtml }}
         />
       );
@@ -184,7 +213,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
           .filter((p: string) => p.length > 0);
 
         return (
-          <div className="text-base sm:text-lg leading-8 text-foreground">
+          <div className={`reader-content text-base sm:text-lg leading-8 text-foreground ${getTextSizeClass(textSize)}`}>
             {paragraphs.map((paragraph: string, index: number) => (
               <p key={index} className="mb-6">
                 {paragraph}
@@ -202,7 +231,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
           .filter((line: string) => line.length > 0);
 
         return (
-          <div className="text-base sm:text-lg leading-8 text-foreground">
+          <div className={`reader-content text-base sm:text-lg leading-8 text-foreground ${getTextSizeClass(textSize)}`}>
             {lines.map((line: string, index: number) => (
               <p key={index} className="mb-6">
                 {line}
@@ -227,7 +256,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
         }
 
         return (
-          <div className="text-base sm:text-lg leading-8 text-foreground">
+          <div className={`reader-content text-base sm:text-lg leading-8 text-foreground ${getTextSizeClass(textSize)}`}>
             {paragraphs.map((paragraph: string, index: number) => (
               <p key={index} className="mb-6">
                 {paragraph}
@@ -239,7 +268,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
 
       // Very short text or couldn't split - render as single block with improved line-height
       return (
-        <div className="text-base sm:text-lg leading-8 text-foreground">
+        <div className={`reader-content text-base sm:text-lg leading-8 text-foreground ${getTextSizeClass(textSize)}`}>
           {normalizedBody}
         </div>
       );
@@ -292,7 +321,8 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
       {/* Header wrapper - static, outside scroll container */}
       <div className="shrink-0 bg-background pt-[env(safe-area-inset-top)]">
         {/* Header */}
-        <header className="flex items-center justify-between px-4 py-2.5 sm:py-3 border-b border-border bg-background">
+        <header className="grid grid-cols-[auto_1fr_auto] items-center px-4 py-2.5 sm:py-3 border-b border-border bg-background">
+          {/* Left: Back button */}
           <button
             onClick={onBack}
             className="flex items-center gap-2 -ml-2 px-3 py-3 min-h-[48px] rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
@@ -314,13 +344,49 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
             <span className="text-base font-medium">Back</span>
           </button>
 
-          {/* Open Original - text link style */}
-          {originalUrl && (
+          {/* Center: Text Size control */}
+          <div ref={textSizeRef} className="relative justify-self-center">
+            <button
+              onClick={() => setShowTextSizeMenu(prev => !prev)}
+              className="flex items-center justify-center px-3 py-2 min-h-[44px] min-w-[44px] rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors text-base font-serif font-medium text-foreground"
+              style={{ touchAction: 'manipulation' }}
+              aria-label="Text size"
+              aria-expanded={showTextSizeMenu}
+            >
+              Aa
+            </button>
+
+            {showTextSizeMenu && (
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 z-50 bg-background border border-border rounded-lg shadow-lg overflow-hidden min-w-[160px]">
+                {([
+                  { value: 'default' as const, label: 'Default' },
+                  { value: 'large' as const, label: 'Large' },
+                  { value: 'larger' as const, label: 'Larger' },
+                ]).map(({ value, label }) => (
+                  <button
+                    key={value}
+                    onClick={() => handleTextSizeChange(value)}
+                    className={`w-full px-4 py-2.5 text-left text-sm font-medium transition-colors ${
+                      textSize === value
+                        ? 'text-accent bg-accent/10'
+                        : 'text-foreground hover:bg-zinc-50 dark:hover:bg-zinc-900'
+                    }`}
+                    style={{ touchAction: 'manipulation' }}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Right: Original link */}
+          {originalUrl ? (
             <a
               href={originalUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-3 min-h-[48px] min-w-[48px] text-accent hover:underline transition-colors no-underline"
+              className="flex items-center gap-2 px-3 py-3 min-h-[48px] min-w-[48px] justify-self-end text-accent hover:underline transition-colors no-underline"
               style={{ touchAction: 'manipulation' }}
             >
               <span className="text-base font-medium">Original</span>
@@ -338,6 +404,8 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
                 />
               </svg>
             </a>
+          ) : (
+            <div />
           )}
         </header>
       </div>

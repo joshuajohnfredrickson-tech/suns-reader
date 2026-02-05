@@ -212,3 +212,12 @@ button {
 .reader-content em {
   font-style: italic;
 }
+
+/* Reader text size overrides */
+.reader-content.text-size-large {
+  font-size: 1.12em;
+}
+
+.reader-content.text-size-larger {
+  font-size: 1.25em;
+}
