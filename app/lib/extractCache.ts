@@ -7,7 +7,7 @@
  */
 
 const STORAGE_KEY = 'suns-reader-extract-cache-v1';
-const TTL_MS = 12 * 60 * 60 * 1000; // 12 hours
+const TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 const MAX_ENTRIES = 50;
 
 interface CacheEntry {
