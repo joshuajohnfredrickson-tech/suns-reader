@@ -413,33 +413,35 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
       <div className="shrink-0 bg-background pt-[env(safe-area-inset-top)]">
         {/* Top Bar */}
         <header className="relative flex items-center justify-between px-4 pt-2 pb-1 sm:pt-2.5 sm:pb-1 bg-background">
-        {/* Donate link */}
-        <a
-          href={DONATE_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="-ml-2 px-2 inline-flex items-center gap-2 h-10 text-sm font-medium text-foreground hover:text-foreground/80 active:text-foreground/60 rounded-lg transition-colors"
-          style={{ touchAction: 'manipulation' }}
-        >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+        {/* Left controls */}
+        <div className="-ml-3 flex items-center">
+          <a
+            href={DONATE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-3 inline-flex items-center gap-2 h-12 text-sm font-medium text-foreground hover:text-foreground/80 active:text-foreground/60 rounded-lg transition-colors"
+            style={{ touchAction: 'manipulation' }}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-            />
-          </svg>
-          <span>Donate</span>
-        </a>
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+              />
+            </svg>
+            <span>Donate</span>
+          </a>
+        </div>
         {/* Centered title */}
         <h1 className="absolute left-1/2 -translate-x-1/2 text-xl font-semibold">Suns Reader</h1>
-        {/* Right-aligned buttons */}
-        <div className="flex items-center gap-4">
+        {/* Right controls */}
+        <div className="-mr-3 flex items-center gap-4">
           <button
             onClick={handleRefresh}
             disabled={isFetching}
