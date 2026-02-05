@@ -152,7 +152,7 @@ function SettingsContent() {
             <div className="border border-border/30 rounded-lg bg-background overflow-hidden divide-y divide-border/20">
               {/* System option */}
               <label
-                className="flex items-center gap-3 min-h-[44px] py-2.5 px-3 cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                className="flex items-center gap-3 h-[44px] px-3 cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
                 style={{ touchAction: 'manipulation' }}
               >
                 <input
@@ -163,10 +163,8 @@ function SettingsContent() {
                   onChange={() => handleThemeChange('system')}
                   className="w-4 h-4 text-accent accent-accent"
                 />
-                <div className="flex-1">
-                  <span className="text-base font-medium text-foreground">System</span>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400">Match your device settings</p>
-                </div>
+                <span className="text-base font-medium text-foreground">System</span>
+                <span className="flex-1 text-sm text-zinc-500 dark:text-zinc-400 text-right truncate">Match your device settings</span>
               </label>
 
               {/* Light option */}
