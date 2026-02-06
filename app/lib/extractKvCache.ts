@@ -48,6 +48,7 @@ function getRedis(): any | null {
   const token = process.env.KV_REST_API_TOKEN;
 
   if (!url || !token) {
+    console.log('[KV] cache enabled: false (missing env vars)');
     _redis = null;
     return null;
   }
@@ -56,8 +57,10 @@ function getRedis(): any | null {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { Redis } = require('@upstash/redis') as typeof import('@upstash/redis');
     _redis = new Redis({ url, token });
+    console.log('[KV] cache enabled: true');
     return _redis;
-  } catch {
+  } catch (err) {
+    console.log('[KV] cache enabled: false (init error)', err instanceof Error ? err.message : err);
     _redis = null;
     return null;
   }
@@ -158,11 +161,14 @@ export async function getCachedExtract(normalizedUrl: string): Promise<CachedExt
 
     // Validate schema version
     if (data && data.v === 1 && data.contentHtml && data.title) {
+      console.log(`[KV] GET ${key} HIT`);
       return data;
     }
+    console.log(`[KV] GET ${key} MISS`);
     return null;
-  } catch {
-    // KV failure — silently fall back to extraction
+  } catch (err) {
+    const key = makeCacheKey(normalizedUrl);
+    console.log(`[KV] GET ${key} ERROR`, err instanceof Error ? err.message : err);
     return null;
   }
 }
@@ -179,8 +185,10 @@ export async function setCachedExtract(normalizedUrl: string, payload: CachedExt
 
     const key = makeCacheKey(normalizedUrl);
     await redis.set(key, payload, { ex: KV_TTL_SECONDS });
-  } catch {
-    // KV failure — silently ignore
+    console.log(`[KV] SET success ${key}`);
+  } catch (err) {
+    const key = makeCacheKey(normalizedUrl);
+    console.log(`[KV] SET failed ${key}`, err instanceof Error ? err.message : err);
   }
 }
 
