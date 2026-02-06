@@ -122,7 +122,7 @@ function SettingsContent() {
       </div>
 
       {/* Content - scroll container for contained scrolling */}
-      <div className="flex-1 overflow-y-auto overscroll-y-contain py-4 md:flex md:justify-center">
+      <div className="flex-1 overflow-y-auto overscroll-y-contain pt-4 pb-10 md:flex md:justify-center">
         <div className="w-full max-w-[420px] md:flex-none" style={{ paddingLeft: '24px', paddingRight: '24px' }}>
           {/* Trusted Sources Section */}
           <SettingsSection
