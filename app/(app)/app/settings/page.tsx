@@ -260,7 +260,7 @@ function SettingsContent() {
           </SettingsSection>
 
           {/* Bottom spacer for scroll breathing room */}
-          <div aria-hidden="true" className="h-10 sm:h-12" />
+          <div aria-hidden="true" className="h-6 sm:h-8" />
         </div>
       </div>
 
