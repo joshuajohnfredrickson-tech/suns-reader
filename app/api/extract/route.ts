@@ -9,6 +9,7 @@ import {
   TelemetryReason,
   isPlaywrightCandidate,
 } from '../../lib/telemetry';
+import { healthLog, safeHost, normalizeError } from '../../lib/healthLog';
 
 // Local only; disabled on Vercel. Set ENABLE_PLAYWRIGHT=1 to enable Playwright fallback.
 const ENABLE_PLAYWRIGHT = process.env.ENABLE_PLAYWRIGHT === '1';
@@ -115,6 +116,14 @@ function extractStatusToTelemetryReason(
   return 'unknown';
 }
 
+/** Extra context for health telemetry on extract */
+interface ExtractHealthExtra {
+  cacheStatus?: 'hit' | 'miss' | 'none';
+  readabilityOk?: boolean;
+  qualityGatePassed?: boolean;
+  blockedDetected?: boolean;
+}
+
 /**
  * Finalize the request: log metrics, record telemetry, and return response
  */
@@ -124,7 +133,8 @@ function finalize(
   inputUrl: string,
   payload: ExtractResult,
   telemetryReqId?: string,
-  httpStatus?: number
+  httpStatus?: number,
+  healthExtra?: ExtractHealthExtra
 ): NextResponse<ExtractResult> {
   // Compute metrics from payload
   const host = (() => {
@@ -175,6 +185,34 @@ function finalize(
           reason,
           contentEmpty,
         }),
+  });
+
+  // Health telemetry — derive fields from payload when not explicitly provided
+  const statusStr = String(payload.status || '').toLowerCase();
+  const derivedBlocked = healthExtra?.blockedDetected ?? (statusStr === 'blocked');
+  const derivedReadabilityOk = healthExtra?.readabilityOk ?? (payload.success && titleLength > 0 && textLength > 0);
+  const derivedQualityGate = healthExtra?.qualityGatePassed ?? (payload.success && titleLength >= 8 && textLength >= 400);
+  const derivedCacheStatus = healthExtra?.cacheStatus ?? 'miss';
+
+  const errorInfo = payload.success ? {} : normalizeError(payload.error, httpStatus);
+  healthLog({
+    route: '/api/extract',
+    type: 'extract',
+    ok: payload.success,
+    durationMs,
+    requestId,
+    publisherHost: safeHost(payload.url || payload.fetchedUrl || inputUrl),
+    httpStatus,
+    contentType: payload.contentType || undefined,
+    blockedDetected: derivedBlocked,
+    titleLength,
+    textLength,
+    readabilityOk: derivedReadabilityOk,
+    qualityGatePassed: derivedQualityGate,
+    playwrightUsed: payload.playwrightUsed || false,
+    cacheStatus: derivedCacheStatus,
+    cacheTtlSec: derivedCacheStatus === 'hit' ? Math.round(CACHE_TTL / 1000) : undefined,
+    ...(payload.success ? {} : errorInfo),
   });
 
   return NextResponse.json(payload);
@@ -815,7 +853,7 @@ export async function GET(request: Request) {
       const cached = cache.get(urlParam);
       if (cached && Date.now() < cached.expires) {
         console.log('[Extract] Cache hit for:', urlParam);
-        return finalize(requestId, startedAt, urlParam, cached.result);
+        return finalize(requestId, startedAt, urlParam, cached.result, undefined, undefined, { cacheStatus: 'hit' });
       }
     } else {
       console.log('[Extract] Skipping cache (debug mode)');

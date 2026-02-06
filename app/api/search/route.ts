@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { simpleHash, getDomain, isWithin24Hours } from '@/app/lib/utils';
 import { ArticleSummary } from '@/app/types/article';
 import { randomUUID } from 'crypto';
+import { healthLog, makeRequestId, normalizeError } from '@/app/lib/healthLog';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -134,7 +135,8 @@ function finalize(
   itemsReturned: number,
   cacheBustUsed: boolean,
   error: string | null,
-  payload: { items: ArticleSummary[] } | { error: string; items: [] }
+  payload: { items: ArticleSummary[] } | { error: string; items: [] },
+  extra?: { itemsParsed?: number; uniqueDomains?: number }
 ): NextResponse {
   const durationMs = Date.now() - startedAt;
 
@@ -147,7 +149,7 @@ function finalize(
     }
   })();
 
-  // Log single JSON line
+  // Log single JSON line (existing log)
   console.log(JSON.stringify({
     type: 'search',
     requestId,
@@ -160,6 +162,23 @@ function finalize(
     cacheBustUsed,
     error,
   }));
+
+  // Health telemetry
+  const ok = error === null;
+  const errorInfo = ok ? {} : normalizeError(error);
+  healthLog({
+    route: '/api/search',
+    type: 'search',
+    ok,
+    durationMs,
+    requestId,
+    source: 'google_news_rss',
+    query,
+    itemsReturned,
+    itemsParsed: extra?.itemsParsed ?? 0,
+    uniqueDomains: extra?.uniqueDomains,
+    ...(ok ? {} : errorInfo),
+  });
 
   return NextResponse.json(payload);
 }
@@ -197,7 +216,8 @@ export async function GET(request: Request) {
     console.log('[API] RSS fetched, parsing...');
 
     const rssItems = parseRSS(xmlText);
-    console.log(`[API] Parsed ${rssItems.length} items from RSS`);
+    const itemsParsed = rssItems.length;
+    console.log(`[API] Parsed ${itemsParsed} items from RSS`);
 
     let normalized = normalizeRSSItems(rssItems);
 
@@ -216,6 +236,9 @@ export async function GET(request: Request) {
       return dateB - dateA;
     });
 
+    // Count unique domains for health telemetry
+    const uniqueDomains = new Set(normalized.map(item => item.sourceDomain)).size;
+
     return finalize(
       requestId,
       startedAt,
@@ -225,7 +248,8 @@ export async function GET(request: Request) {
       normalized.length,
       true,
       null,
-      { items: normalized }
+      { items: normalized },
+      { itemsParsed, uniqueDomains }
     );
   } catch (error) {
     console.error('[API] Search error:', error);

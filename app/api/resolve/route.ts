@@ -7,6 +7,7 @@ import {
   createTelemetryContext,
   TelemetryReason,
 } from "../../lib/telemetry";
+import { healthLog, safeHost, normalizeError } from "../../lib/healthLog";
 
 // =============================================================================
 // Cache Configuration
@@ -433,6 +434,8 @@ async function resolveUrl(inputUrl: string, debug: boolean = false): Promise<Res
     methodsTried: string[],
     cached: boolean = false
   ): ResolveResult => {
+    const durationMs = Date.now() - startedAt;
+
     console.log(JSON.stringify({
       type: "resolve",
       ts: new Date().toISOString(),
@@ -441,7 +444,7 @@ async function resolveUrl(inputUrl: string, debug: boolean = false): Promise<Res
       cached,
       strategy,
       methodsTried,
-      durationMs: Date.now() - startedAt,
+      durationMs,
       inputHost: safeHostname(inputUrl),
       publisherHost: safeHostname(publisherUrl),
       error: success ? null : (error || "Could not resolve publisher URL"),
@@ -457,6 +460,26 @@ async function resolveUrl(inputUrl: string, debug: boolean = false): Promise<Res
         playwright_candidate: false,
       });
     }
+
+    // Health telemetry
+    const isGoogleNewsUrl = safeHostname(inputUrl).includes("news.google.com");
+    const cacheStatus = cached ? "hit" as const : "miss" as const;
+    const errorInfo = success ? {} : normalizeError(error);
+    healthLog({
+      route: '/api/resolve',
+      type: 'resolve',
+      ok: success,
+      durationMs,
+      requestId,
+      inputHost: safeHost(inputUrl),
+      resolvedHost: publisherUrl ? safeHost(publisherUrl) : undefined,
+      isGoogleNewsUrl,
+      strategyUsed: strategy || undefined,
+      methodsTried,
+      cacheStatus,
+      cacheTtlSec: cached ? Math.round(CACHE_TTL_MS / 1000) : undefined,
+      ...(success ? {} : errorInfo),
+    });
 
     if (success && publisherUrl) {
       return debug
