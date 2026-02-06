@@ -10,6 +10,13 @@ import {
   isPlaywrightCandidate,
 } from '../../lib/telemetry';
 import { healthLog, safeHost, normalizeError } from '../../lib/healthLog';
+import {
+  normalizeUrl,
+  getCachedExtract,
+  setCachedExtract,
+  buildCachedPayload,
+  KV_TTL_SEC,
+} from '../../lib/extractKvCache';
 
 // Local only; disabled on Vercel. Set ENABLE_PLAYWRIGHT=1 to enable Playwright fallback.
 const ENABLE_PLAYWRIGHT = process.env.ENABLE_PLAYWRIGHT === '1';
@@ -119,6 +126,10 @@ function extractStatusToTelemetryReason(
 /** Extra context for health telemetry on extract */
 interface ExtractHealthExtra {
   cacheStatus?: 'hit' | 'miss' | 'none';
+  cacheLayer?: 'l1' | 'l2';
+  cacheAgeSec?: number;
+  computeMs?: number;
+  computeStartedAt?: number;
   readabilityOk?: boolean;
   qualityGatePassed?: boolean;
   blockedDetected?: boolean;
@@ -211,7 +222,12 @@ function finalize(
     qualityGatePassed: derivedQualityGate,
     playwrightUsed: payload.playwrightUsed || false,
     cacheStatus: derivedCacheStatus,
-    cacheTtlSec: derivedCacheStatus === 'hit' ? Math.round(CACHE_TTL / 1000) : undefined,
+    cacheLayer: healthExtra?.cacheLayer,
+    cacheTtlSec: derivedCacheStatus === 'hit'
+      ? (healthExtra?.cacheLayer === 'l2' ? KV_TTL_SEC : Math.round(CACHE_TTL / 1000))
+      : undefined,
+    cacheAgeSec: healthExtra?.cacheAgeSec,
+    computeMs: healthExtra?.computeMs ?? (healthExtra?.computeStartedAt ? Date.now() - healthExtra.computeStartedAt : undefined),
     ...(payload.success ? {} : errorInfo),
   });
 
@@ -808,6 +824,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const urlParam = searchParams.get('url');
     const debugMode = searchParams.get('debug') === '1' || searchParams.get('debug') === 'true';
+    const refreshMode = searchParams.get('refresh') === '1';
 
     if (!urlParam) {
       return finalize(
@@ -848,16 +865,59 @@ export async function GET(request: Request) {
       // If URL parsing fails, let it fall through to the existing validation below
     }
 
-    // Check cache first (skip cache in debug mode)
+    // Compute normalized URL for cache keying (L1 + L2)
+    const cacheKeyUrl = normalizeUrl(urlParam);
+
+    // L1: Check in-memory cache (skip in debug mode)
     if (!debugMode) {
-      const cached = cache.get(urlParam);
+      const cached = cache.get(cacheKeyUrl);
       if (cached && Date.now() < cached.expires) {
-        console.log('[Extract] Cache hit for:', urlParam);
-        return finalize(requestId, startedAt, urlParam, cached.result, undefined, undefined, { cacheStatus: 'hit' });
+        console.log('[Extract] L1 cache hit');
+        return finalize(requestId, startedAt, urlParam, cached.result, undefined, undefined, { cacheStatus: 'hit', cacheLayer: 'l1' });
       }
     } else {
       console.log('[Extract] Skipping cache (debug mode)');
     }
+
+    // L2: Check KV cache (skip in debug mode or refresh mode)
+    if (!debugMode && !refreshMode) {
+      try {
+        const kvCached = await getCachedExtract(cacheKeyUrl);
+        if (kvCached) {
+          const cacheAgeSec = Math.floor((Date.now() - kvCached.cachedAt) / 1000);
+          console.log('[Extract] L2 KV cache hit');
+
+          // Reconstruct ExtractResult from cached payload
+          const kvResult = buildExtractResponse({
+            success: true,
+            url: kvCached.normalizedUrl,
+            status: 'ok',
+            title: kvCached.title,
+            byline: kvCached.byline,
+            siteName: kvCached.siteName,
+            contentHtml: kvCached.contentHtml,
+            textContent: kvCached.textContent,
+            excerpt: kvCached.excerpt,
+            length: kvCached.length,
+            fetchedUrl: kvCached.normalizedUrl,
+          });
+
+          // Promote to L1 for fast subsequent hits on same instance
+          cache.set(cacheKeyUrl, { result: kvResult, expires: Date.now() + CACHE_TTL });
+
+          return finalize(requestId, startedAt, urlParam, kvResult, undefined, undefined, {
+            cacheStatus: 'hit',
+            cacheLayer: 'l2',
+            cacheAgeSec,
+          });
+        }
+      } catch {
+        // KV failure — continue with extraction
+      }
+    }
+
+    // Track extraction compute time (excludes cache lookups)
+    const computeStartedAt = Date.now();
 
     // Validate URL
     const validation = validateUrl(urlParam);
@@ -1141,7 +1201,8 @@ export async function GET(request: Request) {
               contentType: publisherResponse.headers.get('content-type') || '',
             };
 
-            cache.set(urlParam, { result, expires: Date.now() + CACHE_TTL });
+            cache.set(cacheKeyUrl, { result, expires: Date.now() + CACHE_TTL });
+        { const cp = buildCachedPayload(cacheKeyUrl, result); if (cp) void setCachedExtract(cacheKeyUrl, cp).catch(() => {}); }
             console.log('[Extract] Success via Readability (redirect unwrap):', article.title);
             return finalize(requestId, startedAt, urlParam, result);
           }
@@ -1210,7 +1271,8 @@ export async function GET(request: Request) {
               contentType: publisherResponse.headers.get('content-type') || '',
             };
 
-            cache.set(urlParam, { result, expires: Date.now() + CACHE_TTL });
+            cache.set(cacheKeyUrl, { result, expires: Date.now() + CACHE_TTL });
+        { const cp = buildCachedPayload(cacheKeyUrl, result); if (cp) void setCachedExtract(cacheKeyUrl, cp).catch(() => {}); }
             console.log('[Extract] Success via fallback extraction (redirect unwrap)');
             return finalize(requestId, startedAt, urlParam, result);
           }
@@ -1225,7 +1287,7 @@ export async function GET(request: Request) {
             status: "no_reader",
             contentType: publisherResponse.headers.get('content-type') || '',
           };
-          cache.set(urlParam, { result, expires: Date.now() + (2 * 60 * 1000) });
+          cache.set(cacheKeyUrl, { result, expires: Date.now() + (2 * 60 * 1000) });
           return finalize(requestId, startedAt, urlParam, result);
         } catch (publisherError) {
           clearTimeout(timeout2);
@@ -1409,7 +1471,8 @@ export async function GET(request: Request) {
                   contentType: publisherResponse.headers.get('content-type') || '',
                 };
 
-                cache.set(urlParam, { result, expires: Date.now() + CACHE_TTL });
+                cache.set(cacheKeyUrl, { result, expires: Date.now() + CACHE_TTL });
+        { const cp = buildCachedPayload(cacheKeyUrl, result); if (cp) void setCachedExtract(cacheKeyUrl, cp).catch(() => {}); }
                 console.log('[Extract] Success via Readability (Google News unwrapped):', article.title);
                 return finalize(requestId, startedAt, urlParam, result);
               }
@@ -1478,7 +1541,8 @@ export async function GET(request: Request) {
                   contentType: publisherResponse.headers.get('content-type') || '',
                 };
 
-                cache.set(urlParam, { result, expires: Date.now() + CACHE_TTL });
+                cache.set(cacheKeyUrl, { result, expires: Date.now() + CACHE_TTL });
+        { const cp = buildCachedPayload(cacheKeyUrl, result); if (cp) void setCachedExtract(cacheKeyUrl, cp).catch(() => {}); }
                 console.log('[Extract] Success via fallback extraction (Google News unwrapped)');
                 return finalize(requestId, startedAt, urlParam, result);
               }
@@ -1493,7 +1557,7 @@ export async function GET(request: Request) {
                 status: "no_reader",
                 contentType: publisherResponse.headers.get('content-type') || '',
               };
-              cache.set(urlParam, { result, expires: Date.now() + (2 * 60 * 1000) });
+              cache.set(cacheKeyUrl, { result, expires: Date.now() + (2 * 60 * 1000) });
               return finalize(requestId, startedAt, urlParam, result);
             } catch (publisherError) {
               clearTimeout(timeout2);
@@ -1695,7 +1759,8 @@ export async function GET(request: Request) {
                     contentType: publisherResponse.headers.get('content-type') || '',
                   };
 
-                  cache.set(urlParam, { result, expires: Date.now() + CACHE_TTL });
+                  cache.set(cacheKeyUrl, { result, expires: Date.now() + CACHE_TTL });
+        { const cp = buildCachedPayload(cacheKeyUrl, result); if (cp) void setCachedExtract(cacheKeyUrl, cp).catch(() => {}); }
                   console.log('[Extract] Success via Readability (Google News unwrapped via fallback):', article.title);
                   return finalize(requestId, startedAt, urlParam, result);
                 }
@@ -1764,7 +1829,8 @@ export async function GET(request: Request) {
                     contentType: publisherResponse.headers.get('content-type') || '',
                   };
 
-                  cache.set(urlParam, { result, expires: Date.now() + CACHE_TTL });
+                  cache.set(cacheKeyUrl, { result, expires: Date.now() + CACHE_TTL });
+        { const cp = buildCachedPayload(cacheKeyUrl, result); if (cp) void setCachedExtract(cacheKeyUrl, cp).catch(() => {}); }
                   console.log('[Extract] Success via fallback extraction (Google News unwrapped via fallback)');
                   return finalize(requestId, startedAt, urlParam, result);
                 }
@@ -1779,7 +1845,7 @@ export async function GET(request: Request) {
                   status: "no_reader",
                   contentType: publisherResponse.headers.get('content-type') || '',
                 };
-                cache.set(urlParam, { result, expires: Date.now() + (2 * 60 * 1000) });
+                cache.set(cacheKeyUrl, { result, expires: Date.now() + (2 * 60 * 1000) });
                 return finalize(requestId, startedAt, urlParam, result);
               } catch (publisherError) {
                 clearTimeout(timeout2);
@@ -2176,7 +2242,8 @@ export async function GET(request: Request) {
               playwrightUsed: true,
             };
 
-            cache.set(urlParam, { result, expires: Date.now() + CACHE_TTL });
+            cache.set(cacheKeyUrl, { result, expires: Date.now() + CACHE_TTL });
+        { const cp = buildCachedPayload(cacheKeyUrl, result); if (cp) void setCachedExtract(cacheKeyUrl, cp).catch(() => {}); }
             console.log('[Extract] Success via Readability (Playwright retry):', pwArticle.title);
             return finalize(requestId, startedAt, urlParam, result);
           }
@@ -2245,7 +2312,8 @@ export async function GET(request: Request) {
               playwrightUsed: true,
             };
 
-            cache.set(urlParam, { result, expires: Date.now() + CACHE_TTL });
+            cache.set(cacheKeyUrl, { result, expires: Date.now() + CACHE_TTL });
+        { const cp = buildCachedPayload(cacheKeyUrl, result); if (cp) void setCachedExtract(cacheKeyUrl, cp).catch(() => {}); }
             console.log('[Extract] Success via fallback extraction (Playwright retry)');
             return finalize(requestId, startedAt, urlParam, result);
           }
@@ -2402,7 +2470,8 @@ export async function GET(request: Request) {
         }
 
         // Cache successful result
-        cache.set(urlParam, { result, expires: Date.now() + CACHE_TTL });
+        cache.set(cacheKeyUrl, { result, expires: Date.now() + CACHE_TTL });
+        { const cp = buildCachedPayload(cacheKeyUrl, result); if (cp) void setCachedExtract(cacheKeyUrl, cp).catch(() => {}); }
 
         console.log('[Extract] Success via Readability:', article.title, playwrightUsed ? '(Playwright)' : '(fetch)');
 
@@ -2480,7 +2549,8 @@ export async function GET(request: Request) {
         };
 
         // Cache successful result
-        cache.set(urlParam, { result, expires: Date.now() + CACHE_TTL });
+        cache.set(cacheKeyUrl, { result, expires: Date.now() + CACHE_TTL });
+        { const cp = buildCachedPayload(cacheKeyUrl, result); if (cp) void setCachedExtract(cacheKeyUrl, cp).catch(() => {}); }
 
         console.log('[Extract] Success via fallback extraction', playwrightUsed ? '(Playwright)' : '(fetch)');
 
@@ -2502,7 +2572,7 @@ export async function GET(request: Request) {
       };
 
       // Cache failure too (shorter TTL)
-      cache.set(urlParam, { result, expires: Date.now() + (2 * 60 * 1000) });
+      cache.set(cacheKeyUrl, { result, expires: Date.now() + (2 * 60 * 1000) });
 
       return finalize(requestId, startedAt, urlParam, result);
 

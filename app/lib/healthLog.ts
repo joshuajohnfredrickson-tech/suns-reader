@@ -83,7 +83,10 @@ export interface ExtractHealthFields extends HealthEventBase {
   qualityGatePassed?: boolean;
   playwrightUsed?: boolean;
   cacheStatus: CacheStatus;
+  cacheLayer?: 'l1' | 'l2';
   cacheTtlSec?: number;
+  cacheAgeSec?: number;
+  computeMs?: number;
   errorReason?: HealthErrorReason;
   errorMessage?: string;
 }
@@ -237,7 +240,10 @@ export function healthLog(event: HealthEvent): void {
         if (e.qualityGatePassed !== undefined) entry.qualityGatePassed = e.qualityGatePassed;
         if (e.playwrightUsed !== undefined) entry.playwrightUsed = e.playwrightUsed;
         entry.cacheStatus = e.cacheStatus;
+        if (e.cacheLayer) entry.cacheLayer = e.cacheLayer;
         if (e.cacheTtlSec !== undefined) entry.cacheTtlSec = e.cacheTtlSec;
+        if (e.cacheAgeSec !== undefined) entry.cacheAgeSec = e.cacheAgeSec;
+        if (e.computeMs !== undefined) entry.computeMs = e.computeMs;
         if (!e.ok) {
           if (e.errorReason) entry.errorReason = e.errorReason;
           if (e.errorMessage) entry.errorMessage = truncate(e.errorMessage, 300);
