@@ -22,6 +22,8 @@ export function MarketingLayout({ children }: MarketingLayoutProps) {
             <li>
               <Link
                 href="/app"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-zinc-600 dark:text-zinc-400 hover:text-foreground transition-colors"
               >
                 App
@@ -59,6 +61,8 @@ export function MarketingLayout({ children }: MarketingLayoutProps) {
             <li>
               <Link
                 href="/app"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="hover:text-foreground transition-colors"
               >
                 App

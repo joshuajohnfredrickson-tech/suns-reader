@@ -36,8 +36,8 @@ export default function AboutPage() {
       <div className="flex flex-col gap-7 sm:gap-10">
         {/* Section: What is Suns Reader? */}
         <section>
-          <h2 className="text-xl font-semibold tracking-tight leading-[1.15]">What is Suns Reader?</h2>
-          <div className="mt-3.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
+          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">What is Suns Reader?</h2>
+          <div className="mt-4 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-500 dark:text-zinc-400">
             <p>
               Suns Reader is a free news reader for Phoenix Suns fans. It gathers the latest Suns coverage from dozens of outlets into one clean, easy-to-read feed.
             </p>
@@ -52,8 +52,8 @@ export default function AboutPage() {
 
         {/* Section: Why it exists */}
         <section>
-          <h2 className="text-xl font-semibold tracking-tight leading-[1.15]">Why it exists</h2>
-          <div className="mt-3.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
+          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Why it exists</h2>
+          <div className="mt-4 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-500 dark:text-zinc-400">
             <p>
               Following the Suns online usually means jumping between search results, social feeds, and multiple websites — often wading through duplicate articles, clickbait, betting sites, fantasy content, and SEO noise just to find real coverage.
             </p>
@@ -71,8 +71,8 @@ export default function AboutPage() {
 
         {/* Section: Built by a Suns fan */}
         <section>
-          <h2 className="text-xl font-semibold tracking-tight leading-[1.15]">Built by a Suns fan</h2>
-          <div className="mt-3.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
+          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Built by a Suns fan</h2>
+          <div className="mt-4 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-500 dark:text-zinc-400">
             <p>
               I've followed the Suns since the 1988–89 season, from the Tom Chambers era through the Barkley Finals run, the Steve Nash "Seven Seconds or Less" years, and today's Booker era.
             </p>
@@ -87,8 +87,8 @@ export default function AboutPage() {
 
         {/* Section: How it works */}
         <section>
-          <h2 className="text-xl font-semibold tracking-tight leading-[1.15]">How it works</h2>
-          <div className="mt-3.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
+          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">How it works</h2>
+          <div className="mt-4 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-500 dark:text-zinc-400">
             <p>
               Suns Reader monitors RSS feeds and sports news sources covering the Suns and displays recent articles in a chronological feed.
             </p>
@@ -103,8 +103,8 @@ export default function AboutPage() {
 
         {/* Section: Support Suns Reader */}
         <section>
-          <h2 className="text-xl font-semibold tracking-tight leading-[1.15]">Support Suns Reader</h2>
-          <div className="mt-3.5 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-600 dark:text-zinc-300">
+          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Support Suns Reader</h2>
+          <div className="mt-4 space-y-3.5 text-base leading-[1.6] sm:text-lg sm:leading-[1.65] text-zinc-500 dark:text-zinc-400">
             <p>
               Suns Reader is free to use and will stay that way.
             </p>
