@@ -7,8 +7,8 @@ export default function AboutPage() {
   return (
     <div className="max-w-2xl mx-auto px-6">
       {/* Page Header */}
-      <header className="pt-6 pb-7 sm:pt-8 sm:pb-10">
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-5">About Suns Reader</h1>
+      <header className="pt-6 sm:pt-8">
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-7 sm:mb-10">About Suns Reader</h1>
       </header>
 
       {/* Content sections */}
