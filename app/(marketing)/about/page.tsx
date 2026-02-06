@@ -9,107 +9,21 @@ export default function AboutPage() {
       {/* Page Header */}
       <header className="pt-6 pb-7 sm:pt-8 sm:pb-10">
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-5">About Suns Reader</h1>
-        <a
-          href="https://buymeacoffee.com/sunsreader"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-accent font-medium hover:underline transition-colors"
-        >
-          <span>Support Suns Reader</span>
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-            />
-          </svg>
-        </a>
       </header>
 
       {/* Content sections */}
       <div className="flex flex-col gap-7 sm:gap-10">
-        {/* Section: What is Suns Reader? */}
+        {/* Section: About Suns Reader */}
         <section>
-          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">What is Suns Reader?</h2>
-          <div className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground">
+          <div className="space-y-3.5 text-base leading-[1.6] text-foreground">
             <p>
-              Suns Reader is a free news reader for Phoenix Suns fans. It gathers the latest Suns coverage from dozens of outlets into one clean, easy-to-read feed.
+              Suns Reader is an independent project built by a Phoenix Suns fan who wanted an easier way to keep up with team coverage without jumping between dozens of sites, social feeds, and apps.
             </p>
             <p>
-              No accounts, no ads, and no subscriptions — just Suns coverage in one place.
+              Instead of searching for news across the web, Suns Reader brings recent Suns coverage into one clean, readable feed so fans can spend less time hunting for articles and more time enjoying them.
             </p>
             <p>
-              Built by a longtime Suns fan in Phoenix.
-            </p>
-          </div>
-        </section>
-
-        {/* Section: Why it exists */}
-        <section>
-          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Why it exists</h2>
-          <div className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground">
-            <p>
-              Following the Suns online usually means jumping between search results, social feeds, and multiple websites — often wading through duplicate articles, clickbait, betting sites, fantasy content, and SEO noise just to find real coverage.
-            </p>
-            <p>
-              Suns Reader was built to make catching up on Suns news quick and clutter-free.
-            </p>
-            <p>
-              I originally built it just for myself — partly to scratch a personal itch and partly to see if I could actually build something like this.
-            </p>
-            <p>
-              After using it a few times a day, it became clear it genuinely made following the team easier, so I decided to share it with other Suns fans too.
-            </p>
-          </div>
-        </section>
-
-        {/* Section: Built by a Suns fan */}
-        <section>
-          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Built by a Suns fan</h2>
-          <div className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground">
-            <p>
-              I've followed the Suns since the 1988–89 season, from the Tom Chambers era through the Barkley Finals run, the Steve Nash "Seven Seconds or Less" years, and today's Booker era.
-            </p>
-            <p>
-              Like many fans, watching the games is only part of it — I also enjoy digging into box scores, reading recaps, and following Suns coverage throughout the season.
-            </p>
-            <p>
-              Suns Reader is simply a tool built by a longtime fan who wanted a better way to keep up with the team.
-            </p>
-          </div>
-        </section>
-
-        {/* Section: How it works */}
-        <section>
-          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">How it works</h2>
-          <div className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground">
-            <p>
-              Suns Reader monitors RSS feeds and sports news sources covering the Suns and displays recent articles in a chronological feed.
-            </p>
-            <p>
-              When you open an article, it loads in a clean reading view without pop-ups or autoplay videos, while still allowing you to open the original source if you prefer.
-            </p>
-            <p>
-              You can also customize your feed by choosing trusted sources while discovering new perspectives in the Discovery tab.
-            </p>
-          </div>
-        </section>
-
-        {/* Section: Support Suns Reader */}
-        <section>
-          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Support Suns Reader</h2>
-          <div className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground">
-            <p>
-              Suns Reader is free to use and will stay that way.
-            </p>
-            <p>
-              If you use it regularly and find it helpful, donations help cover hosting costs and the time needed to keep the project running and improving.
+              Enjoying Suns Reader? You can help support the project here.
             </p>
             <a
               href="https://buymeacoffee.com/sunsreader"
@@ -132,6 +46,92 @@ export default function AboutPage() {
                 />
               </svg>
             </a>
+          </div>
+        </section>
+
+        {/* Section: Why this exists */}
+        <section>
+          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Why this exists</h2>
+          <div className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground">
+            <p>
+              Following the Suns often means dealing with pop-ups, autoplay videos, and cluttered pages just to read a single article.
+            </p>
+            <p>
+              Suns Reader focuses on one simple goal: make Suns coverage easier to read and easier to follow.
+            </p>
+            <p>
+              No clickbait tricks. No algorithm games. Just Suns coverage in a cleaner format.
+            </p>
+          </div>
+        </section>
+
+        {/* Section: Who runs this? */}
+        <section>
+          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Who runs this?</h2>
+          <div className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground">
+            <p>
+              Suns Reader isn't run by a media company or advertising network. It's a side project built and maintained independently by a Suns fan.
+            </p>
+            <p>
+              The goal isn't to build a media empire — just to make something useful for the Suns community.
+            </p>
+          </div>
+        </section>
+
+        {/* Section: Is Suns Reader free? */}
+        <section>
+          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Is Suns Reader free?</h2>
+          <div className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground">
+            <p>
+              Yes. Suns Reader is free to use.
+            </p>
+            <p>
+              Running the app does have hosting and infrastructure costs, so optional donations help keep the project running, but nothing is locked behind a paywall.
+            </p>
+            <p>
+              If Suns Reader makes it easier to follow the Suns, you can help support ongoing development here.
+            </p>
+            <a
+              href="https://buymeacoffee.com/sunsreader"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-accent font-medium hover:underline transition-colors"
+            >
+              <span>Support Suns Reader</span>
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
+              </svg>
+            </a>
+          </div>
+        </section>
+
+        {/* Section: Privacy & data */}
+        <section>
+          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Privacy & data</h2>
+          <div className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground">
+            <p>
+              Suns Reader doesn't require accounts and doesn't sell personal data. The goal is simply to make reading Suns coverage easier — not to track users.
+            </p>
+          </div>
+        </section>
+
+        {/* Section: What's next? */}
+        <section>
+          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">What's next?</h2>
+          <div className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground">
+            <p>
+              Suns Reader will continue improving over time based on feedback and usage. The focus will stay the same: keep it simple, fast, and useful for Suns fans.
+            </p>
           </div>
         </section>
       </div>
