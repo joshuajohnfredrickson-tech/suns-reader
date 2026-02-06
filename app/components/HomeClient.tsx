@@ -102,7 +102,7 @@ export default function HomeClient() {
     setToast({ message, visible: true });
     toastTimeoutRef.current = setTimeout(() => {
       setToast(prev => ({ ...prev, visible: false }));
-    }, 1000);
+    }, 3500);
   }, []);
 
   useEffect(() => {
