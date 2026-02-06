@@ -38,10 +38,10 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
         </header>
 
         {/* Content sections */}
-        <div className="flex flex-col gap-7 sm:gap-10">
+        <div className="flex flex-col gap-10 sm:gap-14">
           {/* Section 1: Aggregation - text left, image right on desktop */}
           <section data-debug-section="1-aggregation">
-            <div className="flex flex-col sm:flex-row sm:items-start sm:gap-8">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-10">
               <div className="flex-1">
                 <h2 data-debug-h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Bring the news to you.</h2>
                 <p data-debug-subhead className="mt-1 text-lg text-foreground/80 leading-snug">
@@ -59,13 +59,13 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
                   </p>
                 </div>
               </div>
-              <div className="mt-6 sm:mt-0 sm:w-[180px] sm:flex-shrink-0">
+              <div className="mt-6 sm:mt-0 flex-1 flex justify-center sm:justify-end">
                 <Image
                   src="/marketing/feed.png"
                   alt="Suns Reader feed showing latest articles"
-                  width={180}
-                  height={390}
-                  className="rounded-xl shadow-lg mx-auto sm:mx-0"
+                  width={280}
+                  height={607}
+                  className="rounded-xl shadow-lg max-w-[280px]"
                 />
               </div>
             </div>
@@ -73,7 +73,7 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
 
           {/* Section 2: Curation - image left, text right on desktop */}
           <section data-debug-section="2-curation">
-            <div className="flex flex-col sm:flex-row-reverse sm:items-start sm:gap-8">
+            <div className="flex flex-col sm:flex-row-reverse sm:items-center sm:gap-10">
               <div className="flex-1">
                 <h2 data-debug-h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Shape your own Suns feed.</h2>
                 <p data-debug-subhead className="mt-1 text-lg text-foreground/80 leading-snug">
@@ -94,13 +94,13 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
                   </p>
                 </div>
               </div>
-              <div className="mt-6 sm:mt-0 sm:w-[180px] sm:flex-shrink-0">
+              <div className="mt-6 sm:mt-0 flex-1 flex justify-center sm:justify-start">
                 <Image
                   src="/marketing/sources.png"
                   alt="Suns Reader trusted sources settings"
-                  width={180}
-                  height={390}
-                  className="rounded-xl shadow-lg mx-auto sm:mx-0"
+                  width={280}
+                  height={607}
+                  className="rounded-xl shadow-lg max-w-[280px]"
                 />
               </div>
             </div>
@@ -108,7 +108,7 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
 
           {/* Section 3: Reader - text left, image right on desktop */}
           <section data-debug-section="3-reader">
-            <div className="flex flex-col sm:flex-row sm:items-start sm:gap-8">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-10">
               <div className="flex-1">
                 <h2 data-debug-h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">A better way to read.</h2>
                 <p data-debug-subhead className="mt-1 text-lg text-foreground/80 leading-snug">
@@ -126,13 +126,13 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
                   </p>
                 </div>
               </div>
-              <div className="mt-6 sm:mt-0 sm:w-[180px] sm:flex-shrink-0">
+              <div className="mt-6 sm:mt-0 flex-1 flex justify-center sm:justify-end">
                 <Image
                   src="/marketing/reader.png"
                   alt="Suns Reader article view"
-                  width={180}
-                  height={390}
-                  className="rounded-xl shadow-lg mx-auto sm:mx-0"
+                  width={280}
+                  height={607}
+                  className="rounded-xl shadow-lg max-w-[280px]"
                 />
               </div>
             </div>
