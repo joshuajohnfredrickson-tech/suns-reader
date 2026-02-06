@@ -65,7 +65,7 @@ function SettingsContent() {
     setToast({ message, visible: true });
     setTimeout(() => {
       setToast(prev => ({ ...prev, visible: false }));
-    }, 3500);
+    }, 2500);
   };
 
   const handleMarkAllAsRead = () => {
