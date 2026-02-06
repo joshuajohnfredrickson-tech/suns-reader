@@ -125,7 +125,8 @@ function extractStatusToTelemetryReason(
 
 /** Extra context for health telemetry on extract */
 interface ExtractHealthExtra {
-  cacheStatus?: 'hit' | 'miss' | 'none';
+  cacheStatus?: 'hit' | 'miss' | 'bypass' | 'none';
+  cacheMode?: 'normal' | 'refresh_bypass';
   cacheLayer?: 'l1' | 'l2';
   cacheAgeSec?: number;
   computeMs?: number;
@@ -145,7 +146,8 @@ function finalize(
   payload: ExtractResult,
   telemetryReqId?: string,
   httpStatus?: number,
-  healthExtra?: ExtractHealthExtra
+  healthExtra?: ExtractHealthExtra,
+  isRefreshBypass?: boolean
 ): NextResponse<ExtractResult> {
   // Compute metrics from payload
   const host = (() => {
@@ -203,7 +205,8 @@ function finalize(
   const derivedBlocked = healthExtra?.blockedDetected ?? (statusStr === 'blocked');
   const derivedReadabilityOk = healthExtra?.readabilityOk ?? (payload.success && titleLength > 0 && textLength > 0);
   const derivedQualityGate = healthExtra?.qualityGatePassed ?? (payload.success && titleLength >= 8 && textLength >= 400);
-  const derivedCacheStatus = healthExtra?.cacheStatus ?? 'miss';
+  const derivedCacheStatus = healthExtra?.cacheStatus ?? (isRefreshBypass ? 'bypass' : 'miss');
+  const derivedCacheMode = healthExtra?.cacheMode ?? (isRefreshBypass ? 'refresh_bypass' : 'normal');
 
   const errorInfo = payload.success ? {} : normalizeError(payload.error, httpStatus);
   healthLog({
@@ -222,6 +225,7 @@ function finalize(
     qualityGatePassed: derivedQualityGate,
     playwrightUsed: payload.playwrightUsed || false,
     cacheStatus: derivedCacheStatus,
+    cacheMode: derivedCacheMode,
     cacheLayer: healthExtra?.cacheLayer,
     cacheTtlSec: derivedCacheStatus === 'hit'
       ? (healthExtra?.cacheLayer === 'l2' ? KV_TTL_SEC : Math.round(CACHE_TTL / 1000))
@@ -868,18 +872,20 @@ export async function GET(request: Request) {
     // Compute normalized URL for cache keying (L1 + L2)
     const cacheKeyUrl = normalizeUrl(urlParam);
 
-    // L1: Check in-memory cache (skip in debug mode)
-    if (!debugMode) {
+    // L1: Check in-memory cache (skip in debug or refresh mode)
+    if (!debugMode && !refreshMode) {
       const cached = cache.get(cacheKeyUrl);
       if (cached && Date.now() < cached.expires) {
         console.log('[Extract] L1 cache hit');
-        return finalize(requestId, startedAt, urlParam, cached.result, undefined, undefined, { cacheStatus: 'hit', cacheLayer: 'l1' });
+        return finalize(requestId, startedAt, urlParam, cached.result, undefined, undefined, { cacheStatus: 'hit', cacheLayer: 'l1', cacheMode: 'normal' });
       }
-    } else {
+    } else if (debugMode) {
       console.log('[Extract] Skipping cache (debug mode)');
+    } else if (refreshMode) {
+      console.log('[Extract] Skipping cache (refresh bypass)');
     }
 
-    // L2: Check KV cache (skip in debug mode or refresh mode)
+    // L2: Check KV cache (skip in debug or refresh mode)
     if (!debugMode && !refreshMode) {
       try {
         const kvCached = await getCachedExtract(cacheKeyUrl);
@@ -907,6 +913,7 @@ export async function GET(request: Request) {
 
           return finalize(requestId, startedAt, urlParam, kvResult, undefined, undefined, {
             cacheStatus: 'hit',
+            cacheMode: 'normal',
             cacheLayer: 'l2',
             cacheAgeSec,
           });
@@ -1100,7 +1107,7 @@ export async function GET(request: Request) {
               resolvedUrl: publisherUrlFromRedirect,
               status: "no_reader",
             };
-            return finalize(requestId, startedAt, urlParam, result);
+            return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
           }
 
           const publisherHtml = await publisherResponse.text();
@@ -1142,7 +1149,7 @@ export async function GET(request: Request) {
                 error: "ESPN blocks reader mode",
               };
               console.log('[Extract] ESPN shell result rejected (Google News redirect unwrap)');
-              return finalize(requestId, startedAt, urlParam, result);
+              return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
             }
 
             // Detect JSON error payload disguised as text
@@ -1181,7 +1188,7 @@ export async function GET(request: Request) {
                 url: finalPublisherUrl
               });
 
-              return finalize(requestId, startedAt, urlParam, result);
+              return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
             }
 
             // Quality gate passed
@@ -1204,7 +1211,7 @@ export async function GET(request: Request) {
             cache.set(cacheKeyUrl, { result, expires: Date.now() + CACHE_TTL });
         { const cp = buildCachedPayload(cacheKeyUrl, result); if (cp) void setCachedExtract(cacheKeyUrl, cp).catch(() => {}); }
             console.log('[Extract] Success via Readability (redirect unwrap):', article.title);
-            return finalize(requestId, startedAt, urlParam, result);
+            return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
           }
 
           // Readability failed, try fallback extraction
@@ -1254,7 +1261,7 @@ export async function GET(request: Request) {
                 url: finalPublisherUrl
               });
 
-              return finalize(requestId, startedAt, urlParam, result);
+              return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
             }
 
             // Quality gate passed
@@ -1274,7 +1281,7 @@ export async function GET(request: Request) {
             cache.set(cacheKeyUrl, { result, expires: Date.now() + CACHE_TTL });
         { const cp = buildCachedPayload(cacheKeyUrl, result); if (cp) void setCachedExtract(cacheKeyUrl, cp).catch(() => {}); }
             console.log('[Extract] Success via fallback extraction (redirect unwrap)');
-            return finalize(requestId, startedAt, urlParam, result);
+            return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
           }
 
           // All extraction failed
@@ -1288,7 +1295,7 @@ export async function GET(request: Request) {
             contentType: publisherResponse.headers.get('content-type') || '',
           };
           cache.set(cacheKeyUrl, { result, expires: Date.now() + (2 * 60 * 1000) });
-          return finalize(requestId, startedAt, urlParam, result);
+          return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
         } catch (publisherError) {
           clearTimeout(timeout2);
 
@@ -1308,7 +1315,7 @@ export async function GET(request: Request) {
             fetchedUrl: normalizedUrl,
             resolvedUrl: publisherUrlFromRedirect,
           };
-          return finalize(requestId, startedAt, urlParam, result);
+          return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
         }
       }
 
@@ -1370,7 +1377,7 @@ export async function GET(request: Request) {
                   resolvedUrl: publisherUrl,
                   status: "no_reader",
                 };
-                return finalize(requestId, startedAt, urlParam, result);
+                return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
               }
 
               const publisherHtml = await publisherResponse.text();
@@ -1412,7 +1419,7 @@ export async function GET(request: Request) {
                     error: "ESPN blocks reader mode",
                   };
                   console.log('[Extract] ESPN shell result rejected (Google News HTML parsing)');
-                  return finalize(requestId, startedAt, urlParam, result);
+                  return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
                 }
 
                 // Detect JSON error payload disguised as text
@@ -1451,7 +1458,7 @@ export async function GET(request: Request) {
                     url: finalPublisherUrl
                   });
 
-                  return finalize(requestId, startedAt, urlParam, result);
+                  return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
                 }
 
                 // Quality gate passed
@@ -1474,7 +1481,7 @@ export async function GET(request: Request) {
                 cache.set(cacheKeyUrl, { result, expires: Date.now() + CACHE_TTL });
         { const cp = buildCachedPayload(cacheKeyUrl, result); if (cp) void setCachedExtract(cacheKeyUrl, cp).catch(() => {}); }
                 console.log('[Extract] Success via Readability (Google News unwrapped):', article.title);
-                return finalize(requestId, startedAt, urlParam, result);
+                return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
               }
 
               // Readability failed, try fallback
@@ -1524,7 +1531,7 @@ export async function GET(request: Request) {
                     url: finalPublisherUrl
                   });
 
-                  return finalize(requestId, startedAt, urlParam, result);
+                  return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
                 }
 
                 // Quality gate passed
@@ -1544,7 +1551,7 @@ export async function GET(request: Request) {
                 cache.set(cacheKeyUrl, { result, expires: Date.now() + CACHE_TTL });
         { const cp = buildCachedPayload(cacheKeyUrl, result); if (cp) void setCachedExtract(cacheKeyUrl, cp).catch(() => {}); }
                 console.log('[Extract] Success via fallback extraction (Google News unwrapped)');
-                return finalize(requestId, startedAt, urlParam, result);
+                return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
               }
 
               // All extraction failed
@@ -1558,7 +1565,7 @@ export async function GET(request: Request) {
                 contentType: publisherResponse.headers.get('content-type') || '',
               };
               cache.set(cacheKeyUrl, { result, expires: Date.now() + (2 * 60 * 1000) });
-              return finalize(requestId, startedAt, urlParam, result);
+              return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
             } catch (publisherError) {
               clearTimeout(timeout2);
 
@@ -1578,7 +1585,7 @@ export async function GET(request: Request) {
                 fetchedUrl: normalizedUrl,
                 resolvedUrl: publisherUrl,
               };
-              return finalize(requestId, startedAt, urlParam, result);
+              return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
             }
           } else {
             // Fallback A: Try fetching with output=1 parameter for simplified HTML
@@ -1658,7 +1665,7 @@ export async function GET(request: Request) {
                     resolvedUrl: publisherUrlFromFallback,
                     status: "no_reader",
                   };
-                  return finalize(requestId, startedAt, urlParam, result);
+                  return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
                 }
 
                 const publisherHtml = await publisherResponse.text();
@@ -1700,7 +1707,7 @@ export async function GET(request: Request) {
                       error: "ESPN blocks reader mode",
                     };
                     console.log('[Extract] ESPN shell result rejected (Google News fallback unwrap)');
-                    return finalize(requestId, startedAt, urlParam, result);
+                    return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
                   }
 
                   // Detect JSON error payload disguised as text
@@ -1739,7 +1746,7 @@ export async function GET(request: Request) {
                       url: finalPublisherUrl
                     });
 
-                    return finalize(requestId, startedAt, urlParam, result);
+                    return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
                   }
 
                   // Quality gate passed
@@ -1762,7 +1769,7 @@ export async function GET(request: Request) {
                   cache.set(cacheKeyUrl, { result, expires: Date.now() + CACHE_TTL });
         { const cp = buildCachedPayload(cacheKeyUrl, result); if (cp) void setCachedExtract(cacheKeyUrl, cp).catch(() => {}); }
                   console.log('[Extract] Success via Readability (Google News unwrapped via fallback):', article.title);
-                  return finalize(requestId, startedAt, urlParam, result);
+                  return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
                 }
 
                 // Readability failed, try fallback extraction
@@ -1812,7 +1819,7 @@ export async function GET(request: Request) {
                       url: finalPublisherUrl
                     });
 
-                    return finalize(requestId, startedAt, urlParam, result);
+                    return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
                   }
 
                   // Quality gate passed
@@ -1832,7 +1839,7 @@ export async function GET(request: Request) {
                   cache.set(cacheKeyUrl, { result, expires: Date.now() + CACHE_TTL });
         { const cp = buildCachedPayload(cacheKeyUrl, result); if (cp) void setCachedExtract(cacheKeyUrl, cp).catch(() => {}); }
                   console.log('[Extract] Success via fallback extraction (Google News unwrapped via fallback)');
-                  return finalize(requestId, startedAt, urlParam, result);
+                  return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
                 }
 
                 // All extraction failed
@@ -1846,7 +1853,7 @@ export async function GET(request: Request) {
                   contentType: publisherResponse.headers.get('content-type') || '',
                 };
                 cache.set(cacheKeyUrl, { result, expires: Date.now() + (2 * 60 * 1000) });
-                return finalize(requestId, startedAt, urlParam, result);
+                return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
               } catch (publisherError) {
                 clearTimeout(timeout2);
 
@@ -1866,7 +1873,7 @@ export async function GET(request: Request) {
                   fetchedUrl: normalizedUrl,
                   resolvedUrl: publisherUrlFromFallback,
                 };
-                return finalize(requestId, startedAt, urlParam, result);
+                return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
               }
             }
 
@@ -1891,7 +1898,7 @@ export async function GET(request: Request) {
               fetchedUrl: normalizedUrl,
               resolvedUrl: googleResponse.url,
             };
-            return finalize(requestId, startedAt, urlParam, result);
+            return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
           }
         } else {
           const result: ExtractResult = {
@@ -1902,7 +1909,7 @@ export async function GET(request: Request) {
             resolvedUrl: googleResponse.url,
             status: googleResponse.status,
           };
-          return finalize(requestId, startedAt, urlParam, result);
+          return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
         }
       } catch (googleError) {
         clearTimeout(timeout1);
@@ -1922,7 +1929,7 @@ export async function GET(request: Request) {
           error: errorMessage,
           fetchedUrl: normalizedUrl,
         };
-        return finalize(requestId, startedAt, urlParam, result);
+        return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
       }
     }
 
@@ -1979,7 +1986,7 @@ export async function GET(request: Request) {
               contentType: contentTypeHeader,
               playwrightUsed: false,
             };
-            return finalize(requestId, startedAt, urlParam, result);
+            return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
           }
 
           html = playwrightResult.html;
@@ -2025,7 +2032,7 @@ export async function GET(request: Request) {
             contentType: contentTypeHeader,
             playwrightUsed: true,
           };
-          return finalize(requestId, startedAt, urlParam, result);
+          return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
         }
       } else if (!response.ok) {
         const result: ExtractResult = {
@@ -2038,7 +2045,7 @@ export async function GET(request: Request) {
           contentType: contentTypeHeader,
           playwrightUsed: false,
         };
-        return finalize(requestId, startedAt, urlParam, result);
+        return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
       } else {
         // Normal successful response, read HTML
         // Check content type
@@ -2053,7 +2060,7 @@ export async function GET(request: Request) {
             contentType: contentTypeHeader,
             playwrightUsed: false,
           };
-          return finalize(requestId, startedAt, urlParam, result);
+          return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
         }
 
         // Read response with size limit (2MB)
@@ -2069,7 +2076,7 @@ export async function GET(request: Request) {
             contentType: contentTypeHeader,
             playwrightUsed: false,
           };
-          return finalize(requestId, startedAt, urlParam, result);
+          return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
         }
       }
 
@@ -2181,7 +2188,7 @@ export async function GET(request: Request) {
                 error: "ESPN blocks reader mode",
               };
               console.log('[Extract] ESPN shell result rejected (Playwright retry)');
-              return finalize(requestId, startedAt, urlParam, result);
+              return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
             }
 
             // Detect JSON error payload disguised as text
@@ -2221,7 +2228,7 @@ export async function GET(request: Request) {
                 url: urlParam
               });
 
-              return finalize(requestId, startedAt, urlParam, result);
+              return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
             }
 
             // Quality gate passed
@@ -2245,7 +2252,7 @@ export async function GET(request: Request) {
             cache.set(cacheKeyUrl, { result, expires: Date.now() + CACHE_TTL });
         { const cp = buildCachedPayload(cacheKeyUrl, result); if (cp) void setCachedExtract(cacheKeyUrl, cp).catch(() => {}); }
             console.log('[Extract] Success via Readability (Playwright retry):', pwArticle.title);
-            return finalize(requestId, startedAt, urlParam, result);
+            return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
           }
 
           // Playwright also failed to extract, try fallback
@@ -2294,7 +2301,7 @@ export async function GET(request: Request) {
                 url: urlParam
               });
 
-              return finalize(requestId, startedAt, urlParam, result);
+              return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
             }
 
             // Quality gate passed
@@ -2315,7 +2322,7 @@ export async function GET(request: Request) {
             cache.set(cacheKeyUrl, { result, expires: Date.now() + CACHE_TTL });
         { const cp = buildCachedPayload(cacheKeyUrl, result); if (cp) void setCachedExtract(cacheKeyUrl, cp).catch(() => {}); }
             console.log('[Extract] Success via fallback extraction (Playwright retry)');
-            return finalize(requestId, startedAt, urlParam, result);
+            return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
           }
 
             // ESPN with no extractable content
@@ -2352,7 +2359,7 @@ export async function GET(request: Request) {
               resolvedUrl: finalUrl,
               playwrightUsed: true,
             };
-            return finalize(requestId, startedAt, urlParam, result);
+            return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
           }
 
           // Continue with original article result or fallback below for non-ESPN
@@ -2395,7 +2402,7 @@ export async function GET(request: Request) {
             error: "ESPN blocks reader mode",
           };
           console.log('[Extract] ESPN shell result rejected (before quality gate)');
-          return finalize(requestId, startedAt, urlParam, result);
+          return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
         }
 
         // Detect JSON error payload disguised as text
@@ -2441,7 +2448,7 @@ export async function GET(request: Request) {
             result.debug = debugInfo;
           }
 
-          return finalize(requestId, startedAt, urlParam, result);
+          return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
         }
 
         // Quality gate passed - return success
@@ -2475,7 +2482,7 @@ export async function GET(request: Request) {
 
         console.log('[Extract] Success via Readability:', article.title, playwrightUsed ? '(Playwright)' : '(fetch)');
 
-        return finalize(requestId, startedAt, urlParam, result);
+        return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
       }
 
       // Readability failed, try fallback extraction
@@ -2528,7 +2535,7 @@ export async function GET(request: Request) {
             url: urlParam
           });
 
-          return finalize(requestId, startedAt, urlParam, result);
+          return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
         }
 
         // Quality gate passed
@@ -2554,7 +2561,7 @@ export async function GET(request: Request) {
 
         console.log('[Extract] Success via fallback extraction', playwrightUsed ? '(Playwright)' : '(fetch)');
 
-        return finalize(requestId, startedAt, urlParam, result);
+        return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
       }
 
       // All extraction methods failed
@@ -2574,7 +2581,7 @@ export async function GET(request: Request) {
       // Cache failure too (shorter TTL)
       cache.set(cacheKeyUrl, { result, expires: Date.now() + (2 * 60 * 1000) });
 
-      return finalize(requestId, startedAt, urlParam, result);
+      return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
 
     } catch (fetchError) {
       clearTimeout(timeout);
@@ -2595,7 +2602,7 @@ export async function GET(request: Request) {
         fetchedUrl: urlParam,
       };
 
-      return finalize(requestId, startedAt, urlParam, result);
+      return finalize(requestId, startedAt, urlParam, result, undefined, undefined, undefined, refreshMode);
     }
 
   } catch (error) {

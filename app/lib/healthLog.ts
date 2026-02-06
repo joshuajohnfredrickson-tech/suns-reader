@@ -19,7 +19,8 @@
 
 export type HealthRoute = '/api/search' | '/api/resolve' | '/api/extract';
 export type HealthType = 'search' | 'resolve' | 'extract';
-export type CacheStatus = 'hit' | 'miss' | 'stale' | 'none';
+export type CacheStatus = 'hit' | 'miss' | 'bypass' | 'stale' | 'none';
+export type CacheMode = 'normal' | 'refresh_bypass';
 
 export type HealthErrorReason =
   | 'timeout'
@@ -83,6 +84,7 @@ export interface ExtractHealthFields extends HealthEventBase {
   qualityGatePassed?: boolean;
   playwrightUsed?: boolean;
   cacheStatus: CacheStatus;
+  cacheMode?: CacheMode;
   cacheLayer?: 'l1' | 'l2';
   cacheTtlSec?: number;
   cacheAgeSec?: number;
@@ -240,6 +242,7 @@ export function healthLog(event: HealthEvent): void {
         if (e.qualityGatePassed !== undefined) entry.qualityGatePassed = e.qualityGatePassed;
         if (e.playwrightUsed !== undefined) entry.playwrightUsed = e.playwrightUsed;
         entry.cacheStatus = e.cacheStatus;
+        if (e.cacheMode) entry.cacheMode = e.cacheMode;
         if (e.cacheLayer) entry.cacheLayer = e.cacheLayer;
         if (e.cacheTtlSec !== undefined) entry.cacheTtlSec = e.cacheTtlSec;
         if (e.cacheAgeSec !== undefined) entry.cacheAgeSec = e.cacheAgeSec;
