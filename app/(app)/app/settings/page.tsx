@@ -123,7 +123,7 @@ function SettingsContent() {
 
       {/* Content - scroll container for contained scrolling */}
       <div className="flex-1 overflow-y-auto overscroll-y-contain pt-4 md:flex md:justify-center">
-        <div className="w-full max-w-[420px] pb-12 md:flex-none" style={{ paddingLeft: '24px', paddingRight: '24px' }}>
+        <div className="w-full max-w-[420px] md:flex-none" style={{ paddingLeft: '24px', paddingRight: '24px' }}>
           {/* Trusted Sources Section */}
           <SettingsSection
             title="Trusted Sources"
@@ -258,6 +258,9 @@ function SettingsContent() {
               </button>
             </div>
           </SettingsSection>
+
+          {/* Bottom spacer for scroll breathing room */}
+          <div aria-hidden="true" className="h-10 sm:h-12" />
         </div>
       </div>
 
