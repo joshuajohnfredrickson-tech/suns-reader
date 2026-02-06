@@ -63,9 +63,9 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
                 <Image
                   src="/marketing/feed.png"
                   alt="Suns Reader feed showing latest articles"
-                  width={280}
-                  height={607}
-                  className="rounded-xl shadow-lg max-w-[280px]"
+                  width={250}
+                  height={542}
+                  className="rounded-xl shadow-lg max-w-[250px]"
                 />
               </div>
             </div>
@@ -98,9 +98,9 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
                 <Image
                   src="/marketing/sources.png"
                   alt="Suns Reader trusted sources settings"
-                  width={280}
-                  height={607}
-                  className="rounded-xl shadow-lg max-w-[280px]"
+                  width={250}
+                  height={542}
+                  className="rounded-xl shadow-lg max-w-[250px]"
                 />
               </div>
             </div>
@@ -130,9 +130,9 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
                 <Image
                   src="/marketing/reader.png"
                   alt="Suns Reader article view"
-                  width={280}
-                  height={607}
-                  className="rounded-xl shadow-lg max-w-[280px]"
+                  width={250}
+                  height={542}
+                  className="rounded-xl shadow-lg max-w-[250px]"
                 />
               </div>
             </div>
