@@ -44,10 +44,10 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
             <div className="flex flex-col sm:flex-row sm:items-start sm:gap-10">
               <div className="flex-1">
                 <h2 data-debug-h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Bring the news to you.</h2>
-                <p data-debug-subhead className="mt-1.5 text-xl font-medium text-foreground leading-snug">
+                <p data-debug-subhead className="mt-1.5 mb-5 text-xl sm:text-2xl font-semibold text-foreground leading-snug">
                   The latest Suns coverage is ready when you open the app.
                 </p>
-                <div data-debug-body className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground">
+                <div data-debug-body className="space-y-3.5 text-base leading-[1.6] text-foreground">
                   <p>
                     Dozens of outlets publish Suns news every day. Suns Reader gathers recent articles into one feed so you can see what's new instantly.
                   </p>
@@ -76,10 +76,10 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
             <div className="flex flex-col sm:flex-row-reverse sm:items-center sm:gap-10">
               <div className="flex-1">
                 <h2 data-debug-h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Shape your own Suns feed.</h2>
-                <p data-debug-subhead className="mt-1.5 text-xl font-medium text-foreground leading-snug">
+                <p data-debug-subhead className="mt-1.5 mb-5 text-xl sm:text-2xl font-semibold text-foreground leading-snug">
                   Follow the sources you trust while still discovering new perspectives.
                 </p>
-                <div data-debug-body className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground">
+                <div data-debug-body className="space-y-3.5 text-base leading-[1.6] text-foreground">
                   <p>
                     Suns Reader starts with a trusted set of major outlets, but you're always in control.
                   </p>
@@ -111,10 +111,10 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
             <div className="flex flex-col sm:flex-row sm:items-center sm:gap-10">
               <div className="flex-1">
                 <h2 data-debug-h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">A better way to read.</h2>
-                <p data-debug-subhead className="mt-1.5 text-xl font-medium text-foreground leading-snug">
+                <p data-debug-subhead className="mt-1.5 mb-5 text-xl sm:text-2xl font-semibold text-foreground leading-snug">
                   Articles open in a clean, readable format by default.
                 </p>
-                <div data-debug-body className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground">
+                <div data-debug-body className="space-y-3.5 text-base leading-[1.6] text-foreground">
                   <p>
                     Instead of loading the original site first, Suns Reader opens articles directly in a simple reading view designed for your phone.
                   </p>
@@ -141,10 +141,10 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
           {/* Section 4: Install */}
           <section data-debug-section="4-install">
             <h2 data-debug-h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Use it like an app.</h2>
-            <p data-debug-subhead className="mt-1.5 text-xl font-medium text-foreground leading-snug">
+            <p data-debug-subhead className="mt-1.5 mb-5 text-xl sm:text-2xl font-semibold text-foreground leading-snug">
               Add Suns Reader to your home screen for the best experience.
             </p>
-            <div data-debug-body className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground">
+            <div data-debug-body className="space-y-3.5 text-base leading-[1.6] text-foreground">
               <p>
                 Suns Reader works instantly in your browser, but you can also install it on your phone so it opens just like a normal app.
               </p>
@@ -205,10 +205,10 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
           {/* Section 5: Free / No ads */}
           <section data-debug-section="5-free">
             <h2 data-debug-h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Free to use. No ads.</h2>
-            <p data-debug-subhead className="mt-1.5 text-xl font-medium text-foreground leading-snug">
+            <p data-debug-subhead className="mt-1.5 mb-5 text-xl sm:text-2xl font-semibold text-foreground leading-snug">
               Suns Reader is free and designed purely for a better reading experience.
             </p>
-            <div data-debug-body className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground">
+            <div data-debug-body className="space-y-3.5 text-base leading-[1.6] text-foreground">
               <p>
                 There are no ads, accounts, or subscriptions — just Suns coverage in a clean, simple feed.
               </p>
@@ -221,7 +221,7 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
           {/* Final CTA */}
           <section data-debug-section="6-cta">
             <h2 data-debug-h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Ready to start reading?</h2>
-            <p data-debug-subhead className="mt-1.5 text-xl font-medium text-foreground leading-snug">
+            <p data-debug-subhead className="mt-1.5 mb-5 text-xl sm:text-2xl font-semibold text-foreground leading-snug">
               Open Suns Reader and catch up on the latest Suns coverage.
             </p>
             <Link
