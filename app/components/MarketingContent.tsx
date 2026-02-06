@@ -41,7 +41,7 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
         <div className="flex flex-col gap-10 sm:gap-14">
           {/* Section 1: Aggregation - text left, image right on desktop */}
           <section data-debug-section="1-aggregation">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-10">
+            <div className="flex flex-col sm:flex-row sm:items-start sm:gap-10">
               <div className="flex-1">
                 <h2 data-debug-h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Bring the news to you.</h2>
                 <p data-debug-subhead className="mt-1 text-lg text-foreground/80 leading-snug">
