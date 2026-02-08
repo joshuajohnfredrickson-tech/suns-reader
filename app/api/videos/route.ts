@@ -9,6 +9,25 @@ const SECONDARY_Q = "Suns";
 const PRIMARY_TIMEOUT_MS = 8000;
 const SECONDARY_TIMEOUT_MS = 2500;
 
+// Keywords that qualify a video mentioning "suns" as basketball-related
+const QUALIFYING_KEYWORDS = [
+  "nba",
+  "basketball",
+  "highlights",
+  "recap",
+  "reaction",
+  "analysis",
+  "postgame",
+  "pregame",
+  "interview",
+  "vs",
+  "game",
+  "final",
+  "win",
+  "loss",
+  "lose",
+];
+
 // Per-(query, pageToken) cache
 const cache = new Map<string, { data: any; expires: number }>();
 
@@ -102,7 +121,7 @@ async function fetchYouTubePage(
     `[videos] fetch done q="${q}" items=${(json.items ?? []).length} (${duration}ms)`
   );
 
-  const videos: NormalizedVideo[] = (json.items ?? []).map((item: any) => ({
+  const rawVideos: NormalizedVideo[] = (json.items ?? []).map((item: any) => ({
     id: item.id?.videoId,
     title: item.snippet?.title,
     description: item.snippet?.description,
@@ -114,6 +133,11 @@ async function fetchYouTubePage(
     url: `https://www.youtube.com/watch?v=${item.id?.videoId}`,
   }));
 
+  const videos = filterRelevant(rawVideos);
+  console.log(
+    `[videos] filtered q="${q}" ${rawVideos.length} -> ${videos.length} videos`
+  );
+
   const result: PageResult = {
     videos,
     nextPageToken: json.nextPageToken ?? null,
@@ -122,6 +146,26 @@ async function fetchYouTubePage(
   cache.set(cacheKey, { data: result, expires: Date.now() + CACHE_TTL_MS });
 
   return result;
+}
+
+/**
+ * Filter videos by relevance to Phoenix Suns basketball.
+ * Auto-includes if "phoenix suns" appears in combined text.
+ * Conditionally includes if "suns" appears AND at least one qualifying keyword.
+ * Excludes everything else (astronomy, generic "sun" content, etc.).
+ */
+function filterRelevant(videos: NormalizedVideo[]): NormalizedVideo[] {
+  return videos.filter((v) => {
+    const combined = `${v.title ?? ""} ${v.description ?? ""} ${v.channelTitle ?? ""}`.toLowerCase();
+    if (combined.includes("phoenix suns")) return true;
+    if (
+      combined.includes("suns") &&
+      QUALIFYING_KEYWORDS.some((kw) => combined.includes(kw))
+    ) {
+      return true;
+    }
+    return false;
+  });
 }
 
 /**
