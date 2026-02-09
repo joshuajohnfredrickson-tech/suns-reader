@@ -96,6 +96,41 @@ const GAMING_NEGATIVE_KEYWORDS = [
   "fading suns",
 ];
 
+// YouTube API returns HTML-encoded entities in snippet fields (e.g. &amp; &#39; &quot;).
+// Decode them server-side so the client always receives clean strings.
+const HTML_ENTITY_MAP: Record<string, string> = {
+  "&amp;": "&",
+  "&lt;": "<",
+  "&gt;": ">",
+  "&quot;": '"',
+  "&#39;": "'",
+  "&#x27;": "'",
+};
+
+const HTML_ENTITY_RE = /&(?:#x[\da-fA-F]+|#\d+|\w+);/g;
+
+function decodeHtmlEntities(str: string): string {
+  if (!str) return str;
+  try {
+    return str.replace(HTML_ENTITY_RE, (match) => {
+      if (match in HTML_ENTITY_MAP) return HTML_ENTITY_MAP[match];
+      // Numeric decimal entity: &#NNN;
+      if (match.startsWith("&#") && !match.startsWith("&#x")) {
+        const code = parseInt(match.slice(2, -1), 10);
+        return isNaN(code) ? match : String.fromCharCode(code);
+      }
+      // Numeric hex entity: &#xHHH;
+      if (match.startsWith("&#x")) {
+        const code = parseInt(match.slice(3, -1), 16);
+        return isNaN(code) ? match : String.fromCharCode(code);
+      }
+      return match;
+    });
+  } catch {
+    return str;
+  }
+}
+
 // Per-(query, pageToken) cache
 const cache = new Map<string, { data: any; expires: number }>();
 
@@ -191,12 +226,12 @@ async function fetchYouTubePage(
 
   const rawVideos: NormalizedVideo[] = (json.items ?? []).map((item: any) => ({
     id: item.id?.videoId,
-    title: item.snippet?.title,
-    description: item.snippet?.description,
+    title: decodeHtmlEntities(item.snippet?.title ?? ""),
+    description: decodeHtmlEntities(item.snippet?.description ?? ""),
     thumbnail:
       item.snippet?.thumbnails?.medium?.url ??
       item.snippet?.thumbnails?.default?.url,
-    channelTitle: item.snippet?.channelTitle,
+    channelTitle: decodeHtmlEntities(item.snippet?.channelTitle ?? ""),
     publishedAt: item.snippet?.publishedAt,
     url: `https://www.youtube.com/watch?v=${item.id?.videoId}`,
   }));
