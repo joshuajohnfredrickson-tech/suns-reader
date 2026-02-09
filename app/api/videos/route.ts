@@ -9,19 +9,25 @@ const SECONDARY_Q = "Suns";
 const PRIMARY_TIMEOUT_MS = 8000;
 const SECONDARY_TIMEOUT_MS = 2500;
 
-// Keywords that qualify a video mentioning "suns" as basketball-related
-const QUALIFYING_KEYWORDS = [
+// Strong qualifiers: basketball-specific, sufficient on their own.
+// Checked against title + description only (not channelTitle).
+const STRONG_QUALIFIERS = [
   "nba",
   "basketball",
-  "highlights",
-  "recap",
-  "reaction",
-  "analysis",
   "postgame",
   "pregame",
-  "interview",
+  "highlights",
+  "recap",
+];
+
+// Weak qualifiers: generic words that need ≥2 to qualify.
+// Checked against title + description only (not channelTitle).
+const WEAK_QUALIFIERS = [
   "vs",
   "game",
+  "analysis",
+  "reaction",
+  "interview",
   "final",
   "win",
   "loss",
@@ -29,7 +35,7 @@ const QUALIFYING_KEYWORDS = [
 ];
 
 // Negative keywords to exclude non-basketball "suns" content.
-// Applied ONLY to the conditional "suns" branch, NOT to "phoenix suns" auto-include.
+// Applied ONLY to Branch 2, NOT to "phoenix suns" auto-include.
 const NEGATIVE_KEYWORDS = [
   // Space / astronomy / science
   "astronomy",
@@ -75,6 +81,19 @@ const NEGATIVE_KEYWORDS = [
   "sunrise yoga",
   "sunset timelapse",
   "sun exposure",
+];
+
+// Gaming / simulation negatives — category-level filter for video games.
+// Applied ONLY to Branch 2, NOT to "phoenix suns" auto-include.
+const GAMING_NEGATIVE_KEYWORDS = [
+  "nba2k", "nba 2k", "2k26", "2k25", "2k24", "2k",
+  "mycareer", "myteam", "myleague",
+  "simulation", "simulated",
+  "walkthrough", "gameplay", "pc gameplay",
+  "ps5", "xbox",
+  "mod", "mods",
+  "spider-man",
+  "fading suns",
 ];
 
 // Per-(query, pageToken) cache
@@ -199,25 +218,39 @@ async function fetchYouTubePage(
 
 /**
  * Filter videos by relevance to Phoenix Suns basketball.
- * Auto-includes if "phoenix suns" appears in combined text.
- * Conditionally includes if "suns" appears AND at least one qualifying keyword.
- * Excludes everything else (astronomy, generic "sun" content, etc.).
+ *
+ * Branch 1: Auto-include if "phoenix suns" appears in combined text (title+desc+channel).
+ * Branch 2: If "suns" appears in combined text, qualify using title+description only:
+ *   - needs ≥1 strong qualifier OR ≥2 weak qualifiers
+ *   - then must pass negative keyword + gaming blacklists
+ * Branch 3: Exclude everything else.
  */
 function filterRelevant(videos: NormalizedVideo[]): NormalizedVideo[] {
   return videos.filter((v) => {
-    const combined = `${v.title ?? ""} ${v.description ?? ""} ${v.channelTitle ?? ""}`.toLowerCase();
-    if (combined.includes("phoenix suns")) return true;
-    if (
-      combined.includes("suns") &&
-      QUALIFYING_KEYWORDS.some((kw) => combined.includes(kw))
-    ) {
-      const neg = NEGATIVE_KEYWORDS.find((term) => combined.includes(term));
-      if (neg) {
-        console.log(`[videos] blacklist drop: "${v.title}" matched "${neg}"`);
-        return false;
+    const combinedAll = `${v.title ?? ""} ${v.description ?? ""} ${v.channelTitle ?? ""}`.toLowerCase();
+    const combinedTD = `${v.title ?? ""} ${v.description ?? ""}`.toLowerCase();
+
+    // Branch 1: explicit "phoenix suns" — always include, no blacklist
+    if (combinedAll.includes("phoenix suns")) return true;
+
+    // Branch 2: "suns" + two-tier qualifier system
+    if (combinedAll.includes("suns")) {
+      const hasStrong = STRONG_QUALIFIERS.some((kw) => combinedTD.includes(kw));
+      const weakCount = WEAK_QUALIFIERS.filter((kw) => combinedTD.includes(kw)).length;
+
+      if (hasStrong || weakCount >= 2) {
+        // Check negative blacklists against full combined text
+        const neg = NEGATIVE_KEYWORDS.find((term) => combinedAll.includes(term))
+          ?? GAMING_NEGATIVE_KEYWORDS.find((term) => combinedAll.includes(term));
+        if (neg) {
+          console.log(`[videos] blacklist drop: "${v.title}" matched "${neg}"`);
+          return false;
+        }
+        return true;
       }
-      return true;
     }
+
+    // Branch 3: no match
     return false;
   });
 }
