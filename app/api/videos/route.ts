@@ -28,6 +28,55 @@ const QUALIFYING_KEYWORDS = [
   "lose",
 ];
 
+// Negative keywords to exclude non-basketball "suns" content.
+// Applied ONLY to the conditional "suns" branch, NOT to "phoenix suns" auto-include.
+const NEGATIVE_KEYWORDS = [
+  // Space / astronomy / science
+  "astronomy",
+  "solar system",
+  "solar eclipse",
+  "solar flare",
+  "nasa",
+  "planet",
+  "orbit",
+  "telescope",
+  "cosmos",
+  "astrophysic",
+
+  // Astrology / horoscope / zodiac
+  "astrology",
+  "horoscope",
+  "zodiac",
+  "tarot",
+  "birth chart",
+
+  // Solar energy
+  "solar panel",
+  "solar energy",
+  "solar power",
+  "photovoltaic",
+  "inverter",
+  "kilowatt",
+
+  // Sunscreen / skincare / UV
+  "sunscreen",
+  "sunblock",
+  "spf",
+  "tanning",
+  "uv protection",
+  "skincare",
+
+  // Other sports "Suns" teams
+  "brisbane suns",
+  "gold coast suns",
+  "sunderland",
+
+  // Weather / generic sun
+  "sunrise yoga",
+  "sunset timelapse",
+  "sun exposure",
+];
+
 // Per-(query, pageToken) cache
 const cache = new Map<string, { data: any; expires: number }>();
 
@@ -162,6 +211,11 @@ function filterRelevant(videos: NormalizedVideo[]): NormalizedVideo[] {
       combined.includes("suns") &&
       QUALIFYING_KEYWORDS.some((kw) => combined.includes(kw))
     ) {
+      const neg = NEGATIVE_KEYWORDS.find((term) => combined.includes(term));
+      if (neg) {
+        console.log(`[videos] blacklist drop: "${v.title}" matched "${neg}"`);
+        return false;
+      }
       return true;
     }
     return false;
