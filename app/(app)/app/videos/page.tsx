@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { ContentColumn } from '../../../components/ContentColumn';
 import { getRelativeTime } from '../../../lib/utils';
 import { markVideoWatched, getWatchedStateForVideos, purgeExpiredVideoWatchedState } from '../../../lib/videoWatchedState';
+import { BottomTabBar } from '../../../components/BottomTabBar';
 
 interface Video {
   id: string;
@@ -234,6 +235,9 @@ export default function VideosPage() {
           )}
         </ContentColumn>
       </div>
+
+      {/* Bottom tab bar */}
+      <BottomTabBar />
     </div>
   );
 }

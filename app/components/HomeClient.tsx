@@ -12,6 +12,7 @@ import { getRelativeTime, formatDate, normalizeTitle } from '../lib/utils';
 import { getTrustedDomains, addTrustedDomain } from '../lib/trustedDomains';
 import { purgeExpiredReadState, getReadStateForArticles } from '../lib/readState';
 import { SystemToast } from './SystemToast';
+import { BottomTabBar } from './BottomTabBar';
 
 // Feed cache constants
 const FEED_CACHE_KEY = 'suns-reader-feed-cache';
@@ -568,6 +569,9 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
 
       {/* Toast */}
       <SystemToast message={toast.message} visible={toast.visible} />
+
+      {/* Bottom tab bar */}
+      <BottomTabBar />
     </div>
   );
 }
