@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { ContentColumn } from '../../../components/ContentColumn';
 import { getRelativeTime } from '../../../lib/utils';
+import { markVideoWatched, getWatchedStateForVideos, purgeExpiredVideoWatchedState } from '../../../lib/videoWatchedState';
 
 interface Video {
   id: string;
@@ -12,6 +13,7 @@ interface Video {
   channelTitle: string;
   publishedAt: string;
   url: string;
+  isWatched?: boolean;
 }
 
 const CLIENT_TIMEOUT_MS = 10_000;
@@ -35,9 +37,11 @@ export default function VideosPage() {
   const [nextPageToken, setNextPageToken] = useState<string | null>(null);
   const [loadingMore, setLoadingMore] = useState(false);
   const [loadMoreError, setLoadMoreError] = useState<string | null>(null);
+  const [watchedVersion, setWatchedVersion] = useState(0);
 
   useEffect(() => {
     setMounted(true);
+    purgeExpiredVideoWatchedState();
 
     async function fetchVideos() {
       try {
@@ -94,6 +98,33 @@ export default function VideosPage() {
     }
   }, [nextPageToken, loadingMore]);
 
+  // Listen for watched state changes (same-tab + cross-tab)
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'suns-reader-video-watched-state') {
+        setWatchedVersion(v => v + 1);
+      }
+    };
+    const handleWatchedStateChange = () => {
+      setWatchedVersion(v => v + 1);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('videoWatchedStateChanged', handleWatchedStateChange);
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('videoWatchedStateChanged', handleWatchedStateChange);
+    };
+  }, []);
+
+  // Derive videos with watched state attached
+  const videosWithWatchedState = useMemo(() => {
+    if (videos.length === 0) return videos;
+    const ids = videos.map(v => v.id);
+    const watchedMap = getWatchedStateForVideos(ids);
+    return videos.map(v => ({ ...v, isWatched: watchedMap[v.id] || false }));
+  }, [videos, watchedVersion]);
+
   if (!mounted) {
     return null;
   }
@@ -126,8 +157,8 @@ export default function VideosPage() {
             </div>
           ) : (
             <div>
-              {videos.map((video, index) => {
-                const isLast = index === videos.length - 1 && !nextPageToken;
+              {videosWithWatchedState.map((video, index) => {
+                const isLast = index === videosWithWatchedState.length - 1 && !nextPageToken;
                 return (
                   <div
                     key={video.id}
@@ -137,25 +168,41 @@ export default function VideosPage() {
                       href={video.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex gap-3 px-4 py-3.5 hover:bg-zinc-50 dark:hover:bg-zinc-900 active:bg-zinc-100 dark:active:bg-zinc-800 transition-colors no-underline"
+                      onClick={() => markVideoWatched(video.id)}
+                      className="block w-full px-4 py-3.5 hover:bg-zinc-50 dark:hover:bg-zinc-900 active:bg-zinc-100 dark:active:bg-zinc-800 transition-colors no-underline"
                       style={{ touchAction: 'manipulation' }}
                     >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={video.thumbnail}
-                        alt=""
-                        width={120}
-                        height={68}
-                        className="shrink-0 w-[120px] h-[68px] rounded object-cover bg-zinc-100 dark:bg-zinc-800"
-                      />
-                      <div className="min-w-0 flex-1">
-                        <h3 className="text-base font-medium leading-snug text-foreground line-clamp-2">
-                          {video.title}
-                        </h3>
-                        <div className="mt-1.5 text-xs leading-tight text-zinc-500 dark:text-zinc-400 truncate">
-                          <span>{video.channelTitle}</span>
-                          <span className="mx-1.5">&middot;</span>
-                          <span>{getRelativeTime(video.publishedAt)}</span>
+                      <div className="grid grid-cols-[20px_1fr] gap-2 pointer-events-none">
+                        {/* Dot column - centered vertically */}
+                        <div className="flex items-center justify-center">
+                          <div
+                            className={`h-2.5 w-2.5 rounded-full ${
+                              video.isWatched
+                                ? 'bg-transparent border border-zinc-300 dark:border-zinc-600'
+                                : 'bg-accent'
+                            }`}
+                          />
+                        </div>
+                        {/* Content column: thumbnail + text */}
+                        <div className="flex gap-3">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={video.thumbnail}
+                            alt=""
+                            width={120}
+                            height={68}
+                            className="shrink-0 w-[120px] h-[68px] rounded object-cover bg-zinc-100 dark:bg-zinc-800"
+                          />
+                          <div className="min-w-0 flex-1">
+                            <h3 className="text-base font-medium leading-snug text-foreground line-clamp-2">
+                              {video.title}
+                            </h3>
+                            <div className="mt-1.5 text-xs leading-tight text-zinc-500 dark:text-zinc-400 truncate">
+                              <span>{video.channelTitle}</span>
+                              <span className="mx-1.5">&middot;</span>
+                              <span>{getRelativeTime(video.publishedAt)}</span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </a>
