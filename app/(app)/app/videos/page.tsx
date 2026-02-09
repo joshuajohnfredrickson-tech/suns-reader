@@ -18,6 +18,7 @@ interface Video {
 }
 
 const CLIENT_TIMEOUT_MS = 10_000;
+const DONATE_URL = 'https://buymeacoffee.com/sunsreader';
 
 /**
  * Fetch with a client-side AbortController timeout.
@@ -33,6 +34,7 @@ function fetchWithTimeout(url: string, timeoutMs: number): Promise<Response> {
 export default function VideosPage() {
   const [videos, setVideos] = useState<Video[]>([]);
   const [isFetching, setIsFetching] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
   const [nextPageToken, setNextPageToken] = useState<string | null>(null);
@@ -40,32 +42,43 @@ export default function VideosPage() {
   const [loadMoreError, setLoadMoreError] = useState<string | null>(null);
   const [watchedVersion, setWatchedVersion] = useState(0);
 
+  const fetchVideos = useCallback(async () => {
+    try {
+      const res = await fetchWithTimeout('/api/videos', CLIENT_TIMEOUT_MS);
+      if (!res.ok) {
+        const body = await res.json().catch(() => null);
+        throw new Error(body?.error ?? `Server error (${res.status})`);
+      }
+      const data = await res.json();
+      setVideos(data.videos ?? []);
+      setNextPageToken(data.nextPageToken ?? null);
+      setError(null);
+    } catch (err) {
+      if (err instanceof DOMException && err.name === 'AbortError') {
+        setError('Videos took too long to load. Please try again.');
+      } else {
+        setError(err instanceof Error ? err.message : 'Failed to load videos');
+      }
+    }
+  }, []);
+
   useEffect(() => {
     setMounted(true);
     purgeExpiredVideoWatchedState();
 
-    async function fetchVideos() {
-      try {
-        const res = await fetchWithTimeout('/api/videos', CLIENT_TIMEOUT_MS);
-        if (!res.ok) {
-          const body = await res.json().catch(() => null);
-          throw new Error(body?.error ?? `Server error (${res.status})`);
-        }
-        const data = await res.json();
-        setVideos(data.videos ?? []);
-        setNextPageToken(data.nextPageToken ?? null);
-      } catch (err) {
-        if (err instanceof DOMException && err.name === 'AbortError') {
-          setError('Videos took too long to load. Please try again.');
-        } else {
-          setError(err instanceof Error ? err.message : 'Failed to load videos');
-        }
-      } finally {
-        setIsFetching(false);
-      }
+    async function initialFetch() {
+      await fetchVideos();
+      setIsFetching(false);
     }
-    fetchVideos();
-  }, []);
+    initialFetch();
+  }, [fetchVideos]);
+
+  const handleRefresh = useCallback(async () => {
+    if (isRefreshing) return;
+    setIsRefreshing(true);
+    await fetchVideos();
+    setIsRefreshing(false);
+  }, [isRefreshing, fetchVideos]);
 
   const handleLoadMore = useCallback(async () => {
     if (!nextPageToken || loadingMore) return;
@@ -132,11 +145,92 @@ export default function VideosPage() {
 
   return (
     <div className="flex flex-col h-[100dvh] md:h-screen bg-background text-foreground">
-      {/* Header - static, outside scroll container */}
+      {/* Header wrapper - static, outside scroll container */}
       <div className="shrink-0 bg-background pt-[env(safe-area-inset-top)]">
-        <header className="relative flex items-center justify-center px-4 pt-2 pb-1 sm:pt-2.5 sm:pb-1">
-          <h1 className="text-xl font-semibold">Videos</h1>
-        </header>
+        {/* Top Bar */}
+        <header className="relative flex items-center justify-between px-4 pt-2 pb-1 sm:pt-2.5 sm:pb-1 bg-background">
+        {/* Left controls */}
+        <div className="-ml-3 flex items-center">
+          <a
+            href={DONATE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-3 inline-flex items-center gap-2 h-12 text-sm font-medium text-foreground hover:text-foreground/80 active:text-foreground/60 rounded-lg transition-colors"
+            style={{ touchAction: 'manipulation' }}
+          >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+              />
+            </svg>
+            <span>Donate</span>
+          </a>
+        </div>
+        {/* Centered title */}
+        <h1 className="absolute left-1/2 -translate-x-1/2 text-xl font-semibold">Suns Reader</h1>
+        {/* Right controls */}
+        <div className="-mr-3 flex items-center gap-4">
+          <button
+            onClick={handleRefresh}
+            disabled={isRefreshing}
+            className={`p-3 min-w-[48px] min-h-[48px] flex items-center justify-center rounded-lg transition-colors ${
+              isRefreshing
+                ? 'opacity-50 cursor-not-allowed'
+                : 'hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700'
+            }`}
+            aria-label="Refresh"
+            style={{ touchAction: 'manipulation' }}
+          >
+            <svg
+              className={`w-5 h-5 ${isRefreshing ? 'animate-spin' : ''}`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              />
+            </svg>
+          </button>
+          <button
+            onClick={() => window.location.href = '/app/settings'}
+            className="p-3 min-w-[48px] min-h-[48px] flex items-center justify-center rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
+            aria-label="Settings"
+            style={{ touchAction: 'manipulation' }}
+          >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+          </button>
+        </div>
+      </header>
         <div className="border-b border-border" />
       </div>
 
