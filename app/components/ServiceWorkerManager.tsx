@@ -40,6 +40,7 @@ export function ServiceWorkerManager() {
     const handleControllerChange = () => {
       if (!sessionStorage.getItem('sw-reloaded')) {
         sessionStorage.setItem('sw-reloaded', '1');
+        sessionStorage.setItem('sr:splashReason', 'update');
         window.location.reload();
       }
     };

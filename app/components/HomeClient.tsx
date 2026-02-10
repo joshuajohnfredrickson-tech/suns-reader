@@ -11,6 +11,7 @@ import { Article, ArticleSummary } from '../types/article';
 import { getRelativeTime, formatDate, normalizeTitle } from '../lib/utils';
 import { getTrustedDomains, addTrustedDomain } from '../lib/trustedDomains';
 import { purgeExpiredReadState, getReadStateForArticles } from '../lib/readState';
+import { emitAppReady } from '../lib/appReady';
 import { SystemToast } from './SystemToast';
 import { BottomTabBar } from './BottomTabBar';
 
@@ -391,6 +392,13 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
       localStorage.setItem('suns-reader-latest-article-ids', JSON.stringify(ids));
     }
   }, [allArticles]);
+
+  // Signal splash overlay that first meaningful paint is ready
+  useEffect(() => {
+    if (mounted && !isFetching) {
+      emitAppReady();
+    }
+  }, [mounted, isFetching]);
 
   if (!mounted) {
     return null;

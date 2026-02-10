@@ -1,5 +1,7 @@
 'use client';
 
+import { SplashOverlay } from '../components/SplashOverlay';
+
 /**
  * Layout for app routes (/app, /app/reader, /app/settings)
  * Applies mobile scroll-lock to prevent iOS Safari rubber-banding on sticky headers.
@@ -21,6 +23,7 @@ export default function AppLayout({
           }
         }
       `}</style>
+      <SplashOverlay />
       {children}
     </>
   );

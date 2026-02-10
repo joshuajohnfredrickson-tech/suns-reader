@@ -12,6 +12,7 @@ import {
 } from '../../../lib/theme';
 import { markAllAsRead, clearAllReadState } from '../../../lib/readState';
 import { SystemToast } from '../../../components/SystemToast';
+import { emitAppReady } from '../../../lib/appReady';
 
 function SettingsContent() {
   const router = useRouter();
@@ -32,6 +33,7 @@ function SettingsContent() {
     setMounted(true);
     setTrustedDomains(getTrustedDomains());
     setThemePreference(getStoredThemePreference());
+    emitAppReady();
   }, []);
 
   const handleRemove = (domain: string) => {

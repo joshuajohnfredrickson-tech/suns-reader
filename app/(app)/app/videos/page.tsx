@@ -5,6 +5,7 @@ import { ContentColumn } from '../../../components/ContentColumn';
 import { getRelativeTime } from '../../../lib/utils';
 import { markVideoWatched, getWatchedStateForVideos, purgeExpiredVideoWatchedState } from '../../../lib/videoWatchedState';
 import { BottomTabBar } from '../../../components/BottomTabBar';
+import { emitAppReady } from '../../../lib/appReady';
 
 interface Video {
   id: string;
@@ -130,6 +131,13 @@ export default function VideosPage() {
       window.removeEventListener('videoWatchedStateChanged', handleWatchedStateChange);
     };
   }, []);
+
+  // Signal splash overlay that first meaningful paint is ready
+  useEffect(() => {
+    if (mounted && !isFetching) {
+      emitAppReady();
+    }
+  }, [mounted, isFetching]);
 
   // Derive videos with watched state attached
   const videosWithWatchedState = useMemo(() => {

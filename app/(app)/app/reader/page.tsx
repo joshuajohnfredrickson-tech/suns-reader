@@ -7,6 +7,7 @@ import { Suspense, useEffect, useState } from 'react';
 import { Article } from '../../../types/article';
 import { getRelativeTime, formatDate } from '../../../lib/utils';
 import { markAsRead } from '../../../lib/readState';
+import { emitAppReady } from '../../../lib/appReady';
 
 function ReaderContent() {
   const searchParams = useSearchParams();
@@ -65,6 +66,13 @@ function ReaderContent() {
 
     loadArticle();
   }, [articleId]);
+
+  // Signal splash overlay that first meaningful paint is ready
+  useEffect(() => {
+    if (!loading) {
+      emitAppReady();
+    }
+  }, [loading]);
 
   const handleBack = () => {
     router.push(`/app?tab=${tab}`);
