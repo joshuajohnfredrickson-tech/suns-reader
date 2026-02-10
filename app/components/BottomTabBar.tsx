@@ -16,7 +16,7 @@ export function BottomTabBar() {
     >
       <Link
         href="/app"
-        className={`flex-1 h-full flex items-center justify-center min-h-[52px] text-sm font-medium transition-colors no-underline cursor-pointer ${
+        className={`flex-1 h-full flex items-center justify-center min-h-[52px] py-3 text-sm font-medium transition-colors no-underline cursor-pointer ${
           !isVideos
             ? 'text-accent'
             : 'text-zinc-500 dark:text-zinc-400 active:text-foreground'
@@ -27,7 +27,7 @@ export function BottomTabBar() {
       </Link>
       <Link
         href="/app/videos"
-        className={`flex-1 h-full flex items-center justify-center min-h-[52px] text-sm font-medium transition-colors no-underline cursor-pointer ${
+        className={`flex-1 h-full flex items-center justify-center min-h-[52px] py-3 text-sm font-medium transition-colors no-underline cursor-pointer ${
           isVideos
             ? 'text-accent'
             : 'text-zinc-500 dark:text-zinc-400 active:text-foreground'
