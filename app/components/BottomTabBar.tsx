@@ -11,12 +11,12 @@ export function BottomTabBar() {
     <nav
       className="shrink-0 flex border-t border-zinc-200/50 dark:border-zinc-800/50 bg-background z-50 select-none"
       style={{
-        paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 12px)',
+        paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 8px)',
       }}
     >
       <Link
         href="/app"
-        className={`flex-1 h-full flex items-center justify-center min-h-[60px] text-sm font-medium transition-colors no-underline cursor-pointer ${
+        className={`flex-1 h-full flex items-center justify-center min-h-[52px] text-sm font-medium transition-colors no-underline cursor-pointer ${
           !isVideos
             ? 'text-accent'
             : 'text-zinc-500 dark:text-zinc-400 active:text-foreground'
@@ -27,7 +27,7 @@ export function BottomTabBar() {
       </Link>
       <Link
         href="/app/videos"
-        className={`flex-1 h-full flex items-center justify-center min-h-[60px] text-sm font-medium transition-colors no-underline cursor-pointer ${
+        className={`flex-1 h-full flex items-center justify-center min-h-[52px] text-sm font-medium transition-colors no-underline cursor-pointer ${
           isVideos
             ? 'text-accent'
             : 'text-zinc-500 dark:text-zinc-400 active:text-foreground'
