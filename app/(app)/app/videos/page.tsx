@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import { ContentColumn } from '../../../components/ContentColumn';
 import { getRelativeTime } from '../../../lib/utils';
 import { markVideoWatched, getWatchedStateForVideos, purgeExpiredVideoWatchedState } from '../../../lib/videoWatchedState';
@@ -33,6 +34,7 @@ function fetchWithTimeout(url: string, timeoutMs: number): Promise<Response> {
 }
 
 export default function VideosPage() {
+  const router = useRouter();
   const [videos, setVideos] = useState<Video[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -213,7 +215,7 @@ export default function VideosPage() {
             </svg>
           </button>
           <button
-            onClick={() => window.location.href = '/app/settings'}
+            onClick={() => router.push('/app/settings')}
             className="p-3 min-w-[48px] min-h-[48px] flex items-center justify-center rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
             aria-label="Settings"
             style={{ touchAction: 'manipulation' }}

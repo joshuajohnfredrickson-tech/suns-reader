@@ -6,7 +6,7 @@ import { resetAppReady, emitAppReady } from '../lib/appReady';
 type SplashReason = 'launch' | 'update' | 'resume';
 
 const MIN_DURATION: Record<SplashReason, number> = {
-  launch: 400,
+  launch: 1500, // TEMP: bumped from 400 for diagnostic visibility — revert after confirming
   update: 800,
   resume: 400,
 };
