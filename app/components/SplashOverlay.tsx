@@ -6,7 +6,7 @@ import { resetAppReady, emitAppReady } from '../lib/appReady';
 type SplashReason = 'launch' | 'update' | 'resume';
 
 const MIN_DURATION: Record<SplashReason, number> = {
-  launch: 1500, // TEMP: bumped from 400 for diagnostic visibility — revert after confirming
+  launch: 400,
   update: 800,
   resume: 400,
 };
@@ -24,12 +24,7 @@ export function SplashOverlay() {
 
   useEffect(() => {
     const splash = document.getElementById('sr-splash');
-    if (!splash) {
-      console.log('[Splash] SplashOverlay mounted — no #sr-splash found, skipping');
-      return;
-    }
-
-    console.log('[Splash] SplashOverlay taking over #sr-splash');
+    if (!splash) return;
 
     // Determine reason: sessionStorage set by SW manager, else 'launch'
     let reason: SplashReason = 'launch';
@@ -47,7 +42,6 @@ export function SplashOverlay() {
     function dismiss() {
       if (dismissed) return;
       dismissed = true;
-      console.log('[Splash] dismissing splash (reason:', reason, 'elapsed:', Date.now() - showStartedAt, 'ms)');
       splash!.style.opacity = '0';
       setTimeout(() => {
         splash!.remove();

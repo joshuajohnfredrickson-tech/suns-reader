@@ -70,10 +70,9 @@ function ReaderContent() {
   // Signal splash overlay that first meaningful paint is ready
   useEffect(() => {
     if (!loading) {
-      console.log('[Splash] emitAppReady from /app/reader', { loading, hasArticle: !!article });
       emitAppReady();
     }
-  }, [loading, article]);
+  }, [loading]);
 
   const handleBack = () => {
     router.push(`/app?tab=${tab}`);

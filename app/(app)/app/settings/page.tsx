@@ -38,7 +38,6 @@ function SettingsContent() {
   // Signal splash overlay after first render (mounted triggers re-render, this effect fires after paint)
   useEffect(() => {
     if (mounted) {
-      console.log('[Splash] emitAppReady from /app/settings', { mounted });
       emitAppReady();
     }
   }, [mounted]);

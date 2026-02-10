@@ -402,7 +402,6 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
   // NOT on mount when isFetching happens to default to false.
   useEffect(() => {
     if (mounted && !isFetching && initialLoadCompleteRef.current) {
-      console.log('[Splash] emitAppReady from /app (articles)', { mounted, isFetching, error, articleCount: articleSummaries.length });
       emitAppReady();
     }
   }, [mounted, isFetching, error, articleSummaries.length]);

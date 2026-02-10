@@ -8,7 +8,6 @@ let fired = false;
 export function emitAppReady() {
   if (fired) return;
   fired = true;
-  console.log('[Splash] sr:app-ready dispatched');
   window.dispatchEvent(new Event('sr:app-ready'));
 }
 
