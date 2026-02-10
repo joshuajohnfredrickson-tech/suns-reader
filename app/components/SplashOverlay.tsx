@@ -24,7 +24,12 @@ export function SplashOverlay() {
 
   useEffect(() => {
     const splash = document.getElementById('sr-splash');
-    if (!splash) return;
+    if (!splash) {
+      console.log('[Splash] SplashOverlay mounted — no #sr-splash found, skipping');
+      return;
+    }
+
+    console.log('[Splash] SplashOverlay taking over #sr-splash');
 
     // Determine reason: sessionStorage set by SW manager, else 'launch'
     let reason: SplashReason = 'launch';
@@ -42,6 +47,7 @@ export function SplashOverlay() {
     function dismiss() {
       if (dismissed) return;
       dismissed = true;
+      console.log('[Splash] dismissing splash (reason:', reason, 'elapsed:', Date.now() - showStartedAt, 'ms)');
       splash!.style.opacity = '0';
       setTimeout(() => {
         splash!.remove();

@@ -135,9 +135,10 @@ export default function VideosPage() {
   // Signal splash overlay that first meaningful paint is ready
   useEffect(() => {
     if (mounted && !isFetching) {
+      console.log('[Splash] emitAppReady from /app/videos', { mounted, isFetching, error, videoCount: videos.length });
       emitAppReady();
     }
-  }, [mounted, isFetching]);
+  }, [mounted, isFetching, error, videos.length]);
 
   // Derive videos with watched state attached
   const videosWithWatchedState = useMemo(() => {

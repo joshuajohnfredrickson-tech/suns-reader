@@ -90,6 +90,7 @@ export default function HomeClient() {
   const [error, setError] = useState<string | null>(null);
   const [readVersion, setReadVersion] = useState(0);
   const hasFetchedRef = useRef(false);
+  const initialLoadCompleteRef = useRef(false);
   const [toast, setToast] = useState<{ message: string; visible: boolean }>({
     message: '',
     visible: false,
@@ -219,6 +220,7 @@ export default function HomeClient() {
       setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setIsFetching(false);
+      initialLoadCompleteRef.current = true;
       // Note: isExplicitRefresh is reset by handleRefresh after min spin duration
     }
   }, [debugMode]);
@@ -336,6 +338,8 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
       hasFetchedRef.current = true;
       if (!hasCachedData) {
         fetchArticles();
+      } else {
+        initialLoadCompleteRef.current = true;
       }
     }
 
@@ -393,12 +397,15 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
     }
   }, [allArticles]);
 
-  // Signal splash overlay that first meaningful paint is ready
+  // Signal splash overlay that first meaningful paint is ready.
+  // Only fire after the initial load has actually completed (fetch resolved or cache hydrated),
+  // NOT on mount when isFetching happens to default to false.
   useEffect(() => {
-    if (mounted && !isFetching) {
+    if (mounted && !isFetching && initialLoadCompleteRef.current) {
+      console.log('[Splash] emitAppReady from /app (articles)', { mounted, isFetching, error, articleCount: articleSummaries.length });
       emitAppReady();
     }
-  }, [mounted, isFetching]);
+  }, [mounted, isFetching, error, articleSummaries.length]);
 
   if (!mounted) {
     return null;
