@@ -1,25 +1,33 @@
-const CACHE_NAME = 'suns-reader-v2';
-const STATIC_CACHE = [
-  '/manifest.json',
-  '/icon.svg'
+// Auto-generated build ID — replaced at build time. Do not edit sw.js directly; edit sw.template.js.
+const BUILD_ID = '__BUILD_ID__';
+const CACHE_NAME = `suns-reader-${BUILD_ID}`;
+
+const PRECACHE_URLS = [
+  '/manifest.webmanifest',
 ];
 
 // Install service worker - take control immediately
 self.addEventListener('install', (event) => {
-  console.log('[SW] Installing service worker...');
+  console.log('[SW] Installing service worker, build:', BUILD_ID);
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => {
-        console.log('[SW] Caching static assets');
-        return cache.addAll(STATIC_CACHE);
+      .then(async (cache) => {
+        // Precache individually so one 404 doesn't abort install
+        for (const url of PRECACHE_URLS) {
+          try {
+            await cache.add(url);
+          } catch (err) {
+            console.warn('[SW] Failed to precache:', url, err);
+          }
+        }
       })
-      .then(() => self.skipWaiting()) // Activate immediately
+      .then(() => self.skipWaiting())
   );
 });
 
 // Activate immediately and take control of all pages
 self.addEventListener('activate', (event) => {
-  console.log('[SW] Activating service worker...');
+  console.log('[SW] Activating service worker, build:', BUILD_ID);
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
@@ -30,7 +38,7 @@ self.addEventListener('activate', (event) => {
           }
         })
       );
-    }).then(() => self.clients.claim()) // Take control immediately
+    }).then(() => self.clients.claim())
   );
 });
 
@@ -49,7 +57,6 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(request)
         .then((response) => {
-          // Clone and cache the fresh response
           const responseToCache = response.clone();
           caches.open(CACHE_NAME).then((cache) => {
             cache.put(request, responseToCache);
@@ -57,7 +64,6 @@ self.addEventListener('fetch', (event) => {
           return response;
         })
         .catch(() => {
-          // Network failed, try cache
           return caches.match(request);
         })
     );
@@ -72,7 +78,6 @@ self.addEventListener('fetch', (event) => {
           return response;
         }
         return fetch(request).then((response) => {
-          // Only cache successful responses
           if (response && response.status === 200) {
             const responseToCache = response.clone();
             caches.open(CACHE_NAME).then((cache) => {

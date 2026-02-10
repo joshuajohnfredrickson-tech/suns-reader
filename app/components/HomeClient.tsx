@@ -294,13 +294,6 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
     // Purge expired read state (older than 24 hours)
     purgeExpiredReadState();
 
-    // Register service worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').catch((error) => {
-        console.error('Service Worker registration failed:', error);
-      });
-    }
-
     // Listen for storage events (read state changes)
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'suns-reader-read-state') {

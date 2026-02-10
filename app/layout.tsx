@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./components/ThemeProvider";
+import { ServiceWorkerManager } from "./components/ServiceWorkerManager";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -72,6 +73,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} antialiased`}>
         <ThemeProvider>
+          <ServiceWorkerManager />
           <div className="w-full md:flex md:justify-center">
             <div className="w-full md:max-w-[1024px] md:flex-none">
               {children}
