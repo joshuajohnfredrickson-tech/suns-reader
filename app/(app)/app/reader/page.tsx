@@ -34,12 +34,38 @@ function ReaderContent() {
     if (articleUrl) {
       // Primary path: construct article from URL param and render directly.
       // No /api/search re-fetch needed — ReaderView handles extraction.
+
+      // Restore click metadata from sessionStorage for instant header rendering
+      let title = '';
+      let source = '';
+      let date = '';
+      let timeAgo = '';
+      if (articleId) {
+        try {
+          const raw = sessionStorage.getItem(`sr:clicked:${articleId}`);
+          if (raw) {
+            const meta = JSON.parse(raw);
+            const CLICK_META_TTL = 30 * 60 * 1000; // 30 minutes
+            if (meta.ts && Date.now() - meta.ts < CLICK_META_TTL) {
+              title = meta.title || '';
+              source = meta.source || '';
+              date = meta.date || '';
+              timeAgo = meta.timeAgo || '';
+            }
+            // Clean up after use
+            sessionStorage.removeItem(`sr:clicked:${articleId}`);
+          }
+        } catch {
+          // Silently ignore storage errors
+        }
+      }
+
       setArticle({
         id: articleId || '',
-        title: '',
-        source: '',
-        timeAgo: '',
-        date: '',
+        title,
+        source,
+        timeAgo,
+        date,
         isRead: true,
         url: articleUrl,
       });

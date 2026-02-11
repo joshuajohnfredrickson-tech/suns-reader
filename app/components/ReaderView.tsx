@@ -162,10 +162,18 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
     }
 
     if (extracted?.success && extracted.contentHtml) {
+      // Strip stray leading punctuation (lone . or · as first visible char)
+      let cleanedHtml = extracted.contentHtml;
+      const leadingJunkPattern = /^(\s*<[^>]+>)*\s*[.·]\s*/;
+      if (leadingJunkPattern.test(cleanedHtml)) {
+        cleanedHtml = cleanedHtml.replace(leadingJunkPattern, '$1');
+        console.log('[READER] cleaned stray leading punctuation from extracted content');
+      }
+
       return (
         <div
           className={`reader-content text-base sm:text-lg leading-8 text-foreground ${getTextSizeClass(textSize)}`}
-          dangerouslySetInnerHTML={{ __html: extracted.contentHtml }}
+          dangerouslySetInnerHTML={{ __html: cleanedHtml }}
         />
       );
     }
@@ -432,30 +440,36 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
         <ContentColumn className="px-4 sm:px-6">
           {/* Article Meta Header Block */}
           <div className="pt-2 mb-6">
-            {/* Title */}
-            <h1 className="text-xl sm:text-2xl font-semibold leading-snug mb-5 text-foreground">
-              {normalizeTitle(extracted?.title || article.title, extracted?.siteName || article.source)}
-            </h1>
+            {/* Title — only render if we have one */}
+            {(extracted?.title || article.title) && (
+              <h1 className="text-xl sm:text-2xl font-semibold leading-snug mb-5 text-foreground">
+                {normalizeTitle(extracted?.title || article.title, extracted?.siteName || article.source)}
+              </h1>
+            )}
 
-            {/* Source + author line */}
-            <div className="flex items-center gap-1.5 text-sm text-zinc-500 dark:text-zinc-400 mb-2">
-              <span className="font-medium text-zinc-700 dark:text-zinc-300">
-                {extracted?.siteName || article.source}
-              </span>
-              {(extracted?.byline || article.author) && (
-                <>
-                  <span>·</span>
-                  <span>{extracted?.byline || article.author}</span>
-                </>
-              )}
-            </div>
+            {/* Source + author line — only render if source exists */}
+            {(extracted?.siteName || article.source) && (
+              <div className="flex items-center gap-1.5 text-sm text-zinc-500 dark:text-zinc-400 mb-2">
+                <span className="font-medium text-zinc-700 dark:text-zinc-300">
+                  {extracted?.siteName || article.source}
+                </span>
+                {(extracted?.byline || article.author) && (
+                  <>
+                    <span>·</span>
+                    <span>{extracted?.byline || article.author}</span>
+                  </>
+                )}
+              </div>
+            )}
 
-            {/* Date/time stamp */}
-            <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400">
-              <span>{article.date}</span>
-              <span>·</span>
-              <span>{article.timeAgo}</span>
-            </div>
+            {/* Date/time stamp — only render if at least one value exists */}
+            {(article.date || article.timeAgo) && (
+              <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400">
+                {article.date && <span>{article.date}</span>}
+                {article.date && article.timeAgo && <span>·</span>}
+                {article.timeAgo && <span>{article.timeAgo}</span>}
+              </div>
+            )}
           </div>
 
           {/* Debug: Show extraction URL (only with ?debug=1) */}

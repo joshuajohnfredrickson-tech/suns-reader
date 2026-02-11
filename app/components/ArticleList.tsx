@@ -22,6 +22,20 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
     }
   };
 
+  const storeClickMeta = (article: Article) => {
+    try {
+      sessionStorage.setItem(`sr:clicked:${article.id}`, JSON.stringify({
+        title: article.title,
+        source: article.source,
+        date: article.date,
+        timeAgo: article.timeAgo,
+        ts: Date.now(),
+      }));
+    } catch {
+      // Silently ignore storage errors
+    }
+  };
+
   return (
     <div>
       {articles.map((article, index) => {
@@ -36,6 +50,7 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
           >
             <Link
               href={`/app/reader?id=${article.id}&tab=${currentTab}${article.url ? `&url=${encodeURIComponent(article.url)}` : ''}`}
+              onClick={() => storeClickMeta(article)}
               className="block w-full px-4 py-3.5 hover:bg-zinc-50 dark:hover:bg-zinc-900 active:bg-zinc-100 dark:active:bg-zinc-800 transition-colors no-underline"
               style={{ touchAction: 'manipulation' }}
             >
