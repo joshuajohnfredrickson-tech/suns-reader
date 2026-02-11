@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 interface VideoPlayerModalProps {
   videoId: string;
@@ -10,6 +11,12 @@ interface VideoPlayerModalProps {
 }
 
 export function VideoPlayerModal({ videoId, title, youtubeUrl, onClose }: VideoPlayerModalProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const handleEsc = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -27,8 +34,8 @@ export function VideoPlayerModal({ videoId, title, youtubeUrl, onClose }: VideoP
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-background text-foreground">
+  const modalContent = (
+    <div className="fixed inset-0 z-[100] flex flex-col h-[100dvh] overflow-hidden bg-background text-foreground">
       {/* Safe area top padding */}
       <div className="shrink-0 pt-[env(safe-area-inset-top)]" />
 
@@ -71,9 +78,12 @@ export function VideoPlayerModal({ videoId, title, youtubeUrl, onClose }: VideoP
         </button>
       </div>
 
-      {/* Player area */}
-      <div className="px-4 pt-2">
-        <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+      {/* Player area — constrained so it fits in landscape too */}
+      <div className="shrink-0 px-4 pt-2">
+        <div
+          className="relative w-full max-h-[calc(100dvh-100px)]"
+          style={{ aspectRatio: '16 / 9' }}
+        >
           <iframe
             className="absolute inset-0 w-full h-full rounded-lg"
             src={`https://www.youtube.com/embed/${videoId}?autoplay=1&playsinline=1&rel=0&modestbranding=1`}
@@ -88,4 +98,8 @@ export function VideoPlayerModal({ videoId, title, youtubeUrl, onClose }: VideoP
       <div className="shrink-0 pb-[env(safe-area-inset-bottom)]" />
     </div>
   );
+
+  // Portal to document.body so the overlay escapes parent overflow/transform contexts
+  if (!mounted) return null;
+  return createPortal(modalContent, document.body);
 }
