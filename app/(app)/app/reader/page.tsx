@@ -2,10 +2,8 @@
 
 import { useSearchParams, useRouter } from 'next/navigation';
 import { ReaderView } from '../../../components/ReaderView';
-import { trustedArticles } from '../../../data/mockArticles';
 import { Suspense, useEffect, useState } from 'react';
 import { Article } from '../../../types/article';
-import { getRelativeTime, formatDate } from '../../../lib/utils';
 import { markAsRead } from '../../../lib/readState';
 import { emitAppReady } from '../../../lib/appReady';
 
@@ -13,59 +11,45 @@ function ReaderContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const articleId = searchParams.get('id');
+  const articleUrl = searchParams.get('url');
   const tab = searchParams.get('tab') || 'trusted';
   const debug = searchParams.get('debug') === '1';
   const [article, setArticle] = useState<Article | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadArticle = async () => {
-      // First, try to find in mock trusted articles
-      const mockArticle = trustedArticles.find(a => a.id === articleId);
-      if (mockArticle) {
-        setArticle(mockArticle);
-        setLoading(false);
-        // Mark as read immediately when article is loaded
-        if (articleId) {
-          markAsRead(articleId);
-        }
-        return;
-      }
+    // Log reader load for debugging
+    try {
+      const urlHost = articleUrl ? new URL(articleUrl).hostname : 'none';
+      console.log('[READER] load', { hasId: !!articleId, hasUrl: !!articleUrl, urlHost });
+    } catch {
+      console.log('[READER] load', { hasId: !!articleId, hasUrl: !!articleUrl, urlHost: 'invalid' });
+    }
 
-      // If not found in mock, try to fetch from discovery articles
-      try {
-        const response = await fetch('/api/search?q=Phoenix+Suns');
-        if (response.ok) {
-          const data = await response.json();
-          const items = data.items || [];
+    // Mark as read immediately (preserves feed dot behavior)
+    if (articleId) {
+      markAsRead(articleId);
+    }
 
-          // Find the article in the fetched items
-          const foundItem = items.find((item: any) => item.id === articleId);
-          if (foundItem) {
-            setArticle({
-              id: foundItem.id,
-              title: foundItem.title,
-              source: foundItem.sourceName,
-              timeAgo: getRelativeTime(foundItem.publishedAt),
-              date: formatDate(foundItem.publishedAt),
-              isRead: false,
-              url: foundItem.url,
-              publishedAt: foundItem.publishedAt,
-              sourceDomain: foundItem.sourceDomain,
-            });
-            // Mark as read immediately when article is loaded
-            markAsRead(foundItem.id);
-          }
-        }
-      } catch (error) {
-        console.error('Failed to load article:', error);
-      }
+    if (articleUrl) {
+      // Primary path: construct article from URL param and render directly.
+      // No /api/search re-fetch needed — ReaderView handles extraction.
+      setArticle({
+        id: articleId || '',
+        title: '',
+        source: '',
+        timeAgo: '',
+        date: '',
+        isRead: true,
+        url: articleUrl,
+      });
+    } else {
+      // No URL provided — likely a stale/bookmarked link
+      console.log('[READER] missing url', { id: articleId });
+    }
 
-      setLoading(false);
-    };
-
-    loadArticle();
-  }, [articleId]);
+    setLoading(false);
+  }, [articleId, articleUrl]);
 
   // Signal splash overlay that first meaningful paint is ready
   useEffect(() => {
@@ -93,7 +77,10 @@ function ReaderContent() {
     return (
       <div className="flex items-center justify-center min-h-screen bg-background text-foreground">
         <div className="text-center">
-          <h1 className="text-xl font-semibold mb-2">Article not found</h1>
+          <h1 className="text-xl font-semibold mb-2">This link has expired</h1>
+          <p className="text-zinc-500 dark:text-zinc-400 mb-4 text-sm">
+            Go back and tap the article again.
+          </p>
           <button
             onClick={handleBack}
             className="text-accent hover:underline"
