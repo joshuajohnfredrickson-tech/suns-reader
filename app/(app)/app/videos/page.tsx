@@ -7,6 +7,7 @@ import { getRelativeTime } from '../../../lib/utils';
 import { markVideoWatched, getWatchedStateForVideos, purgeExpiredVideoWatchedState } from '../../../lib/videoWatchedState';
 import { BottomTabBar } from '../../../components/BottomTabBar';
 import { emitAppReady } from '../../../lib/appReady';
+import { VideoPlayerModal } from '../../../components/VideoPlayerModal';
 
 interface Video {
   id: string;
@@ -44,6 +45,7 @@ export default function VideosPage() {
   const [loadingMore, setLoadingMore] = useState(false);
   const [loadMoreError, setLoadMoreError] = useState<string | null>(null);
   const [watchedVersion, setWatchedVersion] = useState(0);
+  const [selectedVideo, setSelectedVideo] = useState<{ id: string; title: string; url: string } | null>(null);
 
   const fetchVideos = useCallback(async () => {
     try {
@@ -269,12 +271,13 @@ export default function VideosPage() {
                     key={video.id}
                     className={!isLast ? 'border-b border-zinc-200/50 dark:border-zinc-800/50' : ''}
                   >
-                    <a
-                      href={video.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => markVideoWatched(video.id)}
-                      className="block w-full px-4 py-3.5 hover:bg-zinc-50 dark:hover:bg-zinc-900 active:bg-zinc-100 dark:active:bg-zinc-800 transition-colors no-underline"
+                    <button
+                      type="button"
+                      onClick={() => {
+                        markVideoWatched(video.id);
+                        setSelectedVideo({ id: video.id, title: video.title, url: video.url });
+                      }}
+                      className="block w-full px-4 py-3.5 hover:bg-zinc-50 dark:hover:bg-zinc-900 active:bg-zinc-100 dark:active:bg-zinc-800 transition-colors text-left"
                       style={{ touchAction: 'manipulation' }}
                     >
                       <div className="grid grid-cols-[20px_1fr] gap-2 pointer-events-none">
@@ -310,7 +313,7 @@ export default function VideosPage() {
                           </div>
                         </div>
                       </div>
-                    </a>
+                    </button>
                   </div>
                 );
               })}
@@ -339,6 +342,16 @@ export default function VideosPage() {
           )}
         </ContentColumn>
       </div>
+
+      {/* Video player modal */}
+      {selectedVideo && (
+        <VideoPlayerModal
+          videoId={selectedVideo.id}
+          title={selectedVideo.title}
+          youtubeUrl={selectedVideo.url}
+          onClose={() => setSelectedVideo(null)}
+        />
+      )}
 
       {/* Bottom tab bar */}
       <BottomTabBar />
