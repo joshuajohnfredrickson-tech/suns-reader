@@ -320,6 +320,14 @@ export async function GET(request: NextRequest) {
 
   const pageToken =
     request.nextUrl.searchParams.get("pageToken") ?? undefined;
+  const forceRefresh =
+    request.nextUrl.searchParams.get("refresh") === "1";
+
+  // Bust in-memory cache on explicit refresh
+  if (forceRefresh) {
+    cache.clear();
+    console.log("[videos] cache cleared (manual refresh)");
+  }
 
   try {
     const publishedAfter = new Date(

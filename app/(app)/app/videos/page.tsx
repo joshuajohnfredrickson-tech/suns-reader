@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { ContentColumn } from '../../../components/ContentColumn';
 import { getRelativeTime } from '../../../lib/utils';
@@ -8,6 +8,7 @@ import { markVideoWatched, getWatchedStateForVideos, purgeExpiredVideoWatchedSta
 import { BottomTabBar } from '../../../components/BottomTabBar';
 import { emitAppReady } from '../../../lib/appReady';
 import { VideoPlayerModal } from '../../../components/VideoPlayerModal';
+import { SystemToast } from '../../../components/SystemToast';
 
 interface Video {
   id: string;
@@ -46,10 +47,23 @@ export default function VideosPage() {
   const [loadMoreError, setLoadMoreError] = useState<string | null>(null);
   const [watchedVersion, setWatchedVersion] = useState(0);
   const [selectedVideo, setSelectedVideo] = useState<{ id: string; title: string; url: string } | null>(null);
+  const [toast, setToast] = useState({ message: '', visible: false });
+  const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const fetchVideos = useCallback(async () => {
+  const showToast = useCallback((message: string) => {
+    if (toastTimeoutRef.current) {
+      clearTimeout(toastTimeoutRef.current);
+    }
+    setToast({ message, visible: true });
+    toastTimeoutRef.current = setTimeout(() => {
+      setToast(prev => ({ ...prev, visible: false }));
+    }, 1500);
+  }, []);
+
+  const fetchVideos = useCallback(async (options?: { forceRefresh?: boolean }) => {
     try {
-      const res = await fetchWithTimeout('/api/videos', CLIENT_TIMEOUT_MS);
+      const url = options?.forceRefresh ? '/api/videos?refresh=1' : '/api/videos';
+      const res = await fetchWithTimeout(url, CLIENT_TIMEOUT_MS);
       if (!res.ok) {
         const body = await res.json().catch(() => null);
         throw new Error(body?.error ?? `Server error (${res.status})`);
@@ -81,9 +95,11 @@ export default function VideosPage() {
   const handleRefresh = useCallback(async () => {
     if (isRefreshing) return;
     setIsRefreshing(true);
-    await fetchVideos();
+    const minSpinDuration = new Promise(resolve => setTimeout(resolve, 400));
+    await Promise.all([fetchVideos({ forceRefresh: true }), minSpinDuration]);
     setIsRefreshing(false);
-  }, [isRefreshing, fetchVideos]);
+    showToast('Updated Just Now');
+  }, [isRefreshing, fetchVideos, showToast]);
 
   const handleLoadMore = useCallback(async () => {
     if (!nextPageToken || loadingMore) return;
@@ -352,6 +368,9 @@ export default function VideosPage() {
           onClose={() => setSelectedVideo(null)}
         />
       )}
+
+      {/* Toast */}
+      <SystemToast message={toast.message} visible={toast.visible} />
 
       {/* Bottom tab bar */}
       <BottomTabBar />
