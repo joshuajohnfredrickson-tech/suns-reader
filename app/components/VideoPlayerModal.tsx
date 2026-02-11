@@ -11,39 +11,113 @@ interface VideoPlayerModalProps {
 }
 
 /**
- * Mobile landscape theater mode — CSS only, no JS.
- * Targets touch devices in landscape via pointer/hover + orientation queries.
- * Desktop is unaffected (hover: hover / pointer: fine won't match).
+ * Theater mode styles — driven by data-theater attribute instead of @media,
+ * so the switch is deterministic and immediate on iOS rotation.
+ * Desktop is unaffected because matchMedia('(pointer: coarse)') won't match.
  */
 const theaterStyles = `
-@media (hover: none) and (pointer: coarse) and (orientation: landscape) {
-  .sr-video-topbar {
-    padding: 2px 4px;
-  }
-  .sr-video-topbar button {
-    padding: 6px;
-    min-width: 40px;
-    min-height: 40px;
-  }
-  .sr-video-title {
-    display: none;
-  }
-  .sr-video-playerwrap {
-    padding: 0;
-    flex: 1 1 0%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .sr-video-player {
-    width: 100%;
-    max-height: calc(100dvh - 48px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
-  }
+.sr-video-modal[data-theater="1"] .sr-video-topbar {
+  padding: 2px 4px;
+}
+.sr-video-modal[data-theater="1"] .sr-video-topbar button {
+  padding: 6px;
+  min-width: 40px;
+  min-height: 40px;
+}
+.sr-video-modal[data-theater="1"] .sr-video-title {
+  display: none;
+}
+.sr-video-modal[data-theater="1"] .sr-video-playerwrap {
+  padding: 0;
+  flex: 1 1 0%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sr-video-modal[data-theater="1"] .sr-video-player {
+  width: 100%;
+  max-height: calc(var(--sr-vh, 1vh) * 100 - 48px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
 }
 `;
 
+/**
+ * Hook: JS-driven theater mode detection via matchMedia listeners.
+ * Returns true when the device is a coarse pointer (touch) in landscape.
+ */
+function useTheaterMode(): boolean {
+  const [isTheater, setIsTheater] = useState(false);
+
+  useEffect(() => {
+    const mqCoarse = window.matchMedia('(pointer: coarse)');
+    const mqLandscape = window.matchMedia('(orientation: landscape)');
+
+    const update = () => {
+      setIsTheater(mqCoarse.matches && mqLandscape.matches);
+    };
+
+    // Initial check
+    update();
+
+    // Primary: matchMedia change listeners (fires immediately on orientation flip)
+    mqCoarse.addEventListener('change', update);
+    mqLandscape.addEventListener('change', update);
+
+    // Belt-and-suspenders: resize + orientationchange for older iOS
+    window.addEventListener('resize', update);
+    window.addEventListener('orientationchange', update);
+
+    return () => {
+      mqCoarse.removeEventListener('change', update);
+      mqLandscape.removeEventListener('change', update);
+      window.removeEventListener('resize', update);
+      window.removeEventListener('orientationchange', update);
+    };
+  }, []);
+
+  return isTheater;
+}
+
+/**
+ * Hook: sets --sr-vh CSS custom property on <html> based on window.innerHeight.
+ * Fixes iOS Safari viewport height lag where 100dvh doesn't settle until scroll.
+ * Cleans up the property on unmount.
+ */
+function useViewportHeight(): void {
+  useEffect(() => {
+    const setVh = () => {
+      document.documentElement.style.setProperty(
+        '--sr-vh',
+        `${window.innerHeight * 0.01}px`
+      );
+    };
+
+    // Set immediately
+    setVh();
+
+    const handleViewportChange = () => {
+      // Immediate
+      setVh();
+      // After layout settles (rAF)
+      requestAnimationFrame(setVh);
+      // Final catch for iOS Safari settling delay
+      setTimeout(setVh, 80);
+    };
+
+    window.addEventListener('resize', handleViewportChange);
+    window.addEventListener('orientationchange', handleViewportChange);
+
+    return () => {
+      window.removeEventListener('resize', handleViewportChange);
+      window.removeEventListener('orientationchange', handleViewportChange);
+      document.documentElement.style.removeProperty('--sr-vh');
+    };
+  }, []);
+}
+
 export function VideoPlayerModal({ videoId, title, youtubeUrl, onClose }: VideoPlayerModalProps) {
   const [mounted, setMounted] = useState(false);
+  const isTheater = useTheaterMode();
+  useViewportHeight();
 
   useEffect(() => {
     setMounted(true);
@@ -69,7 +143,11 @@ export function VideoPlayerModal({ videoId, title, youtubeUrl, onClose }: VideoP
   const modalContent = (
     <>
       <style dangerouslySetInnerHTML={{ __html: theaterStyles }} />
-      <div className="sr-video-modal fixed inset-0 z-[100] flex flex-col h-[100dvh] overflow-hidden bg-background text-foreground">
+      <div
+        className="sr-video-modal fixed inset-0 z-[100] flex flex-col overflow-hidden bg-background text-foreground"
+        data-theater={isTheater ? '1' : '0'}
+        style={{ height: 'calc(var(--sr-vh, 1vh) * 100)' }}
+      >
         {/* Safe area top padding */}
         <div className="shrink-0 pt-[env(safe-area-inset-top)]" />
 
@@ -87,7 +165,7 @@ export function VideoPlayerModal({ videoId, title, youtubeUrl, onClose }: VideoP
             </svg>
           </button>
 
-          {/* Title (optional, truncated — hidden in mobile landscape via CSS) */}
+          {/* Title (optional, truncated — hidden in theater mode via CSS) */}
           {title && (
             <h2 className="sr-video-title flex-1 mx-2 text-sm font-medium truncate text-center">
               {title}
