@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
+export const dynamic = 'force-dynamic';
+
 const YT_SEARCH_URL = "https://www.googleapis.com/youtube/v3/search";
 const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
 

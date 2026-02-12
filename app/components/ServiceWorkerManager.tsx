@@ -4,7 +4,8 @@ import { useEffect } from 'react';
 
 /**
  * Registers the service worker globally, checks for updates periodically,
- * and auto-reloads once when a new version takes control.
+ * detects waiting workers and prompts them to activate, and auto-reloads
+ * once when a new version takes control.
  *
  * Mounted in app/layout.tsx so it runs on all routes.
  */
@@ -20,9 +21,53 @@ export function ServiceWorkerManager() {
 
     let updateInterval: ReturnType<typeof setInterval> | null = null;
 
+    /**
+     * If a SW is in the waiting state, tell it to skipWaiting so it
+     * activates immediately instead of waiting for all tabs to close.
+     */
+    function promptSkipWaiting(waiting: ServiceWorker) {
+      console.log('[SWM] Waiting worker found, posting SKIP_WAITING');
+      waiting.postMessage({ type: 'SKIP_WAITING' });
+    }
+
+    /**
+     * Watch a registration for a newly installed (waiting) worker.
+     * Covers both the case where a worker is already waiting at
+     * registration time, and when one arrives later via update.
+     */
+    function watchForWaiting(registration: ServiceWorkerRegistration) {
+      // Already waiting — activate it now
+      if (registration.waiting) {
+        promptSkipWaiting(registration.waiting);
+      }
+
+      // Listen for future updates
+      registration.addEventListener('updatefound', () => {
+        const installing = registration.installing;
+        if (!installing) return;
+
+        console.log('[SWM] New service worker installing');
+
+        installing.addEventListener('statechange', () => {
+          if (installing.state === 'installed') {
+            if (registration.waiting) {
+              console.log('[SWM] New service worker installed and waiting');
+              promptSkipWaiting(registration.waiting);
+            }
+          }
+          if (installing.state === 'activated') {
+            console.log('[SWM] New service worker activated');
+          }
+        });
+      });
+    }
+
     navigator.serviceWorker.register('/sw.js')
       .then((registration) => {
         console.log('[SWM] Service worker registered');
+
+        // Watch for waiting workers
+        watchForWaiting(registration);
 
         // Check for updates immediately
         registration.update().catch(() => {});
@@ -41,6 +86,7 @@ export function ServiceWorkerManager() {
       if (!sessionStorage.getItem('sw-reloaded')) {
         sessionStorage.setItem('sw-reloaded', '1');
         sessionStorage.setItem('sr:splashReason', 'update');
+        console.log('[SWM] Controller changed, reloading page');
         window.location.reload();
       }
     };
