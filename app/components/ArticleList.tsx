@@ -84,7 +84,7 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
                           e.preventDefault();
                           e.stopPropagation();
                         }}
-                        className="flex-none whitespace-nowrap pointer-events-auto px-4 py-3 -mx-2 -my-2 text-xs font-medium leading-tight text-accent hover:underline transition-colors"
+                        className="flex-none whitespace-nowrap pointer-events-auto px-2 py-1 -my-1 text-xs font-medium leading-tight text-accent hover:underline transition-colors"
                         style={{ touchAction: 'manipulation' }}
                       >
                         Add to Trusted
