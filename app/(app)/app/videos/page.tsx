@@ -33,7 +33,7 @@ const CLIENT_TIMEOUT_MS = 10_000;
 const DONATE_URL = 'https://buymeacoffee.com/sunsreader';
 
 // Auto-fetch: accumulate pages until we have enough trusted matches
-const MIN_TRUSTED_MATCHES = 12;
+const MIN_TRUSTED_MATCHES = 20;
 const MAX_PAGES = 3;
 
 /**
