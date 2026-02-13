@@ -141,6 +141,7 @@ interface NormalizedVideo {
   title: string;
   description: string;
   thumbnail: string;
+  channelId: string;
   channelTitle: string;
   publishedAt: string;
   url: string;
@@ -233,6 +234,7 @@ async function fetchYouTubePage(
     thumbnail:
       item.snippet?.thumbnails?.medium?.url ??
       item.snippet?.thumbnails?.default?.url,
+    channelId: item.snippet?.channelId ?? "",
     channelTitle: decodeHtmlEntities(item.snippet?.channelTitle ?? ""),
     publishedAt: item.snippet?.publishedAt,
     url: `https://www.youtube.com/watch?v=${item.id?.videoId}`,

@@ -553,18 +553,11 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
           ) : activeTab === 'trusted' ? (
             trustedArticles.length > 0 ? (
               <ArticleList articles={trustedArticles} showAddToTrusted={false} onAddToTrusted={handleAddToTrusted} trustedDomains={trustedDomains} />
-            ) : trustedDomains.length === 0 ? (
-              <EmptyState
-                title="No Trusted Sources Yet"
-                message="Add sources from the Discovery tab to see articles from trusted sites here."
-                actionLabel="Go to Discovery"
-                onAction={() => handleTabChange('discovery')}
-              />
             ) : (
               <EmptyState
-                title="No Articles Found"
-                message="No articles from trusted sources in the last 24 hours."
-                actionLabel="Go to Discovery"
+                title="No trusted articles right now"
+                message="Switch to Discovery to browse and add sources you like."
+                actionLabel="Browse Discovery"
                 onAction={() => handleTabChange('discovery')}
               />
             )

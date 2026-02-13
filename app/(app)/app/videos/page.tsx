@@ -1,10 +1,17 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { Suspense, useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ContentColumn } from '../../../components/ContentColumn';
-import { getRelativeTime } from '../../../lib/utils';
+import { VideoList } from '../../../components/VideoList';
+import { EmptyState } from '../../../components/EmptyState';
 import { markVideoWatched, getWatchedStateForVideos, purgeExpiredVideoWatchedState } from '../../../lib/videoWatchedState';
+import {
+  getTrustedChannelIdSet,
+  trustedVideoSourcesExist,
+  seedTrustedVideoSources,
+  addTrustedVideoSource,
+} from '../../../lib/trustedVideoSources';
 import { BottomTabBar } from '../../../components/BottomTabBar';
 import { emitAppReady } from '../../../lib/appReady';
 import { VideoPlayerModal } from '../../../components/VideoPlayerModal';
@@ -15,6 +22,7 @@ interface Video {
   title: string;
   description: string;
   thumbnail: string;
+  channelId: string;
   channelTitle: string;
   publishedAt: string;
   url: string;
@@ -36,7 +44,21 @@ function fetchWithTimeout(url: string, timeoutMs: number): Promise<Response> {
 }
 
 export default function VideosPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex flex-col h-[100dvh] md:h-screen bg-background text-foreground items-center justify-center">
+        <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-accent" />
+      </div>
+    }>
+      <VideosPageInner />
+    </Suspense>
+  );
+}
+
+function VideosPageInner() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [activeTab, setActiveTab] = useState<'trusted' | 'discovery'>('trusted');
   const [videos, setVideos] = useState<Video[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -46,9 +68,11 @@ export default function VideosPage() {
   const [loadingMore, setLoadingMore] = useState(false);
   const [loadMoreError, setLoadMoreError] = useState<string | null>(null);
   const [watchedVersion, setWatchedVersion] = useState(0);
+  const [trustedChannelIds, setTrustedChannelIds] = useState<Set<string>>(new Set());
   const [selectedVideo, setSelectedVideo] = useState<{ id: string; title: string; url: string } | null>(null);
   const [toast, setToast] = useState({ message: '', visible: false });
   const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const hasSeededRef = useRef(false);
 
   const showToast = useCallback((message: string) => {
     if (toastTimeoutRef.current) {
@@ -60,6 +84,11 @@ export default function VideosPage() {
     }, 1500);
   }, []);
 
+  // Rehydrate trusted channel IDs from localStorage
+  const rehydrateTrustedChannelIds = useCallback(() => {
+    setTrustedChannelIds(getTrustedChannelIdSet());
+  }, []);
+
   const fetchVideos = useCallback(async (options?: { forceRefresh?: boolean }) => {
     try {
       const url = options?.forceRefresh ? '/api/videos?refresh=1' : '/api/videos';
@@ -69,15 +98,18 @@ export default function VideosPage() {
         throw new Error(body?.error ?? `Server error (${res.status})`);
       }
       const data = await res.json();
-      setVideos(data.videos ?? []);
+      const fetched: Video[] = data.videos ?? [];
+      setVideos(fetched);
       setNextPageToken(data.nextPageToken ?? null);
       setError(null);
+      return fetched;
     } catch (err) {
       if (err instanceof DOMException && err.name === 'AbortError') {
         setError('Videos took too long to load. Please try again.');
       } else {
         setError(err instanceof Error ? err.message : 'Failed to load videos');
       }
+      return [];
     }
   }, []);
 
@@ -85,12 +117,34 @@ export default function VideosPage() {
     setMounted(true);
     purgeExpiredVideoWatchedState();
 
+    // Hydrate trusted sources
+    rehydrateTrustedChannelIds();
+
     async function initialFetch() {
-      await fetchVideos();
+      const fetched = await fetchVideos();
+      // Seed defaults on first run only (key does not exist yet)
+      if (!hasSeededRef.current && !trustedVideoSourcesExist() && fetched.length > 0) {
+        hasSeededRef.current = true;
+        seedTrustedVideoSources(fetched);
+        rehydrateTrustedChannelIds();
+      }
       setIsFetching(false);
     }
     initialFetch();
-  }, [fetchVideos]);
+  }, [fetchVideos, rehydrateTrustedChannelIds]);
+
+  // Handle tab param from URL
+  useEffect(() => {
+    const tabParam = searchParams.get('tab');
+    if (tabParam === 'discovery' || tabParam === 'trusted') {
+      setActiveTab(tabParam);
+    }
+  }, [searchParams]);
+
+  const handleTabChange = (tab: 'trusted' | 'discovery') => {
+    setActiveTab(tab);
+    router.push(`/app/videos?tab=${tab}`, { scroll: false });
+  };
 
   const handleRefresh = useCallback(async () => {
     if (isRefreshing) return;
@@ -133,24 +187,38 @@ export default function VideosPage() {
     }
   }, [nextPageToken, loadingMore]);
 
+  const handleAddToTrusted = useCallback((channelId: string, channelTitle: string) => {
+    addTrustedVideoSource(channelId, channelTitle);
+    rehydrateTrustedChannelIds();
+    showToast('Added to Trusted');
+  }, [showToast, rehydrateTrustedChannelIds]);
+
   // Listen for watched state changes (same-tab + cross-tab)
   useEffect(() => {
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'suns-reader-video-watched-state') {
         setWatchedVersion(v => v + 1);
       }
+      if (e.key === 'sr:trustedVideoSources:v1') {
+        rehydrateTrustedChannelIds();
+      }
     };
     const handleWatchedStateChange = () => {
       setWatchedVersion(v => v + 1);
     };
+    const handleTrustedVideoSourcesChange = () => {
+      rehydrateTrustedChannelIds();
+    };
 
     window.addEventListener('storage', handleStorageChange);
     window.addEventListener('videoWatchedStateChanged', handleWatchedStateChange);
+    window.addEventListener('trustedVideoSourcesChanged', handleTrustedVideoSourcesChange);
     return () => {
       window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener('videoWatchedStateChanged', handleWatchedStateChange);
+      window.removeEventListener('trustedVideoSourcesChanged', handleTrustedVideoSourcesChange);
     };
-  }, []);
+  }, [rehydrateTrustedChannelIds]);
 
   // Signal splash overlay that first meaningful paint is ready
   useEffect(() => {
@@ -166,6 +234,20 @@ export default function VideosPage() {
     const watchedMap = getWatchedStateForVideos(ids);
     return videos.map(v => ({ ...v, isWatched: watchedMap[v.id] || false }));
   }, [videos, watchedVersion]);
+
+  // Split into trusted / discovery
+  const trustedVideos = useMemo(() => {
+    return videosWithWatchedState.filter(v => trustedChannelIds.has(v.channelId));
+  }, [videosWithWatchedState, trustedChannelIds]);
+
+  const discoveryVideos = useMemo(() => {
+    return videosWithWatchedState.filter(v => !v.channelId || !trustedChannelIds.has(v.channelId));
+  }, [videosWithWatchedState, trustedChannelIds]);
+
+  const handleVideoClick = useCallback((video: Video) => {
+    markVideoWatched(video.id);
+    setSelectedVideo({ id: video.id, title: video.title, url: video.url });
+  }, []);
 
   if (!mounted) {
     return null;
@@ -259,7 +341,32 @@ export default function VideosPage() {
           </button>
         </div>
       </header>
-        <div className="border-b border-border" />
+
+        {/* Tabs */}
+        <nav className="flex border-b border-border bg-background">
+          <button
+            onClick={() => handleTabChange('trusted')}
+            className={`flex-1 px-4 py-2.5 min-h-[44px] text-base font-medium transition-colors ${
+              activeTab === 'trusted'
+                ? 'text-accent border-b-2 border-accent'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-foreground'
+            }`}
+            style={{ touchAction: 'manipulation' }}
+          >
+            Trusted
+          </button>
+          <button
+            onClick={() => handleTabChange('discovery')}
+            className={`flex-1 px-4 py-2.5 min-h-[44px] text-base font-medium transition-colors ${
+              activeTab === 'discovery'
+                ? 'text-accent border-b-2 border-accent'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-foreground'
+            }`}
+            style={{ touchAction: 'manipulation' }}
+          >
+            Discovery
+          </button>
+        </nav>
       </div>
 
       {/* Video list - full-width scroll container with centered content */}
@@ -278,61 +385,55 @@ export default function VideosPage() {
                 <p className="text-zinc-600 dark:text-zinc-400">{error}</p>
               </div>
             </div>
-          ) : (
-            <div>
-              {videosWithWatchedState.map((video, index) => {
-                const isLast = index === videosWithWatchedState.length - 1 && !nextPageToken;
-                return (
-                  <div
-                    key={video.id}
-                    className={!isLast ? 'border-b border-zinc-200/50 dark:border-zinc-800/50' : ''}
-                  >
+          ) : activeTab === 'trusted' ? (
+            trustedVideos.length > 0 ? (
+              <div>
+                <VideoList
+                  videos={trustedVideos}
+                  showAddToTrusted={false}
+                  trustedChannelIds={trustedChannelIds}
+                  onVideoClick={handleVideoClick}
+                />
+                {nextPageToken ? (
+                  <div className="px-4 py-4 flex flex-col items-center gap-2">
+                    {loadMoreError && (
+                      <p className="text-xs text-red-500 dark:text-red-400">
+                        {loadMoreError}
+                      </p>
+                    )}
                     <button
-                      type="button"
-                      onClick={() => {
-                        markVideoWatched(video.id);
-                        setSelectedVideo({ id: video.id, title: video.title, url: video.url });
-                      }}
-                      className="block w-full px-4 py-3.5 hover:bg-zinc-50 dark:hover:bg-zinc-900 active:bg-zinc-100 dark:active:bg-zinc-800 transition-colors text-left"
+                      onClick={handleLoadMore}
+                      disabled={loadingMore}
+                      className="px-6 py-2.5 text-sm font-medium text-accent hover:bg-zinc-50 dark:hover:bg-zinc-900 active:bg-zinc-100 dark:active:bg-zinc-800 rounded-lg border border-zinc-200 dark:border-zinc-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                       style={{ touchAction: 'manipulation' }}
                     >
-                      <div className="grid grid-cols-[20px_1fr] gap-2 pointer-events-none">
-                        {/* Dot column - centered vertically */}
-                        <div className="flex items-center justify-center">
-                          <div
-                            className={`h-2.5 w-2.5 rounded-full ${
-                              video.isWatched
-                                ? 'bg-transparent border border-zinc-300 dark:border-zinc-600'
-                                : 'bg-accent'
-                            }`}
-                          />
-                        </div>
-                        {/* Content column: thumbnail + text */}
-                        <div className="flex gap-3">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={video.thumbnail}
-                            alt=""
-                            width={120}
-                            height={68}
-                            className="shrink-0 w-[120px] h-[68px] rounded object-cover bg-zinc-100 dark:bg-zinc-800"
-                          />
-                          <div className="min-w-0 flex-1">
-                            <h3 className="text-base font-medium leading-snug text-foreground line-clamp-2">
-                              {video.title}
-                            </h3>
-                            <div className="mt-1.5 text-xs leading-tight text-zinc-500 dark:text-zinc-400 truncate">
-                              <span>{video.channelTitle}</span>
-                              <span className="mx-1.5">&middot;</span>
-                              <span>{getRelativeTime(video.publishedAt)}</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      {loadingMore ? 'Loading\u2026' : 'Load more'}
                     </button>
                   </div>
-                );
-              })}
+                ) : trustedVideos.length > 0 ? (
+                  <div className="px-4 py-4 text-center text-xs text-zinc-400 dark:text-zinc-500">
+                    No more videos
+                  </div>
+                ) : null}
+              </div>
+            ) : (
+              <EmptyState
+                icon="🎬"
+                title="No trusted videos right now"
+                message="Switch to Discovery to browse and add sources you like."
+                actionLabel="Browse Discovery"
+                onAction={() => handleTabChange('discovery')}
+              />
+            )
+          ) : (
+            <div>
+              <VideoList
+                videos={discoveryVideos}
+                showAddToTrusted={true}
+                onAddToTrusted={handleAddToTrusted}
+                trustedChannelIds={trustedChannelIds}
+                onVideoClick={handleVideoClick}
+              />
               {nextPageToken ? (
                 <div className="px-4 py-4 flex flex-col items-center gap-2">
                   {loadMoreError && (
@@ -349,7 +450,7 @@ export default function VideosPage() {
                     {loadingMore ? 'Loading\u2026' : 'Load more'}
                   </button>
                 </div>
-              ) : videos.length > 0 ? (
+              ) : discoveryVideos.length > 0 ? (
                 <div className="px-4 py-4 text-center text-xs text-zinc-400 dark:text-zinc-500">
                   No more videos
                 </div>
