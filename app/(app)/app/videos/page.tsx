@@ -32,6 +32,10 @@ interface Video {
 const CLIENT_TIMEOUT_MS = 10_000;
 const DONATE_URL = 'https://buymeacoffee.com/sunsreader';
 
+// Auto-fetch: accumulate pages until we have enough trusted matches
+const MIN_TRUSTED_MATCHES = 12;
+const MAX_PAGES = 3;
+
 /**
  * Fetch with a client-side AbortController timeout.
  */
@@ -89,6 +93,10 @@ function VideosPageInner() {
     setTrustedChannelIds(getTrustedChannelIdSet());
   }, []);
 
+  /**
+   * Single-page fetch used by refresh and manual "Load more".
+   * Sets state immediately (replaces full list on refresh).
+   */
   const fetchVideos = useCallback(async (options?: { forceRefresh?: boolean }) => {
     try {
       const url = options?.forceRefresh ? '/api/videos?refresh=1' : '/api/videos';
@@ -113,6 +121,68 @@ function VideosPageInner() {
     }
   }, []);
 
+  /**
+   * Initial load: accumulate up to MAX_PAGES pages before setting state.
+   * Stops early when we have >= MIN_TRUSTED_MATCHES trusted videos
+   * or when there is no nextPageToken.
+   * Returns the accumulated video array.
+   */
+  const fetchInitialVideos = useCallback(async () => {
+    let accumulated: Video[] = [];
+    let token: string | undefined;
+    let lastToken: string | null = null;
+
+    // Resolve trusted set for counting (may be empty on very first run,
+    // but seedTrustedVideoSources runs after so the first page always loads).
+    const trustedSet = getTrustedChannelIdSet();
+
+    for (let page = 0; page < MAX_PAGES; page++) {
+      try {
+        const url = token
+          ? `/api/videos?pageToken=${encodeURIComponent(token)}`
+          : '/api/videos';
+        const res = await fetchWithTimeout(url, CLIENT_TIMEOUT_MS);
+        if (!res.ok) {
+          const body = await res.json().catch(() => null);
+          throw new Error(body?.error ?? `Server error (${res.status})`);
+        }
+        const data = await res.json();
+        const pageVideos: Video[] = data.videos ?? [];
+
+        // Dedupe against accumulated set
+        const seenIds = new Set(accumulated.map(v => v.id));
+        const unique = pageVideos.filter(v => v.id && !seenIds.has(v.id));
+        accumulated = [...accumulated, ...unique];
+
+        lastToken = data.nextPageToken ?? null;
+        token = lastToken ?? undefined;
+
+        // Count trusted matches so far
+        const trustedCount = accumulated.filter(v => trustedSet.has(v.channelId)).length;
+        if (trustedCount >= MIN_TRUSTED_MATCHES || !token) break;
+      } catch (err) {
+        // If any page fails, stop accumulating but keep what we have
+        if (page === 0) {
+          // First page failure is a hard error
+          if (err instanceof DOMException && err.name === 'AbortError') {
+            setError('Videos took too long to load. Please try again.');
+          } else {
+            setError(err instanceof Error ? err.message : 'Failed to load videos');
+          }
+          return [];
+        }
+        // Subsequent page failures: just stop, use what we have
+        break;
+      }
+    }
+
+    // Set state once with all accumulated results
+    setVideos(accumulated);
+    setNextPageToken(lastToken);
+    setError(null);
+    return accumulated;
+  }, []);
+
   useEffect(() => {
     setMounted(true);
     purgeExpiredVideoWatchedState();
@@ -121,7 +191,7 @@ function VideosPageInner() {
     rehydrateTrustedChannelIds();
 
     async function initialFetch() {
-      const fetched = await fetchVideos();
+      const fetched = await fetchInitialVideos();
       // Seed defaults on first run only (key does not exist yet)
       if (!hasSeededRef.current && !trustedVideoSourcesExist() && fetched.length > 0) {
         hasSeededRef.current = true;
@@ -131,7 +201,7 @@ function VideosPageInner() {
       setIsFetching(false);
     }
     initialFetch();
-  }, [fetchVideos, rehydrateTrustedChannelIds]);
+  }, [fetchInitialVideos, rehydrateTrustedChannelIds]);
 
   // Handle tab param from URL
   useEffect(() => {
@@ -370,7 +440,7 @@ function VideosPageInner() {
       </div>
 
       {/* Video list - full-width scroll container with centered content */}
-      <div className="flex-1 overflow-y-auto overscroll-y-contain">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden overscroll-y-contain">
         <ContentColumn>
           {isFetching ? (
             <div className="flex items-center justify-center p-8">
