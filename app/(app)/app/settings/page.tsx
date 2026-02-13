@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, useMemo, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getTrustedDomains, removeTrustedDomain, resetToDefaults } from '../../../lib/trustedDomains';
 import {
@@ -29,6 +29,16 @@ function SettingsContent() {
   const [sourcesTab, setSourcesTab] = useState<'articles' | 'videos'>('articles');
   const [themePreference, setThemePreference] = useState<ThemePreference>('system');
   const [mounted, setMounted] = useState(false);
+
+  // UI-only alphabetical sorting (does not mutate storage order)
+  const sortedDomains = useMemo(
+    () => [...trustedDomains].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' })),
+    [trustedDomains]
+  );
+  const sortedVideoSources = useMemo(
+    () => [...trustedVideoSources].sort((a, b) => a.channelTitle.localeCompare(b.channelTitle, undefined, { sensitivity: 'base' })),
+    [trustedVideoSources]
+  );
   const [toast, setToast] = useState<{ message: string; visible: boolean }>({
     message: '',
     visible: false,
@@ -210,10 +220,10 @@ function SettingsContent() {
                 </div>
               ) : (
                 <div className="border border-border/30 rounded-lg bg-background overflow-hidden divide-y divide-border/20">
-                  {trustedDomains.map((domain) => (
+                  {sortedDomains.map((domain) => (
                     <div
                       key={domain}
-                      className="flex items-center justify-between h-[44px] hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                      className="flex items-center gap-3 h-[44px] hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
                       style={{ paddingLeft: '12px', paddingRight: '12px' }}
                     >
                       <div className="flex-1 min-w-0">
@@ -221,7 +231,7 @@ function SettingsContent() {
                       </div>
                       <button
                         onClick={() => handleRemove(domain)}
-                        className="text-sm text-red-600 dark:text-red-400 transition-colors"
+                        className="shrink-0 text-sm text-red-600 dark:text-red-400 transition-colors"
                         style={{ touchAction: 'manipulation' }}
                       >
                         Remove
@@ -242,10 +252,10 @@ function SettingsContent() {
                 />
               ) : (
                 <div className="border border-border/30 rounded-lg bg-background overflow-hidden divide-y divide-border/20">
-                  {trustedVideoSources.map((source) => (
+                  {sortedVideoSources.map((source) => (
                     <div
                       key={source.channelId}
-                      className="flex items-center justify-between h-[44px] hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                      className="flex items-center gap-3 h-[44px] hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
                       style={{ paddingLeft: '12px', paddingRight: '12px' }}
                     >
                       <div className="flex-1 min-w-0">
@@ -253,7 +263,7 @@ function SettingsContent() {
                       </div>
                       <button
                         onClick={() => handleRemoveVideoSource(source.channelId)}
-                        className="text-sm text-red-600 dark:text-red-400 transition-colors"
+                        className="shrink-0 text-sm text-red-600 dark:text-red-400 transition-colors"
                         style={{ touchAction: 'manipulation' }}
                       >
                         Remove
