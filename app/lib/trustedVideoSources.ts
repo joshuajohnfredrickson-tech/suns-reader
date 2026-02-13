@@ -32,6 +32,28 @@ const DEFAULT_CHANNEL_TITLES = [
 ];
 
 /**
+ * Canonical default video sources with pre-resolved YouTube channelIds.
+ * Used by resetVideoSourcesToDefaults() so Settings can reset without
+ * needing access to the video feed.
+ * channelIds are stable and permanent for YouTube channels.
+ */
+export const DEFAULT_VIDEO_SOURCES: TrustedVideoSource[] = [
+  { channelId: 'UCJlZfS5D-i4r_LlR-m7LPUA', channelTitle: 'Arizona Sports' },
+  { channelId: 'UCLxlWVVHz2a8SdCfxzVXzQw', channelTitle: 'Phoenix Suns' },
+  { channelId: 'UC8hoXLfuV6IEFRcgp94-zJg', channelTitle: "KDUS AM 1060- Arizona's Sports Alternative" },
+  { channelId: 'UCKaPEqS_Mc6eGNNBQN1QgQw', channelTitle: 'PHNX Sports' },
+  { channelId: 'UCBzL8XS_08NDMTlDwwVWEWA', channelTitle: 'Locked On Suns' },
+  { channelId: 'UCWJ2lWNubArHWmf3FIHbfcQ', channelTitle: 'NBA' },
+  { channelId: 'UCPAt6z5uX_c5Eo_cSNROzYw', channelTitle: 'Sports Illustrated' },
+  { channelId: 'UCiWLfSweyRNmLpgEHekhoAg', channelTitle: 'ESPN' },
+  { channelId: 'UCNBkf-jAT-w2_fPYB8w7AFw', channelTitle: 'Suns Valley Podcast' },
+  { channelId: 'UCj5cTz2c5ItOD9pWUThM_Cg', channelTitle: 'Suns Digest' },
+  { channelId: 'UC0LrZO9wORIqn_aRJtKdgfA', channelTitle: 'GAMETIME HIGHLIGHTS' },
+  { channelId: 'UCMEoavphn3GBkUbSWrQ-CNA', channelTitle: 'The Timeline: A Phoenix Suns Channel' },
+  { channelId: 'UCFw3-5NBx1XJTaF0TPcK8iQ', channelTitle: 'NBA on NBC' },
+];
+
+/**
  * Get trusted video sources from localStorage.
  * Returns empty array if key doesn't exist (caller handles seeding).
  */
@@ -129,4 +151,19 @@ export function removeTrustedVideoSource(channelId: string): void {
  */
 export function getTrustedChannelIdSet(): Set<string> {
   return new Set(getTrustedVideoSources().map(s => s.channelId));
+}
+
+/**
+ * Reset trusted video sources to the canonical defaults.
+ */
+export function resetVideoSourcesToDefaults(): void {
+  if (typeof window === 'undefined') return;
+
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_VIDEO_SOURCES));
+    sessionStorage.setItem(DIRTY_FLAG_KEY, '1');
+    window.dispatchEvent(new Event('trustedVideoSourcesChanged'));
+  } catch (error) {
+    console.error('Failed to reset video sources to defaults:', error);
+  }
 }

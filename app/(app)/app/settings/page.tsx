@@ -3,7 +3,14 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getTrustedDomains, removeTrustedDomain, resetToDefaults } from '../../../lib/trustedDomains';
+import {
+  getTrustedVideoSources,
+  removeTrustedVideoSource,
+  resetVideoSourcesToDefaults,
+  TrustedVideoSource,
+} from '../../../lib/trustedVideoSources';
 import { SettingsSection } from '../../../components/settings/SettingsSection';
+import { EmptyState } from '../../../components/EmptyState';
 import {
   ThemePreference,
   getStoredThemePreference,
@@ -18,6 +25,8 @@ function SettingsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [trustedDomains, setTrustedDomains] = useState<string[]>([]);
+  const [trustedVideoSources, setTrustedVideoSources] = useState<TrustedVideoSource[]>([]);
+  const [sourcesTab, setSourcesTab] = useState<'articles' | 'videos'>('articles');
   const [themePreference, setThemePreference] = useState<ThemePreference>('system');
   const [mounted, setMounted] = useState(false);
   const [toast, setToast] = useState<{ message: string; visible: boolean }>({
@@ -32,6 +41,7 @@ function SettingsContent() {
   useEffect(() => {
     setMounted(true);
     setTrustedDomains(getTrustedDomains());
+    setTrustedVideoSources(getTrustedVideoSources());
     setThemePreference(getStoredThemePreference());
   }, []);
 
@@ -48,8 +58,18 @@ function SettingsContent() {
   };
 
   const handleResetToDefaults = () => {
-    resetToDefaults();
-    setTrustedDomains(getTrustedDomains());
+    if (sourcesTab === 'articles') {
+      resetToDefaults();
+      setTrustedDomains(getTrustedDomains());
+    } else {
+      resetVideoSourcesToDefaults();
+      setTrustedVideoSources(getTrustedVideoSources());
+    }
+  };
+
+  const handleRemoveVideoSource = (channelId: string) => {
+    removeTrustedVideoSource(channelId);
+    setTrustedVideoSources(getTrustedVideoSources());
   };
 
   const handleThemeChange = (preference: ThemePreference) => {
@@ -135,7 +155,7 @@ function SettingsContent() {
           {/* Trusted Sources Section */}
           <SettingsSection
             title="Trusted Sources"
-            description="Manage which news sources appear in your Trusted tab."
+            description="Manage which sources appear in your Trusted tab."
             headerAction={
               <button
                 onClick={handleResetToDefaults}
@@ -146,41 +166,102 @@ function SettingsContent() {
               </button>
             }
           >
-            {trustedDomains.length === 0 ? (
-              <div className="text-center py-16">
-                <div className="text-5xl mb-6">📰</div>
-                <p className="text-zinc-600 dark:text-zinc-400 mb-6">
-                  No trusted sources yet.
-                </p>
-                <button
-                  onClick={handleResetToDefaults}
-                  className="px-6 py-4 min-h-[48px] bg-accent text-white rounded-lg hover:opacity-90 active:opacity-80 transition-opacity"
-                  style={{ touchAction: 'manipulation' }}
-                >
-                  Load Default Sources
-                </button>
-              </div>
-            ) : (
-              <div className="border border-border/30 rounded-lg bg-background overflow-hidden divide-y divide-border/20">
-                {trustedDomains.map((domain) => (
-                  <div
-                    key={domain}
-                    className="flex items-center justify-between h-[44px] hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
-                    style={{ paddingLeft: '12px', paddingRight: '12px' }}
+            {/* Articles / Videos sub-tabs */}
+            <div className="flex gap-1 mb-3 p-1 rounded-lg bg-zinc-100 dark:bg-zinc-800/60" style={{ marginLeft: '12px', marginRight: '12px' }}>
+              <button
+                onClick={() => setSourcesTab('articles')}
+                className={`flex-1 px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                  sourcesTab === 'articles'
+                    ? 'bg-background text-foreground shadow-sm'
+                    : 'text-zinc-500 dark:text-zinc-400 hover:text-foreground'
+                }`}
+                style={{ touchAction: 'manipulation' }}
+              >
+                Articles
+              </button>
+              <button
+                onClick={() => setSourcesTab('videos')}
+                className={`flex-1 px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                  sourcesTab === 'videos'
+                    ? 'bg-background text-foreground shadow-sm'
+                    : 'text-zinc-500 dark:text-zinc-400 hover:text-foreground'
+                }`}
+                style={{ touchAction: 'manipulation' }}
+              >
+                Videos
+              </button>
+            </div>
+
+            {sourcesTab === 'articles' ? (
+              /* Articles trusted sources list */
+              trustedDomains.length === 0 ? (
+                <div className="text-center py-16">
+                  <div className="text-5xl mb-6">📰</div>
+                  <p className="text-zinc-600 dark:text-zinc-400 mb-6">
+                    No trusted sources yet.
+                  </p>
+                  <button
+                    onClick={handleResetToDefaults}
+                    className="px-6 py-4 min-h-[48px] bg-accent text-white rounded-lg hover:opacity-90 active:opacity-80 transition-opacity"
+                    style={{ touchAction: 'manipulation' }}
                   >
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-medium text-base text-foreground leading-tight truncate">{domain}</h3>
-                    </div>
-                    <button
-                      onClick={() => handleRemove(domain)}
-                      className="text-sm text-red-600 dark:text-red-400 transition-colors"
-                      style={{ touchAction: 'manipulation' }}
+                    Load Default Sources
+                  </button>
+                </div>
+              ) : (
+                <div className="border border-border/30 rounded-lg bg-background overflow-hidden divide-y divide-border/20">
+                  {trustedDomains.map((domain) => (
+                    <div
+                      key={domain}
+                      className="flex items-center justify-between h-[44px] hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                      style={{ paddingLeft: '12px', paddingRight: '12px' }}
                     >
-                      Remove
-                    </button>
-                  </div>
-                ))}
-              </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-medium text-base text-foreground leading-tight truncate">{domain}</h3>
+                      </div>
+                      <button
+                        onClick={() => handleRemove(domain)}
+                        className="text-sm text-red-600 dark:text-red-400 transition-colors"
+                        style={{ touchAction: 'manipulation' }}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )
+            ) : (
+              /* Videos trusted sources list */
+              trustedVideoSources.length === 0 ? (
+                <EmptyState
+                  icon="🎬"
+                  title="No trusted video sources yet"
+                  message={'Add channels from the Videos Discovery tab using "Add to Trusted".'}
+                  actionLabel="Go to Discovery"
+                  onAction={() => router.push('/app/videos?tab=discovery')}
+                />
+              ) : (
+                <div className="border border-border/30 rounded-lg bg-background overflow-hidden divide-y divide-border/20">
+                  {trustedVideoSources.map((source) => (
+                    <div
+                      key={source.channelId}
+                      className="flex items-center justify-between h-[44px] hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                      style={{ paddingLeft: '12px', paddingRight: '12px' }}
+                    >
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-medium text-base text-foreground leading-tight truncate">{source.channelTitle}</h3>
+                      </div>
+                      <button
+                        onClick={() => handleRemoveVideoSource(source.channelId)}
+                        className="text-sm text-red-600 dark:text-red-400 transition-colors"
+                        style={{ touchAction: 'manipulation' }}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )
             )}
           </SettingsSection>
 
