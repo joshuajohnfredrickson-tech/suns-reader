@@ -12,26 +12,6 @@ export interface TrustedVideoSource {
 }
 
 /**
- * Channel titles to seed as defaults on first run.
- * Matched case-insensitively and trimmed against fetched video results.
- */
-const DEFAULT_CHANNEL_TITLES = [
-  'Arizona Sports',
-  'Phoenix Suns',
-  'KDUS AM 1060- Arizona\'s Sports Alternative',
-  'PHNX Sports',
-  'Locked On Suns',
-  'NBA',
-  'Sports Illustrated',
-  'ESPN',
-  'Suns Valley Podcast',
-  'Suns Digest',
-  'Gametime Highlights',
-  'The Timeline: A Phoenix Suns Podcast',
-  'NBA on NBC',
-];
-
-/**
  * Canonical default video sources with pre-resolved YouTube channelIds.
  * Used by resetVideoSourcesToDefaults() so Settings can reset without
  * needing access to the video feed.
@@ -82,24 +62,29 @@ export function trustedVideoSourcesExist(): boolean {
 }
 
 /**
- * Build default trusted sources by matching fetched videos against DEFAULT_CHANNEL_TITLES.
+ * Seed trusted video sources on first run.
+ * Starts with all DEFAULT_VIDEO_SOURCES (hardcoded channelIds), then
+ * updates display names for any channels that appeared in fetched results
+ * (API titles are fresher). This guarantees all 13 defaults are always
+ * present regardless of how many pages were fetched.
  * Only call this when the storage key does not exist yet.
  */
 export function seedTrustedVideoSources(
   videos: { channelId: string; channelTitle: string }[]
 ): TrustedVideoSource[] {
-  const normalizedDefaults = DEFAULT_CHANNEL_TITLES.map(t => t.toLowerCase().trim());
-  const seen = new Set<string>();
-  const sources: TrustedVideoSource[] = [];
-
+  // Build a map of channelId → freshest channelTitle from fetched results
+  const fetchedTitles = new Map<string, string>();
   for (const video of videos) {
-    if (!video.channelId || seen.has(video.channelId)) continue;
-    const normalizedTitle = (video.channelTitle ?? '').toLowerCase().trim();
-    if (normalizedDefaults.includes(normalizedTitle)) {
-      seen.add(video.channelId);
-      sources.push({ channelId: video.channelId, channelTitle: video.channelTitle });
+    if (video.channelId && !fetchedTitles.has(video.channelId)) {
+      fetchedTitles.set(video.channelId, video.channelTitle);
     }
   }
+
+  // Start from the full canonical list, updating titles where we have fresher data
+  const sources: TrustedVideoSource[] = DEFAULT_VIDEO_SOURCES.map(def => ({
+    channelId: def.channelId,
+    channelTitle: fetchedTitles.get(def.channelId) ?? def.channelTitle,
+  }));
 
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(sources));
