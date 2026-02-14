@@ -42,60 +42,8 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
 
         {/* Content sections */}
         <div className="flex flex-col gap-10 sm:gap-14">
-          {/* Section 1: Articles - text left, image right on desktop */}
-          <section data-debug-section="1-articles">
-            <div className="flex flex-col sm:flex-row sm:items-start sm:gap-10">
-              <div className="flex-1">
-                <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">Suns articles, without the clutter</h2>
-                <div data-debug-body className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground/85">
-                  <p>
-                    Tap any article and it opens instantly in a clean, easy-to-read format.
-                  </p>
-                  <p>
-                    Just the story, optimized for reading on your phone or desktop — making it enjoyable to stay on top of the Suns, on your schedule.
-                  </p>
-                </div>
-              </div>
-              <div className="mt-6 sm:mt-0 flex-1 flex justify-center sm:justify-end">
-                <Image
-                  src="/marketing/reader.png"
-                  alt="Suns Reader article view in clean reading format"
-                  width={250}
-                  height={542}
-                  className="rounded-xl shadow-lg max-w-[250px]"
-                />
-              </div>
-            </div>
-          </section>
-
-          {/* Section 2: Videos - image left, text right on desktop */}
-          <section data-debug-section="2-videos">
-            <div className="flex flex-col sm:flex-row-reverse sm:items-start sm:gap-10">
-              <div className="flex-1">
-                <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">Suns videos, ready to watch</h2>
-                <div data-debug-body className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground/85">
-                  <p>
-                    Highlights, analysis, interviews, podcasts, and talk radio clips show up right in your feed.
-                  </p>
-                  <p>
-                    Tap a video and it plays instantly inside Suns Reader, making it delightfully simple to enjoy Suns videos without leaving the app.
-                  </p>
-                </div>
-              </div>
-              <div className="mt-6 sm:mt-0 flex-1 flex justify-center sm:justify-start">
-                <Image
-                  src="/marketing/videos.png"
-                  alt="Suns Reader video feed with highlights and analysis"
-                  width={250}
-                  height={542}
-                  className="rounded-xl shadow-lg max-w-[250px]"
-                />
-              </div>
-            </div>
-          </section>
-
-          {/* Section 3: Aggregation - text left, image right on desktop */}
-          <section data-debug-section="3-aggregation">
+          {/* Section 1: Aggregation - text left, image right on desktop */}
+          <section data-debug-section="1-aggregation">
             <div className="flex flex-col sm:flex-row sm:items-start sm:gap-10">
               <div className="flex-1">
                 <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">Everything Suns, in one place</h2>
@@ -120,12 +68,64 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
             </div>
           </section>
 
+          {/* Section 2: Articles - image left, text right on desktop */}
+          <section data-debug-section="2-articles">
+            <div className="flex flex-col sm:flex-row-reverse sm:items-start sm:gap-10">
+              <div className="flex-1">
+                <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">Suns articles, without the clutter</h2>
+                <div data-debug-body className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground/85">
+                  <p>
+                    Tap any article and it opens instantly in a clean, easy-to-read format.
+                  </p>
+                  <p>
+                    Just the story, optimized for reading on your phone or desktop — making it enjoyable to stay on top of the Suns, on your schedule.
+                  </p>
+                </div>
+              </div>
+              <div className="mt-6 sm:mt-0 flex-1 flex justify-center sm:justify-start">
+                <Image
+                  src="/marketing/reader.png"
+                  alt="Suns Reader article view in clean reading format"
+                  width={250}
+                  height={542}
+                  className="rounded-xl shadow-lg max-w-[250px]"
+                />
+              </div>
+            </div>
+          </section>
+
+          {/* Section 3: Videos - text left, image right on desktop */}
+          <section data-debug-section="3-videos">
+            <div className="flex flex-col sm:flex-row sm:items-start sm:gap-10">
+              <div className="flex-1">
+                <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">Suns videos, ready to watch</h2>
+                <div data-debug-body className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground/85">
+                  <p>
+                    Highlights, analysis, interviews, podcasts, and talk radio clips show up right in your feed.
+                  </p>
+                  <p>
+                    Tap a video and it plays instantly inside Suns Reader, making it delightfully simple to enjoy Suns videos without leaving the app.
+                  </p>
+                </div>
+              </div>
+              <div className="mt-6 sm:mt-0 flex-1 flex justify-center sm:justify-end">
+                <Image
+                  src="/marketing/videos.png"
+                  alt="Suns Reader video feed with highlights and analysis"
+                  width={250}
+                  height={542}
+                  className="rounded-xl shadow-lg max-w-[250px]"
+                />
+              </div>
+            </div>
+          </section>
+
           {/* Section 4: Personalization */}
           <section data-debug-section="4-personalization">
             <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">Shape your feed over time</h2>
             <div data-debug-body className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground/85">
               <p>
-                Suns Reader starts with a great mix of Suns coverage, so you can jump right into it.
+                Suns Reader starts with a great mix of Suns coverage, so you can jump right in.
               </p>
               <p>
                 Over time, you can adjust the sources you want to see more of — and less of — making the feed your own.
