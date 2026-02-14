@@ -22,7 +22,7 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
     }
   };
 
-  const storeClickMeta = (article: Article) => {
+  const storeClickMeta = (article: Article, event: React.MouseEvent) => {
     try {
       sessionStorage.setItem(`sr:clicked:${article.id}`, JSON.stringify({
         title: article.title,
@@ -33,6 +33,21 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
       }));
     } catch {
       // Silently ignore storage errors
+    }
+
+    // Save feed scroll position for restoration after Reader back-nav
+    try {
+      let el = event.currentTarget as HTMLElement | null;
+      while (el) {
+        const style = getComputedStyle(el);
+        if (style.overflowY === 'auto' || style.overflowY === 'scroll') {
+          sessionStorage.setItem('sr:feed:scrollTop', String(el.scrollTop));
+          break;
+        }
+        el = el.parentElement;
+      }
+    } catch {
+      // Silently ignore
     }
   };
 
@@ -50,7 +65,7 @@ export function ArticleList({ articles, showAddToTrusted = false, onAddToTrusted
           >
             <Link
               href={`/app/reader?id=${article.id}&tab=${currentTab}${article.url ? `&url=${encodeURIComponent(article.url)}` : ''}`}
-              onClick={() => storeClickMeta(article)}
+              onClick={(e) => storeClickMeta(article, e)}
               className="block w-full px-4 py-3.5 hover:bg-zinc-50 dark:hover:bg-zinc-900 active:bg-zinc-100 dark:active:bg-zinc-800 transition-colors no-underline"
               style={{ touchAction: 'manipulation' }}
             >

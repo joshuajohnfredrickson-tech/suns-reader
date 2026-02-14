@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import { useState, useEffect, useLayoutEffect, useMemo, useCallback, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ArticleList } from './ArticleList';
 import { ContentColumn } from './ContentColumn';
@@ -97,6 +97,7 @@ export default function HomeClient() {
   });
   const [debugInfo, setDebugInfo] = useState<DebugInfo | null>(null);
   const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const feedScrollRef = useRef<HTMLDivElement>(null);
 
   const showToast = useCallback((message: string) => {
     if (toastTimeoutRef.current) {
@@ -244,7 +245,7 @@ Items: ${debugInfo.itemCount}
 Error: ${debugInfo.searchError || 'none'}
 Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
       navigator.clipboard.writeText(text);
-      showToast('Debug copied');
+      showToast('Debug Copied');
     }
   }, [debugInfo, showToast]);
 
@@ -406,6 +407,24 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
     }
   }, [mounted, isFetching, error, articleSummaries.length]);
 
+  // Restore feed scroll position after back-navigation from Reader
+  useLayoutEffect(() => {
+    if (!mounted || articleSummaries.length === 0) return;
+    try {
+      const saved = sessionStorage.getItem('sr:feed:scrollTop');
+      if (saved && feedScrollRef.current) {
+        sessionStorage.removeItem('sr:feed:scrollTop');
+        requestAnimationFrame(() => {
+          if (feedScrollRef.current) {
+            feedScrollRef.current.scrollTop = Number(saved);
+          }
+        });
+      }
+    } catch {
+      // Silently ignore
+    }
+  }, [mounted, articleSummaries.length]);
+
   if (!mounted) {
     return null;
   }
@@ -543,7 +562,7 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
       {debugMode && debugInfo && <DebugPanel debug={debugInfo} onCopy={copyDebugInfo} />}
 
       {/* Article List - full-width scroll container with centered content */}
-      <div className="flex-1 overflow-y-auto overscroll-y-contain">
+      <div ref={feedScrollRef} className="flex-1 overflow-y-auto overscroll-y-contain">
         <ContentColumn>
           {/* Only show full LoadingState on cold start (no data yet) */}
           {isFetching && articleSummaries.length === 0 ? (

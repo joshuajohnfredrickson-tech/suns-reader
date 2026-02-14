@@ -44,7 +44,8 @@ function SettingsContent() {
     visible: false,
   });
 
-  // Read tab from URL, default to 'trusted' if missing or invalid
+  // Read origin and tab from URL for back navigation
+  const fromParam = searchParams.get('from');
   const tabParam = searchParams.get('tab');
   const returnTab = tabParam === 'discovery' ? 'discovery' : 'trusted';
 
@@ -96,7 +97,8 @@ function SettingsContent() {
   };
 
   const handleBack = () => {
-    router.push(`/app?tab=${returnTab}`);
+    const basePath = fromParam === 'videos' ? '/app/videos' : '/app';
+    router.push(`${basePath}?tab=${returnTab}`);
   };
 
   const showToast = (message: string) => {
@@ -113,7 +115,7 @@ function SettingsContent() {
         const ids = JSON.parse(stored);
         if (Array.isArray(ids) && ids.length > 0) {
           markAllAsRead(ids);
-          showToast('Articles marked as read');
+          showToast('Articles Marked as Read');
         }
       }
     } catch (error) {
@@ -123,7 +125,7 @@ function SettingsContent() {
 
   const handleMarkAllAsUnread = () => {
     clearAllReadState();
-    showToast('Articles marked as unread');
+    showToast('Articles Marked as Unread');
   };
 
   if (!mounted) {

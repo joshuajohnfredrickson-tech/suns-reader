@@ -384,7 +384,7 @@ function VideosPageInner() {
             </svg>
           </button>
           <button
-            onClick={() => router.push('/app/settings')}
+            onClick={() => router.push(`/app/settings?from=videos&tab=${activeTab}`)}
             className="p-3 min-w-[48px] min-h-[48px] flex items-center justify-center rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 transition-colors"
             aria-label="Settings"
             style={{ touchAction: 'manipulation' }}
