@@ -149,7 +149,7 @@ function finalize(
     }
   })();
 
-  // Log single JSON line (existing log)
+  // TODO(logging-v2): Remove legacy JSON line once healthLog is validated in production
   console.log(JSON.stringify({
     type: 'search',
     requestId,

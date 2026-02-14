@@ -436,6 +436,7 @@ async function resolveUrl(inputUrl: string, debug: boolean = false): Promise<Res
   ): ResolveResult => {
     const durationMs = Date.now() - startedAt;
 
+    // TODO(logging-v2): Remove legacy JSON line once healthLog is validated in production
     console.log(JSON.stringify({
       type: "resolve",
       ts: new Date().toISOString(),

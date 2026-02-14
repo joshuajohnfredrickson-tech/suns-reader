@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { healthLog, makeRequestId, normalizeError } from "../../lib/healthLog";
 
 export const dynamic = 'force-dynamic';
 
@@ -150,6 +151,8 @@ interface NormalizedVideo {
 interface PageResult {
   videos: NormalizedVideo[];
   nextPageToken: string | null;
+  rawCount: number;      // pre-filter count from YouTube API
+  cacheHit: boolean;     // whether this result came from in-memory cache
 }
 
 /**
@@ -184,7 +187,7 @@ async function fetchYouTubePage(
   const cached = cache.get(cacheKey);
   if (cached && Date.now() < cached.expires) {
     console.log(`[videos] cache hit: "${cacheKey}"`);
-    return cached.data;
+    return { ...cached.data, cacheHit: true };
   }
   console.log(`[videos] cache miss: "${cacheKey}"`);
 
@@ -248,6 +251,8 @@ async function fetchYouTubePage(
   const result: PageResult = {
     videos,
     nextPageToken: json.nextPageToken ?? null,
+    rawCount: rawVideos.length,
+    cacheHit: false,
   };
 
   cache.set(cacheKey, { data: result, expires: Date.now() + CACHE_TTL_MS });
@@ -313,9 +318,25 @@ function dedupeAndSort(videos: NormalizedVideo[]): NormalizedVideo[] {
 }
 
 export async function GET(request: NextRequest) {
+  const requestId = makeRequestId();
+  const startedAt = Date.now();
   const apiKey = process.env.YT_API_KEY;
 
   if (!apiKey) {
+    healthLog({
+      route: '/api/videos',
+      type: 'videos',
+      ok: false,
+      durationMs: Date.now() - startedAt,
+      requestId,
+      primaryRawCount: 0,
+      primaryFilteredCount: 0,
+      mergedCount: 0,
+      duplicatesRemoved: 0,
+      cacheStatus: 'none',
+      errorReason: 'unknown',
+      errorMessage: 'YT_API_KEY not configured',
+    });
     return NextResponse.json(
       { error: "YT_API_KEY not configured" },
       { status: 500 }
@@ -347,6 +368,19 @@ export async function GET(request: NextRequest) {
         PRIMARY_TIMEOUT_MS,
         pageToken
       );
+      healthLog({
+        route: '/api/videos',
+        type: 'videos',
+        ok: true,
+        durationMs: Date.now() - startedAt,
+        requestId,
+        primaryRawCount: primary.rawCount,
+        primaryFilteredCount: primary.videos.length,
+        mergedCount: primary.videos.length,
+        duplicatesRemoved: 0,
+        cacheStatus: primary.cacheHit ? 'hit' : 'miss',
+        pageToken,
+      });
       return NextResponse.json({
         videos: primary.videos,
         nextPageToken: primary.nextPageToken,
@@ -367,6 +401,20 @@ export async function GET(request: NextRequest) {
     // Primary must succeed
     if (primaryResult.status === "rejected") {
       console.error("[videos] primary query failed:", primaryResult.reason);
+      const errorInfo = normalizeError(primaryResult.reason);
+      healthLog({
+        route: '/api/videos',
+        type: 'videos',
+        ok: false,
+        durationMs: Date.now() - startedAt,
+        requestId,
+        primaryRawCount: 0,
+        primaryFilteredCount: 0,
+        mergedCount: 0,
+        duplicatesRemoved: 0,
+        cacheStatus: 'none',
+        ...errorInfo,
+      });
       return NextResponse.json(
         { error: "Failed to fetch videos" },
         { status: 500 }
@@ -377,8 +425,14 @@ export async function GET(request: NextRequest) {
 
     // Secondary is best-effort
     let secondaryVideos: NormalizedVideo[] = [];
+    let secondaryRawCount: number | undefined;
+    let secondaryFilteredCount: number | undefined;
+    let secondaryCacheHit = false;
     if (secondaryResult.status === "fulfilled") {
       secondaryVideos = secondaryResult.value.videos;
+      secondaryRawCount = secondaryResult.value.rawCount;
+      secondaryFilteredCount = secondaryResult.value.videos.length;
+      secondaryCacheHit = secondaryResult.value.cacheHit;
     } else {
       console.warn(
         "[videos] secondary query failed, continuing with primary only:",
@@ -386,7 +440,28 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const merged = dedupeAndSort([...primary.videos, ...secondaryVideos]);
+    const allVideos = [...primary.videos, ...secondaryVideos];
+    const merged = dedupeAndSort(allVideos);
+    const duplicatesRemoved = allVideos.length - merged.length;
+
+    // Determine cache status: hit if both queries were cache hits, miss if either was a miss
+    const bothCacheHit = primary.cacheHit && secondaryCacheHit;
+    const cacheStatus = bothCacheHit ? 'hit' as const : 'miss' as const;
+
+    healthLog({
+      route: '/api/videos',
+      type: 'videos',
+      ok: true,
+      durationMs: Date.now() - startedAt,
+      requestId,
+      primaryRawCount: primary.rawCount,
+      primaryFilteredCount: primary.videos.length,
+      secondaryRawCount,
+      secondaryFilteredCount,
+      mergedCount: merged.length,
+      duplicatesRemoved,
+      cacheStatus,
+    });
 
     return NextResponse.json({
       videos: merged,
@@ -394,6 +469,20 @@ export async function GET(request: NextRequest) {
     });
   } catch (err) {
     console.error("[videos] Failed to fetch videos:", err);
+    const errorInfo = normalizeError(err instanceof Error ? err : String(err));
+    healthLog({
+      route: '/api/videos',
+      type: 'videos',
+      ok: false,
+      durationMs: Date.now() - startedAt,
+      requestId,
+      primaryRawCount: 0,
+      primaryFilteredCount: 0,
+      mergedCount: 0,
+      duplicatesRemoved: 0,
+      cacheStatus: 'none',
+      ...errorInfo,
+    });
     return NextResponse.json(
       { error: "Failed to fetch videos" },
       { status: 500 }

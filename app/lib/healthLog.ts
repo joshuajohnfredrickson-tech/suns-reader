@@ -17,17 +17,24 @@
 // Types
 // ---------------------------------------------------------------------------
 
-export type HealthRoute = '/api/search' | '/api/resolve' | '/api/extract';
-export type HealthType = 'search' | 'resolve' | 'extract';
+export type HealthRoute = '/api/search' | '/api/resolve' | '/api/extract' | '/api/videos';
+export type HealthType = 'search' | 'resolve' | 'extract' | 'videos';
 export type CacheStatus = 'hit' | 'miss' | 'bypass' | 'stale' | 'none';
 export type CacheMode = 'normal' | 'refresh_bypass';
 
+/**
+ * Normalized error reason taxonomy (v2).
+ * Shared across all routes for consistent dashboarding.
+ */
 export type HealthErrorReason =
   | 'timeout'
-  | 'blocked_401_403_429'
-  | 'fetch_error'
-  | 'non_html'
-  | 'readability_empty'
+  | 'blocked'           // 401, 403, 429, or generic anti-bot blocking
+  | 'paywall'           // soft paywall / subscribe-wall detected
+  | 'fetch_error'       // network-level: ECONNREFUSED, ENOTFOUND, DNS, etc.
+  | 'http_4xx'          // non-blocking 4xx (e.g. 404)
+  | 'http_5xx'          // server errors 5xx
+  | 'non_html'          // response wasn't text/html
+  | 'readability_empty' // Readability returned null or empty
   | 'quality_gate_failed'
   | 'invalid_url'
   | 'unknown';
@@ -70,6 +77,9 @@ export interface ResolveHealthFields extends HealthEventBase {
   errorMessage?: string;
 }
 
+/** Extract method used for content extraction */
+export type ExtractMethod = 'readability' | 'fallback' | 'playwright_readability' | 'playwright_fallback' | 'none';
+
 /** Extract-specific fields */
 export interface ExtractHealthFields extends HealthEventBase {
   type: 'extract';
@@ -83,17 +93,37 @@ export interface ExtractHealthFields extends HealthEventBase {
   readabilityOk?: boolean;
   qualityGatePassed?: boolean;
   playwrightUsed?: boolean;
+  extractMethod?: ExtractMethod;
+  fallbackUsed?: boolean;
   cacheStatus: CacheStatus;
   cacheMode?: CacheMode;
   cacheLayer?: 'l1' | 'l2';
   cacheTtlSec?: number;
   cacheAgeSec?: number;
   computeMs?: number;
+  kvWriteAttempted?: boolean;
+  kvWriteOk?: boolean;
   errorReason?: HealthErrorReason;
   errorMessage?: string;
 }
 
-export type HealthEvent = SearchHealthFields | ResolveHealthFields | ExtractHealthFields;
+/** Videos-specific fields */
+export interface VideosHealthFields extends HealthEventBase {
+  type: 'videos';
+  route: '/api/videos';
+  primaryRawCount: number;
+  primaryFilteredCount: number;
+  secondaryRawCount?: number;
+  secondaryFilteredCount?: number;
+  mergedCount: number;
+  duplicatesRemoved: number;
+  cacheStatus: CacheStatus;
+  pageToken?: string;
+  errorReason?: HealthErrorReason;
+  errorMessage?: string;
+}
+
+export type HealthEvent = SearchHealthFields | ResolveHealthFields | ExtractHealthFields | VideosHealthFields;
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -127,7 +157,10 @@ export function safeHost(url: string | null | undefined): string {
 
 /**
  * Normalize an error into a standard reason + truncated message.
- * Works for search/resolve/extract failures.
+ * Works for search/resolve/extract/videos failures.
+ *
+ * Uses the v2 taxonomy: blocked (not blocked_401_403_429), paywall,
+ * http_4xx, http_5xx as separate buckets.
  */
 export function normalizeError(
   error: string | Error | null | undefined,
@@ -142,16 +175,34 @@ export function normalizeError(
   if (lower.includes('timeout') || lower.includes('aborted') || lower.includes('abort')) {
     reason = 'timeout';
   }
-  // HTTP blocking status codes
+  // Paywall (check before blocked so "paywall" isn't caught by generic blocked)
+  else if (lower.includes('paywall') || lower.includes('subscribe') || lower.includes('subscription')) {
+    reason = 'paywall';
+  }
+  // HTTP blocking status codes (401, 403, 429)
   else if (
     httpStatus === 401 || httpStatus === 403 || httpStatus === 429 ||
     lower.includes('401') || lower.includes('403') || lower.includes('429') ||
     lower.includes('blocked')
   ) {
-    reason = 'blocked_401_403_429';
+    reason = 'blocked';
   }
-  // Fetch errors
-  else if (lower.includes('fetch') || lower.includes('econnrefused') || lower.includes('enotfound') || lower.includes('network')) {
+  // HTTP 5xx server errors
+  else if (
+    (httpStatus && httpStatus >= 500 && httpStatus < 600) ||
+    /50[0-9]|5[1-9][0-9]/.test(lower)
+  ) {
+    reason = 'http_5xx';
+  }
+  // HTTP 4xx non-blocking (e.g. 404)
+  else if (
+    (httpStatus && httpStatus >= 400 && httpStatus < 500) ||
+    lower.includes('404') || lower.includes('not found')
+  ) {
+    reason = 'http_4xx';
+  }
+  // Fetch errors (network-level)
+  else if (lower.includes('fetch') || lower.includes('econnrefused') || lower.includes('enotfound') || lower.includes('network') || lower.includes('dns')) {
     reason = 'fetch_error';
   }
   // Non-HTML content
@@ -163,11 +214,11 @@ export function normalizeError(
     reason = 'readability_empty';
   }
   // Quality gate
-  else if (lower.includes('quality') || lower.includes('too short') || lower.includes('title') || lower.includes('insufficient')) {
+  else if (lower.includes('quality') || lower.includes('too short') || lower.includes('insufficient')) {
     reason = 'quality_gate_failed';
   }
   // Invalid URL
-  else if (lower.includes('invalid') || lower.includes('url') || lower.includes('missing')) {
+  else if (lower.includes('invalid') || lower.includes('missing url') || lower.includes('missing parameter')) {
     reason = 'invalid_url';
   }
 
@@ -241,12 +292,32 @@ export function healthLog(event: HealthEvent): void {
         if (e.readabilityOk !== undefined) entry.readabilityOk = e.readabilityOk;
         if (e.qualityGatePassed !== undefined) entry.qualityGatePassed = e.qualityGatePassed;
         if (e.playwrightUsed !== undefined) entry.playwrightUsed = e.playwrightUsed;
+        if (e.extractMethod) entry.extractMethod = e.extractMethod;
+        if (e.fallbackUsed !== undefined) entry.fallbackUsed = e.fallbackUsed;
         entry.cacheStatus = e.cacheStatus;
         if (e.cacheMode) entry.cacheMode = e.cacheMode;
         if (e.cacheLayer) entry.cacheLayer = e.cacheLayer;
         if (e.cacheTtlSec !== undefined) entry.cacheTtlSec = e.cacheTtlSec;
         if (e.cacheAgeSec !== undefined) entry.cacheAgeSec = e.cacheAgeSec;
         if (e.computeMs !== undefined) entry.computeMs = e.computeMs;
+        if (e.kvWriteAttempted !== undefined) entry.kvWriteAttempted = e.kvWriteAttempted;
+        if (e.kvWriteOk !== undefined) entry.kvWriteOk = e.kvWriteOk;
+        if (!e.ok) {
+          if (e.errorReason) entry.errorReason = e.errorReason;
+          if (e.errorMessage) entry.errorMessage = truncate(e.errorMessage, 300);
+        }
+        break;
+      }
+      case 'videos': {
+        const e = event as VideosHealthFields;
+        entry.primaryRawCount = e.primaryRawCount;
+        entry.primaryFilteredCount = e.primaryFilteredCount;
+        if (e.secondaryRawCount !== undefined) entry.secondaryRawCount = e.secondaryRawCount;
+        if (e.secondaryFilteredCount !== undefined) entry.secondaryFilteredCount = e.secondaryFilteredCount;
+        entry.mergedCount = e.mergedCount;
+        entry.duplicatesRemoved = e.duplicatesRemoved;
+        entry.cacheStatus = e.cacheStatus;
+        if (e.pageToken) entry.pageToken = truncate(e.pageToken, 40);
         if (!e.ok) {
           if (e.errorReason) entry.errorReason = e.errorReason;
           if (e.errorMessage) entry.errorMessage = truncate(e.errorMessage, 300);
