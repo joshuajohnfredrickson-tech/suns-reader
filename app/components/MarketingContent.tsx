@@ -46,7 +46,7 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
           <section data-debug-section="1-articles">
             <div className="flex flex-col sm:flex-row sm:items-start sm:gap-10">
               <div className="flex-1">
-                <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">📰 Suns articles, without the clutter</h2>
+                <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">Suns articles, without the clutter</h2>
                 <div data-debug-body className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground/85">
                   <p>
                     Tap any article and it opens instantly in a clean, easy-to-read format.
@@ -72,7 +72,7 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
           <section data-debug-section="2-videos">
             <div className="flex flex-col sm:flex-row-reverse sm:items-start sm:gap-10">
               <div className="flex-1">
-                <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">🎬 Suns videos, ready to watch</h2>
+                <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">Suns videos, ready to watch</h2>
                 <div data-debug-body className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground/85">
                   <p>
                     Highlights, analysis, interviews, podcasts, and talk radio clips show up right in your feed.
@@ -122,7 +122,7 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
 
           {/* Section 4: Personalization */}
           <section data-debug-section="4-personalization">
-            <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">⭐ Shape your feed over time</h2>
+            <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">Shape your feed over time</h2>
             <div data-debug-body className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground/85">
               <p>
                 Suns Reader starts with a great mix of Suns coverage, so you can jump right into it.
@@ -135,7 +135,7 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
 
           {/* Section 5: Install */}
           <section data-debug-section="5-install">
-            <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">📲 Install Suns Reader for the best experience</h2>
+            <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">Install Suns Reader for the best experience</h2>
             <div data-debug-body className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground/85">
               <p>
                 Suns Reader works in your browser, but adding it to your home screen lets it run like a real app — with a cleaner, more polished experience and more space for Suns content instead of browser controls.
