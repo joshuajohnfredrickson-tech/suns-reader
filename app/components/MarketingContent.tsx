@@ -11,7 +11,7 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
         {/* Hero Section */}
         <header className="pt-6 pb-7 sm:pt-8 sm:pb-10">
           <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight mb-5">Suns Reader</h1>
-          <p className="text-xl sm:text-2xl text-foreground/80 mb-3">
+          <p className="text-xl sm:text-2xl text-foreground mb-3">
             The easiest way to follow the Phoenix Suns.
           </p>
           <p className="text-base leading-[1.6] text-foreground/85 mb-5">
@@ -52,7 +52,7 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
                     Suns Reader pulls coverage from across the web, bringing together articles and videos from many different Suns sources into a single feed.
                   </p>
                   <p>
-                    So whenever you check in, you can quickly see what everyone's saying about the team.
+                    So whenever you check in, you can quickly see what's happening with the team.
                   </p>
                 </div>
               </div>
@@ -78,7 +78,7 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
                     Tap any article and it opens instantly in a clean, easy-to-read format.
                   </p>
                   <p>
-                    Just the story, optimized for reading on your phone or desktop — making it enjoyable to stay on top of the Suns, on your schedule.
+                    Just the story, optimized for reading on your phone or desktop — making it enjoyable to stay in the know.
                   </p>
                 </div>
               </div>
