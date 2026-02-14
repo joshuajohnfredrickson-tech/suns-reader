@@ -11,7 +11,7 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
         {/* Hero Section */}
         <header className="pt-6 pb-7 sm:pt-8 sm:pb-10">
           <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight mb-5">Suns Reader</h1>
-          <p className="text-xl sm:text-2xl text-foreground mb-3">
+          <p className="text-xl sm:text-2xl font-medium leading-snug text-foreground mb-3">
             The easiest way to follow the Phoenix Suns.
           </p>
           <p className="text-base leading-[1.6] text-foreground/85 mb-5">
