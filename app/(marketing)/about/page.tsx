@@ -3,6 +3,34 @@ export const metadata = {
   description: 'Learn about Suns Reader, a free news aggregator for Phoenix Suns fans.',
 };
 
+const SUPPORT_URL = 'https://buymeacoffee.com/sunsreader';
+
+function SupportCta() {
+  return (
+    <a
+      href={SUPPORT_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-2 text-accent font-medium hover:underline transition-colors"
+    >
+      <span>Support Suns Reader</span>
+      <svg
+        className="w-4 h-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+        />
+      </svg>
+    </a>
+  );
+}
+
 export default function AboutPage() {
   return (
     <div className="max-w-2xl mx-auto px-6">
@@ -13,124 +41,72 @@ export default function AboutPage() {
 
       {/* Content sections */}
       <div className="flex flex-col gap-7 sm:gap-10">
-        {/* Section: About Suns Reader */}
+        {/* Section: Built by a Suns fan */}
         <section>
-          <div className="space-y-3.5 text-base leading-[1.6] text-foreground">
+          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Built by a Suns fan</h2>
+          <div className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground">
             <p>
-              Suns Reader is an independent project built by a Phoenix Suns fan who wanted an easier way to keep up with team coverage without jumping between dozens of sites, social feeds, and apps.
+              Suns Reader started as a personal project by a Phoenix Suns fan who wanted an easier way to keep up with the team.
             </p>
             <p>
-              Instead of searching for news across the web, Suns Reader brings recent Suns coverage into one clean, readable feed so fans can spend less time hunting for articles and more time enjoying them.
+              Like a lot of fans, I found myself bouncing between search results, podcasts, YouTube, and different sites just to see what was new. All the coverage was out there — it just wasn't easy to follow in one place.
             </p>
             <p>
-              Enjoying Suns Reader? You can help support the project here.
+              So I built something to fix that for myself... and decided to share it with other Suns fans too.
             </p>
-            <a
-              href="https://buymeacoffee.com/sunsreader"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-accent font-medium hover:underline transition-colors"
-            >
-              <span>Support Suns Reader</span>
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                />
-              </svg>
-            </a>
+            <SupportCta />
           </div>
         </section>
 
-        {/* Section: Why this exists */}
+        {/* Section: The idea behind Suns Reader */}
         <section>
-          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Why this exists</h2>
+          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">The idea behind Suns Reader</h2>
           <div className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground">
             <p>
-              Following the Suns often means dealing with pop-ups, autoplay videos, and cluttered pages just to read a single article.
+              Suns Reader isn't trying to replace news sites or creators. The goal is to make following Suns coverage easier and more enjoyable — bringing articles and videos together in one place while also making them nicer to read and simpler to watch.
             </p>
             <p>
-              Suns Reader focuses on one simple goal: make Suns coverage easier to read and easier to follow.
-            </p>
-            <p>
-              No clickbait tricks. No algorithm games. Just Suns coverage in a cleaner format.
+              Less time hunting across sites and apps, more time enjoying Suns coverage.
             </p>
           </div>
         </section>
 
-        {/* Section: Who runs this? */}
+        {/* Section: An independent fan project */}
         <section>
-          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Who runs this?</h2>
+          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">An independent fan project</h2>
           <div className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground">
             <p>
-              Suns Reader isn't run by a media company or advertising network. It's a side project built and maintained independently by a Suns fan.
+              Suns Reader isn't run by a media company or advertising network. It's an independent side project built and maintained by one Suns fan.
             </p>
             <p>
-              The goal isn't to build a media empire — just to make something useful for the Suns community.
+              There are no ads, no accounts to create, and no data being sold. The goal isn't to build a media business — just to make something useful for the Suns community.
             </p>
           </div>
         </section>
 
-        {/* Section: Is Suns Reader free? */}
+        {/* Section: Supporting the project */}
         <section>
-          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Is Suns Reader free?</h2>
+          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Supporting the project</h2>
           <div className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground">
             <p>
-              Yes. Suns Reader is free to use.
+              Running Suns Reader does come with hosting and infrastructure costs, so the app is supported by optional contributions from fans who enjoy using it.
             </p>
             <p>
-              Running the app does have hosting and infrastructure costs, so optional donations help keep the project running, but nothing is locked behind a paywall.
+              If Suns Reader adds value for you, consider chipping in to help cover those costs.
             </p>
-            <p>
-              If Suns Reader makes it easier to follow the Suns, you can help support ongoing development here.
-            </p>
-            <a
-              href="https://buymeacoffee.com/sunsreader"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-accent font-medium hover:underline transition-colors"
-            >
-              <span>Support Suns Reader</span>
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                />
-              </svg>
-            </a>
+            <SupportCta />
           </div>
         </section>
 
-        {/* Section: Privacy & data */}
+        {/* Section: Looking ahead */}
         <section>
-          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Privacy & data</h2>
+          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">Looking ahead</h2>
           <div className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground">
             <p>
-              Suns Reader doesn't require accounts and doesn't sell personal data. The goal is simply to make reading Suns coverage easier — not to track users.
+              Suns Reader will continue improving over time based on what fans find useful and enjoyable, with the focus staying the same: keep it simple, fast, and make it easier to keep up with the Phoenix Suns.
             </p>
-          </div>
-        </section>
-
-        {/* Section: What's next? */}
-        <section>
-          <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">What's next?</h2>
-          <div className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground">
             <p>
-              Suns Reader will continue improving over time based on feedback and usage. The focus will stay the same: keep it simple, fast, and useful for Suns fans.
+              And of course... Go Suns!
             </p>
           </div>
         </section>
