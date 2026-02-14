@@ -11,8 +11,11 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
         {/* Hero Section */}
         <header className="pt-6 pb-7 sm:pt-8 sm:pb-10">
           <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight mb-5">Suns Reader</h1>
-          <p className="text-xl sm:text-2xl text-foreground/80 mb-4">
+          <p className="text-xl sm:text-2xl text-foreground/80 mb-3">
             The easiest way to follow the Phoenix Suns.
+          </p>
+          <p className="text-base leading-[1.6] text-foreground/85 mb-5">
+            All the latest Suns articles and videos in one place — with a clean, fast experience for reading and watching.
           </p>
           <Link
             href={appUrl}
@@ -39,97 +42,24 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
 
         {/* Content sections */}
         <div className="flex flex-col gap-10 sm:gap-14">
-          {/* Section 1: Aggregation - text left, image right on desktop */}
-          <section data-debug-section="1-aggregation">
+          {/* Section 1: Articles - text left, image right on desktop */}
+          <section data-debug-section="1-articles">
             <div className="flex flex-col sm:flex-row sm:items-start sm:gap-10">
               <div className="flex-1">
-                <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">Bring the news to you.</h2>
-                <p data-debug-subhead className="mt-1.5 mb-5 text-xl sm:text-2xl font-medium text-foreground leading-snug">
-                  The latest Suns coverage is ready when you open the app.
-                </p>
-                <div data-debug-body className="space-y-3.5 text-base leading-[1.6] text-foreground/85">
+                <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">📰 Suns articles, without the clutter</h2>
+                <div data-debug-body className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground/85">
                   <p>
-                    Dozens of outlets publish Suns news every day. Suns Reader gathers recent articles into one feed so you can see what's new instantly.
+                    Tap any article and it opens instantly in a clean, easy-to-read format.
                   </p>
                   <p>
-                    No searching. No sorting or filtering results.
-                  </p>
-                  <p>
-                    Open the app and start reading.
-                  </p>
-                </div>
-              </div>
-              <div className="mt-6 sm:mt-0 flex-1 flex justify-center sm:justify-end">
-                <Image
-                  src="/marketing/feed.png"
-                  alt="Suns Reader feed showing latest articles"
-                  width={250}
-                  height={542}
-                  className="rounded-xl shadow-lg max-w-[250px]"
-                />
-              </div>
-            </div>
-          </section>
-
-          {/* Section 2: Curation - image left, text right on desktop */}
-          <section data-debug-section="2-curation">
-            <div className="flex flex-col sm:flex-row-reverse sm:items-center sm:gap-10">
-              <div className="flex-1">
-                <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">Shape your own Suns feed.</h2>
-                <p data-debug-subhead className="mt-1.5 mb-5 text-xl sm:text-2xl font-medium text-foreground leading-snug">
-                  Follow the sources you trust while still discovering new perspectives.
-                </p>
-                <div data-debug-body className="space-y-3.5 text-base leading-[1.6] text-foreground/85">
-                  <p>
-                    Suns Reader starts with a trusted set of major outlets, but you're always in control.
-                  </p>
-                  <p>
-                    Keep your main feed focused on the sources you like, while the Discovery tab lets you explore coverage from writers in other markets — see how upcoming opponents view the matchup.
-                  </p>
-                  <p>
-                    Add sources you enjoy. Ignore the ones you don't.
-                  </p>
-                  <p>
-                    Your feed evolves with you.
-                  </p>
-                </div>
-              </div>
-              <div className="mt-6 sm:mt-0 flex-1 flex justify-center sm:justify-start">
-                <Image
-                  src="/marketing/sources.png"
-                  alt="Suns Reader trusted sources settings"
-                  width={250}
-                  height={542}
-                  className="rounded-xl shadow-lg max-w-[250px]"
-                />
-              </div>
-            </div>
-          </section>
-
-          {/* Section 3: Reader - text left, image right on desktop */}
-          <section data-debug-section="3-reader">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-10">
-              <div className="flex-1">
-                <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">A better way to read.</h2>
-                <p data-debug-subhead className="mt-1.5 mb-5 text-xl sm:text-2xl font-medium text-foreground leading-snug">
-                  Articles open in a clean, readable format by default.
-                </p>
-                <div data-debug-body className="space-y-3.5 text-base leading-[1.6] text-foreground/85">
-                  <p>
-                    Instead of loading the original site first, Suns Reader opens articles directly in a simple reading view designed for your phone.
-                  </p>
-                  <p>
-                    No pop-ups, autoplay videos, or layout jumps — just the article, formatted for comfortable reading.
-                  </p>
-                  <p>
-                    If you ever want the full site experience, you can still open the original article with one tap.
+                    Just the story, optimized for reading on your phone or desktop — making it enjoyable to stay on top of the Suns, on your schedule.
                   </p>
                 </div>
               </div>
               <div className="mt-6 sm:mt-0 flex-1 flex justify-center sm:justify-end">
                 <Image
                   src="/marketing/reader.png"
-                  alt="Suns Reader article view"
+                  alt="Suns Reader article view in clean reading format"
                   width={250}
                   height={542}
                   className="rounded-xl shadow-lg max-w-[250px]"
@@ -138,91 +68,138 @@ export function MarketingContent({ appUrl = '/app?tab=trusted' }: MarketingConte
             </div>
           </section>
 
-          {/* Section 4: Install */}
-          <section data-debug-section="4-install">
-            <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">Use it like an app.</h2>
-            <p data-debug-subhead className="mt-1.5 mb-5 text-xl sm:text-2xl font-medium text-foreground leading-snug">
-              Add Suns Reader to your home screen for the best experience.
-            </p>
-            <div data-debug-body className="space-y-3.5 text-base leading-[1.6] text-foreground/85">
+          {/* Section 2: Videos - image left, text right on desktop */}
+          <section data-debug-section="2-videos">
+            <div className="flex flex-col sm:flex-row-reverse sm:items-start sm:gap-10">
+              <div className="flex-1">
+                <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">🎬 Suns videos, ready to watch</h2>
+                <div data-debug-body className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground/85">
+                  <p>
+                    Highlights, analysis, interviews, podcasts, and talk radio clips show up right in your feed.
+                  </p>
+                  <p>
+                    Tap a video and it plays instantly inside Suns Reader, making it delightfully simple to enjoy Suns videos without leaving the app.
+                  </p>
+                </div>
+              </div>
+              <div className="mt-6 sm:mt-0 flex-1 flex justify-center sm:justify-start">
+                <Image
+                  src="/marketing/videos.png"
+                  alt="Suns Reader video feed with highlights and analysis"
+                  width={250}
+                  height={542}
+                  className="rounded-xl shadow-lg max-w-[250px]"
+                />
+              </div>
+            </div>
+          </section>
+
+          {/* Section 3: Aggregation - text left, image right on desktop */}
+          <section data-debug-section="3-aggregation">
+            <div className="flex flex-col sm:flex-row sm:items-start sm:gap-10">
+              <div className="flex-1">
+                <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">Everything Suns, in one place</h2>
+                <div data-debug-body className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground/85">
+                  <p>
+                    Suns Reader pulls coverage from across the web, bringing together articles and videos from many different Suns sources into a single feed.
+                  </p>
+                  <p>
+                    So whenever you check in, you can quickly see what everyone's saying about the team.
+                  </p>
+                </div>
+              </div>
+              <div className="mt-6 sm:mt-0 flex-1 flex justify-center sm:justify-end">
+                <Image
+                  src="/marketing/feed.png"
+                  alt="Suns Reader feed showing latest articles from multiple sources"
+                  width={250}
+                  height={542}
+                  className="rounded-xl shadow-lg max-w-[250px]"
+                />
+              </div>
+            </div>
+          </section>
+
+          {/* Section 4: Personalization */}
+          <section data-debug-section="4-personalization">
+            <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">⭐ Shape your feed over time</h2>
+            <div data-debug-body className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground/85">
               <p>
-                Suns Reader works instantly in your browser, but you can also install it on your phone so it opens just like a normal app.
+                Suns Reader starts with a great mix of Suns coverage, so you can jump right into it.
               </p>
               <p>
-                No app store search or downloads required — just add it to your home screen and start reading.
+                Over time, you can adjust the sources you want to see more of — and less of — making the feed your own.
               </p>
+            </div>
+          </section>
+
+          {/* Section 5: Install */}
+          <section data-debug-section="5-install">
+            <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">📲 Install Suns Reader for the best experience</h2>
+            <div data-debug-body className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground/85">
               <p>
-                Open Suns Reader on your phone to install it.
+                Suns Reader works in your browser, but adding it to your home screen lets it run like a real app — with a cleaner, more polished experience and more space for Suns content instead of browser controls.
               </p>
 
               {/* Install instructions grid */}
               <div data-debug-cards className="grid sm:grid-cols-2 gap-4 pt-2">
-                {/* iPhone instructions */}
+                {/* iPhone / iPad instructions */}
                 <div className="p-5 rounded-xl border border-border/50 bg-zinc-50/50 dark:bg-zinc-900/50">
-                  <h3 className="text-base font-semibold text-foreground mb-4">iPhone (Safari)</h3>
+                  <h3 className="text-base font-semibold text-foreground mb-4">iPhone / iPad</h3>
                   <ol className="space-y-3 text-sm sm:text-base text-foreground/85">
                     <li className="flex items-start gap-3">
                       <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent/10 text-accent text-sm font-medium flex items-center justify-center">1</span>
-                      <span>Open Suns Reader in Safari</span>
+                      <span>Tap <strong>Share</strong></span>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent/10 text-accent text-sm font-medium flex items-center justify-center">2</span>
-                      <span>Tap Share</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent/10 text-accent text-sm font-medium flex items-center justify-center">3</span>
-                      <span>Tap Add to Home Screen</span>
+                      <span>Select <strong>Add to Home Screen</strong></span>
                     </li>
                   </ol>
                 </div>
 
-                {/* Android instructions */}
+                {/* Android / Desktop instructions */}
                 <div className="p-5 rounded-xl border border-border/50 bg-zinc-50/50 dark:bg-zinc-900/50">
-                  <h3 className="text-base font-semibold text-foreground mb-4">Android (Chrome)</h3>
+                  <h3 className="text-base font-semibold text-foreground mb-4">Android / Desktop</h3>
                   <ol className="space-y-3 text-sm sm:text-base text-foreground/85">
                     <li className="flex items-start gap-3">
                       <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent/10 text-accent text-sm font-medium flex items-center justify-center">1</span>
-                      <span>Open Suns Reader in Chrome</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent/10 text-accent text-sm font-medium flex items-center justify-center">2</span>
-                      <span>Tap the menu (three dots)</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent/10 text-accent text-sm font-medium flex items-center justify-center">3</span>
-                      <span>Tap Add to Home screen</span>
+                      <span>Choose <strong>Install App</strong> when prompted by your browser</span>
                     </li>
                   </ol>
                 </div>
               </div>
 
               <p>
-                Once installed, Suns Reader launches full-screen and behaves like a native app.
+                Install once, and Suns Reader opens just like any other app on your device.
               </p>
             </div>
           </section>
 
-          {/* Section 5: Free / No ads */}
-          <section data-debug-section="5-free">
-            <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">Free to use. No ads.</h2>
-            <p data-debug-subhead className="mt-1.5 mb-5 text-xl sm:text-2xl font-medium text-foreground leading-snug">
-              Suns Reader is free and designed purely for a better reading experience.
-            </p>
-            <div data-debug-body className="space-y-3.5 text-base leading-[1.6] text-foreground/85">
+          {/* Section 6: Free */}
+          <section data-debug-section="6-free">
+            <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">Free. No accounts. No tracking.</h2>
+            <div data-debug-body className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground/85">
               <p>
-                There are no ads, accounts, or subscriptions — just Suns coverage in a clean, simple feed.
+                Suns Reader is completely free to use.
               </p>
               <p>
-                Suns Reader was built by a Suns fan who wanted an easier way to follow the team, ended up using it every day, and decided to share it with other Suns fans.
+                No account required. No ads. No tracking.
+              </p>
+              <p>
+                Just Suns content, in one place.
+              </p>
+              <p>
+                If you enjoy the app, you can support it with an optional donation — but it'll always be free to use.
               </p>
             </div>
           </section>
 
           {/* Final CTA */}
-          <section data-debug-section="6-cta">
+          <section data-debug-section="7-cta">
             <h2 data-debug-h2 className="text-2xl sm:text-3xl font-semibold text-foreground">Ready to start reading?</h2>
             <p data-debug-subhead className="mt-1.5 mb-5 text-xl sm:text-2xl font-medium text-foreground leading-snug">
-              Open Suns Reader and catch up on the latest Suns coverage.
+              Open Suns Reader and see what's new with the Suns.
             </p>
             <Link
               data-debug-cta
