@@ -63,7 +63,7 @@ export default function AboutPage() {
           <h2 className="text-2xl font-semibold tracking-tight leading-[1.15] text-foreground">The idea behind Suns Reader</h2>
           <div className="mt-4 space-y-3.5 text-base leading-[1.6] text-foreground">
             <p>
-              Suns Reader isn't trying to replace news sites or creators. The goal is to make following Suns coverage easier and more enjoyable — bringing articles and videos together in one place while also making them nicer to read and simpler to watch.
+              Suns Reader isn't trying to replace news sites or creators. The goal is to make following Suns coverage easier and more enjoyable — bringing articles and videos together in one place — and making them nicer to read and simpler to watch.
             </p>
             <p>
               Less time hunting across sites and apps, more time enjoying Suns coverage.
