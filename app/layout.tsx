@@ -1,8 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
+import { Suspense } from "react";
 import "./globals.css";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { ServiceWorkerManager } from "./components/ServiceWorkerManager";
+import { NavigationTracker } from "./components/NavigationTracker";
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
 const inter = Inter({
   subsets: ["latin"],
@@ -74,8 +79,30 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.variable} antialiased`}>
+        {/* Google Analytics 4 — production only */}
+        {GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_ID}', { send_page_view: true });
+              `}
+            </Script>
+          </>
+        )}
         <ThemeProvider>
           <ServiceWorkerManager />
+          {GA_ID && (
+            <Suspense fallback={null}>
+              <NavigationTracker />
+            </Suspense>
+          )}
           <div className="w-full md:flex md:justify-center">
             <div className="w-full md:max-w-[1024px] md:flex-none">
               {children}
