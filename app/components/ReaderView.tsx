@@ -7,6 +7,7 @@ import { resolvePublisherUrl } from '../lib/resolvePublisherUrl';
 import { normalizeTitle } from '../lib/utils';
 import { TextSizePreference, getStoredTextSize, setStoredTextSize, getTextSizeClass } from '../lib/textSize';
 import { getCachedExtract, setCachedExtract } from '../lib/extractCache';
+import { trackEvent } from '../lib/analytics';
 
 interface ReaderViewProps {
   article: Article;
@@ -48,6 +49,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
   const [textSize, setTextSize] = useState<TextSizePreference>('default');
   const [showTextSizeMenu, setShowTextSizeMenu] = useState(false);
   const textSizeRef = useRef<HTMLDivElement>(null);
+  const articleOpenFiredRef = useRef(false);
 
   // Load text size preference from localStorage on mount
   useEffect(() => {
@@ -118,6 +120,10 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
           if (cached) {
             setExtracted(cached);
             setLoading(false);
+            if (!articleOpenFiredRef.current && cached.success) {
+              articleOpenFiredRef.current = true;
+              try { const h = new URL(finalUrl).hostname; trackEvent('article_open', { publisherHost: h, cacheStatus: 'hit', ok: true }); } catch {}
+            }
             return;
           }
         }
@@ -127,6 +133,12 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
         const response = await fetch(`/api/extract?url=${encodeURIComponent(finalUrl)}`);
         const data = await response.json();
         setExtracted(data);
+
+        // Fire article_open once on success
+        if (!articleOpenFiredRef.current && data?.success) {
+          articleOpenFiredRef.current = true;
+          try { const h = new URL(finalUrl).hostname; trackEvent('article_open', { publisherHost: h, cacheStatus: 'miss', ok: true }); } catch {}
+        }
 
         // Step 4: Cache successful extractions (skip in debug mode)
         if (!debug && data?.success && data?.contentHtml) {
@@ -203,6 +215,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
               href={failureUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={handleOpenOriginal}
               className="inline-flex items-center gap-2 px-5 py-3 bg-accent text-white rounded-lg hover:opacity-90 active:opacity-80 transition-opacity"
               style={{ touchAction: 'manipulation' }}
             >
@@ -316,6 +329,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
             href={fallbackUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={handleOpenOriginal}
             className="inline-flex items-center gap-2 px-5 py-3 bg-accent text-white rounded-lg hover:opacity-90 active:opacity-80 transition-opacity"
             style={{ touchAction: 'manipulation' }}
           >
@@ -338,6 +352,11 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
       </div>
     );
   };
+
+  const handleOpenOriginal = useCallback(() => {
+    const url = extracted?.url || publisherUrl || article.url;
+    try { const h = url ? new URL(url).hostname : undefined; trackEvent('open_original', { publisherHost: h }); } catch {}
+  }, [extracted?.url, publisherUrl, article.url]);
 
   const originalUrl = extracted?.url || publisherUrl || article.url;
 
@@ -411,6 +430,7 @@ export function ReaderView({ article, onBack, debug = false }: ReaderViewProps) 
               href={originalUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={handleOpenOriginal}
               className="flex items-center gap-2 px-3 py-3 min-h-[48px] min-w-[48px] justify-self-end text-accent hover:underline transition-colors no-underline"
               style={{ touchAction: 'manipulation' }}
             >

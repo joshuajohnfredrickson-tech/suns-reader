@@ -20,6 +20,7 @@ import {
 import { markAllAsRead, clearAllReadState } from '../../../lib/readState';
 import { SystemToast } from '../../../components/SystemToast';
 import { emitAppReady } from '../../../lib/appReady';
+import { trackEvent } from '../../../lib/analytics';
 
 function SettingsContent() {
   const router = useRouter();
@@ -60,12 +61,14 @@ function SettingsContent() {
   useEffect(() => {
     if (mounted) {
       emitAppReady();
+      trackEvent('settings_open', { source: 'nav' });
     }
   }, [mounted]);
 
   const handleRemove = (domain: string) => {
     removeTrustedDomain(domain);
     setTrustedDomains(getTrustedDomains());
+    trackEvent('trusted_remove', { domain });
   };
 
   const handleResetToDefaults = () => {
@@ -81,6 +84,7 @@ function SettingsContent() {
   const handleRemoveVideoSource = (channelId: string) => {
     removeTrustedVideoSource(channelId);
     setTrustedVideoSources(getTrustedVideoSources());
+    trackEvent('trusted_remove', { domain: channelId });
   };
 
   const handleThemeChange = (preference: ThemePreference) => {

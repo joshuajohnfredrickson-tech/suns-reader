@@ -16,6 +16,7 @@ import { BottomTabBar } from '../../../components/BottomTabBar';
 import { emitAppReady } from '../../../lib/appReady';
 import { VideoPlayerModal } from '../../../components/VideoPlayerModal';
 import { SystemToast } from '../../../components/SystemToast';
+import { trackEvent } from '../../../lib/analytics';
 
 interface Video {
   id: string;
@@ -261,6 +262,7 @@ function VideosPageInner() {
     addTrustedVideoSource(channelId, channelTitle);
     rehydrateTrustedChannelIds();
     showToast('Added to Trusted');
+    trackEvent('trusted_add', { domain: channelTitle });
   }, [showToast, rehydrateTrustedChannelIds]);
 
   // Listen for watched state changes (same-tab + cross-tab)
@@ -317,6 +319,7 @@ function VideosPageInner() {
   const handleVideoClick = useCallback((video: Video) => {
     markVideoWatched(video.id);
     setSelectedVideo({ id: video.id, title: video.title, url: video.url });
+    trackEvent('video_open', { source: video.channelTitle, videoId: video.id });
   }, []);
 
   if (!mounted) {
@@ -335,6 +338,7 @@ function VideosPageInner() {
             href={DONATE_URL}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackEvent('donate_click', { location: 'videos_header' })}
             className="p-3 inline-flex items-center gap-2 h-12 text-sm font-medium text-foreground hover:text-foreground/80 active:text-foreground/60 rounded-lg transition-colors"
             style={{ touchAction: 'manipulation' }}
           >

@@ -14,6 +14,7 @@ import { purgeExpiredReadState, getReadStateForArticles } from '../lib/readState
 import { emitAppReady } from '../lib/appReady';
 import { SystemToast } from './SystemToast';
 import { BottomTabBar } from './BottomTabBar';
+import { trackEvent } from '../lib/analytics';
 
 // Feed cache constants
 const FEED_CACHE_KEY = 'suns-reader-feed-cache';
@@ -230,6 +231,7 @@ export default function HomeClient() {
     addTrustedDomain(domain);
     setTrustedDomains(getTrustedDomains());
     showToast('Added to Trusted');
+    trackEvent('trusted_add', { domain });
   }, [showToast]);
 
   const copyDebugInfo = useCallback(() => {
@@ -454,6 +456,7 @@ Response Preview: ${debugInfo.searchResponsePreview || 'none'}`;
             href={DONATE_URL}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackEvent('donate_click', { location: 'articles_header' })}
             className="p-3 inline-flex items-center gap-2 h-12 text-sm font-medium text-foreground hover:text-foreground/80 active:text-foreground/60 rounded-lg transition-colors"
             style={{ touchAction: 'manipulation' }}
           >

@@ -1,35 +1,9 @@
+import { SupportCta } from '../../components/SupportCta';
+
 export const metadata = {
   title: 'About - Suns Reader',
   description: 'Learn about Suns Reader, a free news aggregator for Phoenix Suns fans.',
 };
-
-const SUPPORT_URL = 'https://buymeacoffee.com/sunsreader';
-
-function SupportCta() {
-  return (
-    <a
-      href={SUPPORT_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-flex items-center gap-2 text-accent font-medium hover:underline transition-colors"
-    >
-      <span>Support Suns Reader</span>
-      <svg
-        className="w-4 h-4"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-        />
-      </svg>
-    </a>
-  );
-}
 
 export default function AboutPage() {
   return (
@@ -54,7 +28,7 @@ export default function AboutPage() {
             <p>
               So I built something to fix that for myself... and decided to share it with other Suns fans too.
             </p>
-            <SupportCta />
+            <SupportCta location="about_top" />
           </div>
         </section>
 
@@ -94,7 +68,7 @@ export default function AboutPage() {
             <p>
               If Suns Reader adds value for you, consider chipping in to help cover those costs.
             </p>
-            <SupportCta />
+            <SupportCta location="about_bottom" />
           </div>
         </section>
 
