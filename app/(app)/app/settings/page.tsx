@@ -81,10 +81,10 @@ function SettingsContent() {
     }
   };
 
-  const handleRemoveVideoSource = (channelId: string) => {
+  const handleRemoveVideoSource = (channelId: string, channelTitle?: string) => {
     removeTrustedVideoSource(channelId);
     setTrustedVideoSources(getTrustedVideoSources());
-    trackEvent('trusted_remove', { domain: channelId });
+    trackEvent('trusted_remove', { channelId, channelTitle });
   };
 
   const handleThemeChange = (preference: ThemePreference) => {
@@ -268,7 +268,7 @@ function SettingsContent() {
                         <h3 className="font-medium text-base text-foreground leading-tight truncate">{source.channelTitle}</h3>
                       </div>
                       <button
-                        onClick={() => handleRemoveVideoSource(source.channelId)}
+                        onClick={() => handleRemoveVideoSource(source.channelId, source.channelTitle)}
                         className="shrink-0 text-sm text-red-600 dark:text-red-400 transition-colors"
                         style={{ touchAction: 'manipulation' }}
                       >
